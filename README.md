@@ -21,7 +21,7 @@ Todas las contribuciones son bienvenidas. En cuanto a pruebas de seguridad, impl
 
 * **Víctor Daniel Neyra Toroberero** - *Initial work* - [PurpleBooth](https://github.com/Litosoft)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/GestionDeCuentas/contributors) who participated in this project.
 
 ## License
 
