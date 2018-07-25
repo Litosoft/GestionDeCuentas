@@ -19,9 +19,7 @@ Todas las contribuciones son bienvenidas. En cuanto a pruebas de seguridad, impl
 
 ## Authors
 
-* **Víctor Daniel Neyra Toroberero** - *Initial work* - [PurpleBooth](https://github.com/Litosoft)
-
-See also the list of [contributors](https://github.com/GestionDeCuentas/contributors) who participated in this project.
+* **Víctor Daniel Neyra Toroberero** - *Initial work* - [Repositorios](https://github.com/Litosoft)
 
 ## License
 
