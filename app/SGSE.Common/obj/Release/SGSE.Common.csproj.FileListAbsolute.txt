@@ -1,0 +1,5 @@
+D:\Workspace\net\SGSE\app\SGSE.Common\bin\Release\SGSE.Common.dll
+D:\Workspace\net\SGSE\app\SGSE.Common\bin\Release\SGSE.Common.pdb
+D:\Workspace\net\SGSE\app\SGSE.Common\obj\Release\SGSE.Common.dll
+D:\Workspace\net\SGSE\app\SGSE.Common\obj\Release\SGSE.Common.pdb
+D:\Workspace\net\SGSE\app\SGSE.Common\obj\Release\SGSE.Common.csprojResolveAssemblyReference.cache

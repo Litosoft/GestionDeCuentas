@@ -1,0 +1,66 @@
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Data\bin\Debug\SGSE.Data.dll
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Data\bin\Debug\SGSE.Data.pdb
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Data\bin\Debug\SGSE.ConfigurationManager.dll
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Data\bin\Debug\SGSE.Entidad.dll
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Data\bin\Debug\SGSE.Security.dll
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Data\bin\Debug\SGSE.ConfigurationManager.pdb
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Data\bin\Debug\SGSE.Entidad.pdb
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Data\bin\Debug\SGSE.Security.pdb
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Data\obj\Debug\SGSE.Data.csprojResolveAssemblyReference.cache
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Data\obj\Debug\SGSE.Data.dll
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Data\obj\Debug\SGSE.Data.pdb
+D:\Users\vneyrat\Desktop\SGSE\SGSE\Webapp\SGSE\SGSE.Data\bin\Debug\SGSE.Data.dll
+D:\Users\vneyrat\Desktop\SGSE\SGSE\Webapp\SGSE\SGSE.Data\bin\Debug\SGSE.Data.pdb
+D:\Users\vneyrat\Desktop\SGSE\SGSE\Webapp\SGSE\SGSE.Data\bin\Debug\SGSE.ConfigurationManager.dll
+D:\Users\vneyrat\Desktop\SGSE\SGSE\Webapp\SGSE\SGSE.Data\bin\Debug\SGSE.Entidad.dll
+D:\Users\vneyrat\Desktop\SGSE\SGSE\Webapp\SGSE\SGSE.Data\bin\Debug\SGSE.Security.dll
+D:\Users\vneyrat\Desktop\SGSE\SGSE\Webapp\SGSE\SGSE.Data\bin\Debug\SGSE.ConfigurationManager.pdb
+D:\Users\vneyrat\Desktop\SGSE\SGSE\Webapp\SGSE\SGSE.Data\bin\Debug\SGSE.Entidad.pdb
+D:\Users\vneyrat\Desktop\SGSE\SGSE\Webapp\SGSE\SGSE.Data\bin\Debug\SGSE.Security.pdb
+D:\Users\vneyrat\Desktop\SGSE\SGSE\Webapp\SGSE\SGSE.Data\obj\Debug\SGSE.Data.csprojResolveAssemblyReference.cache
+D:\Users\vneyrat\Desktop\SGSE\SGSE\Webapp\SGSE\SGSE.Data\obj\Debug\SGSE.Data.dll
+D:\Users\vneyrat\Desktop\SGSE\SGSE\Webapp\SGSE\SGSE.Data\obj\Debug\SGSE.Data.pdb
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Data\bin\Debug\SGSE.Data.dll
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Data\bin\Debug\SGSE.Data.pdb
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Data\bin\Debug\SGSE.ConfigurationManager.dll
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Data\bin\Debug\SGSE.Entidad.dll
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Data\bin\Debug\SGSE.Security.dll
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Data\bin\Debug\SGSE.ConfigurationManager.pdb
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Data\bin\Debug\SGSE.Entidad.pdb
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Data\bin\Debug\SGSE.Security.pdb
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Data\obj\Debug\SGSE.Data.csprojResolveAssemblyReference.cache
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Data\obj\Debug\SGSE.Data.dll
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Data\obj\Debug\SGSE.Data.pdb
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Data\bin\Debug\SGSE.Data.dll
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Data\bin\Debug\SGSE.Data.pdb
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Data\bin\Debug\SGSE.ConfigurationManager.dll
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Data\bin\Debug\SGSE.Entidad.dll
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Data\bin\Debug\SGSE.Security.dll
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Data\bin\Debug\SGSE.ConfigurationManager.pdb
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Data\bin\Debug\SGSE.Entidad.pdb
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Data\bin\Debug\SGSE.Security.pdb
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Data\obj\Debug\SGSE.Data.csprojResolveAssemblyReference.cache
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Data\obj\Debug\SGSE.Data.dll
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Data\obj\Debug\SGSE.Data.pdb
+D:\Workspace\net\SGSE\SGSE\SGSE.Data\bin\Debug\SGSE.Data.dll
+D:\Workspace\net\SGSE\SGSE\SGSE.Data\bin\Debug\SGSE.Data.pdb
+D:\Workspace\net\SGSE\SGSE\SGSE.Data\bin\Debug\SGSE.ConfigurationManager.dll
+D:\Workspace\net\SGSE\SGSE\SGSE.Data\bin\Debug\SGSE.Entidad.dll
+D:\Workspace\net\SGSE\SGSE\SGSE.Data\bin\Debug\SGSE.Security.dll
+D:\Workspace\net\SGSE\SGSE\SGSE.Data\bin\Debug\SGSE.ConfigurationManager.pdb
+D:\Workspace\net\SGSE\SGSE\SGSE.Data\bin\Debug\SGSE.Entidad.pdb
+D:\Workspace\net\SGSE\SGSE\SGSE.Data\bin\Debug\SGSE.Security.pdb
+D:\Workspace\net\SGSE\SGSE\SGSE.Data\obj\Debug\SGSE.Data.csprojResolveAssemblyReference.cache
+D:\Workspace\net\SGSE\SGSE\SGSE.Data\obj\Debug\SGSE.Data.dll
+D:\Workspace\net\SGSE\SGSE\SGSE.Data\obj\Debug\SGSE.Data.pdb
+D:\Workspace\net\SGSE\app\SGSE.Data\bin\Debug\SGSE.Data.dll
+D:\Workspace\net\SGSE\app\SGSE.Data\bin\Debug\SGSE.Data.pdb
+D:\Workspace\net\SGSE\app\SGSE.Data\bin\Debug\SGSE.ConfigurationManager.dll
+D:\Workspace\net\SGSE\app\SGSE.Data\bin\Debug\SGSE.Entidad.dll
+D:\Workspace\net\SGSE\app\SGSE.Data\bin\Debug\SGSE.Security.dll
+D:\Workspace\net\SGSE\app\SGSE.Data\bin\Debug\SGSE.ConfigurationManager.pdb
+D:\Workspace\net\SGSE\app\SGSE.Data\bin\Debug\SGSE.Entidad.pdb
+D:\Workspace\net\SGSE\app\SGSE.Data\bin\Debug\SGSE.Security.pdb
+D:\Workspace\net\SGSE\app\SGSE.Data\obj\Debug\SGSE.Data.csprojResolveAssemblyReference.cache
+D:\Workspace\net\SGSE\app\SGSE.Data\obj\Debug\SGSE.Data.dll
+D:\Workspace\net\SGSE\app\SGSE.Data\obj\Debug\SGSE.Data.pdb

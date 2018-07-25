@@ -1,0 +1,49 @@
+﻿@model SGSE.Webapp.Models.Account.PerfilLoginModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Perfil &middot; Sistema de Gestión del Servicio Exterior</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700">
+
+    <link href="@Url.Content("~/Content/css/vendor.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/css/baboon.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/css/application.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/css/login.css")" rel="stylesheet" />
+</head>
+<body>
+    <div class="login">
+        <div class="login-body">
+            @using (Html.BeginForm("Perfil", "Account", FormMethod.Post, new { @id = "frm-per", name = "frm-per", @class = "login-form" }))
+            {
+                <div class="form-group">
+                    <label class="label-perfil">Seleccione un perfil</label>
+                    @Html.DropDownListFor(m => m.Perfil.CID, Model.Perfiles, new { @class = "form-control" })
+                    <small class="help-block"></small>
+                </div>
+                <button class="btn btn-primary btn-block" type="submit" style="margin-top:40px;">Seleccionar</button>
+                @Html.HiddenFor(h => h.SelectPerfil);
+            }
+        </div>
+    </div>
+    
+    <script src="@Url.Content("~/Scripts/base/vendor.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/base/elephant.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/base/application.min.js")"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#frm-per").submit(function(){
+                var s = $("#Perfil_CID option:selected").text();
+                $("#SelectPerfil").val(s);
+            })
+        });
+    </script>
+</body>
+</html>

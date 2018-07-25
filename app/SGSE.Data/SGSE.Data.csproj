@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4F20054C-AC8F-4BCE-8E96-A233A902F6D9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SGSE.Data</RootNamespace>
+    <AssemblyName>SGSE.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abstract\AbstractDataManager.cs" />
+    <Compile Include="DAAuditoria.cs" />
+    <Compile Include="DABanco.cs" />
+    <Compile Include="DAClasificador.cs" />
+    <Compile Include="DAEntidadPublica.cs" />
+    <Compile Include="DACuentaCorriente.cs" />
+    <Compile Include="DAError.cs" />
+    <Compile Include="DAFormatoEgreso.cs" />
+    <Compile Include="DAGasto.cs" />
+    <Compile Include="DAHome.cs" />
+    <Compile Include="DAMenu.cs" />
+    <Compile Include="DAMoneda.cs" />
+    <Compile Include="DAOrganoServicio.cs" />
+    <Compile Include="DAPais.cs" />
+    <Compile Include="DAParametro.cs" />
+    <Compile Include="DAPerfil.cs" />
+    <Compile Include="DAPersonalLocal.cs" />
+    <Compile Include="DAProgramaPolitico.cs" />
+    <Compile Include="DAProveedor.cs" />
+    <Compile Include="DAUnidadOrganica.cs" />
+    <Compile Include="DAUsuario.cs" />
+    <Compile Include="Helpers\DataUtil.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SGSE.ConfigurationManager\SGSE.ConfigurationManager.csproj">
+      <Project>{2309267f-3666-44a1-91e1-a45fd995247e}</Project>
+      <Name>SGSE.ConfigurationManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SGSE.Entidad\SGSE.Entidad.csproj">
+      <Project>{cc774bbf-5def-4601-bf3c-b56910b90ab2}</Project>
+      <Name>SGSE.Entidad</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SGSE.Security\SGSE.Security.csproj">
+      <Project>{a480d73d-1da3-4d66-8733-3a20dd8d3d69}</Project>
+      <Name>SGSE.Security</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

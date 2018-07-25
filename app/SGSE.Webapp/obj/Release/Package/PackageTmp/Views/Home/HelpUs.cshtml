@@ -1,0 +1,51 @@
+﻿@model SGSE.Webapp.Controllers.FormDataModel
+@{
+    ViewBag.Title = "HelpUs";
+}
+<div class="login-form">
+    @using (Html.BeginForm("HelpUs", "Home", FormMethod.Post, new { id = "helpus_form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-12">
+                @Html.TextAreaFor(m => m.TextAreaInput, new { @class = "form-control", autocomplete = "off", required = "required", id = "txtinput", name = "txtinput" })
+            </div>
+        </div>
+        <button id="btn_submit" class="btn btn-info btn-sm" type="submit" style="margin-top:10px;">Ejecutar</button>
+    }
+
+    @if (Model != null)
+    {
+        if (Model.OutputList != null)
+        {
+            if (Model.OutputList.Count > 0)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" style="margin-top:10px;">
+                                @foreach (var e in Model.OutputList)
+                                {
+                                    string[] rows = e.Split('~');
+                                    <tr>
+                                        @foreach (var row in rows)
+                                        {
+                                            string[] cols = row.Split('§');
+                                            foreach (var col in cols)
+                                            {
+                                                <td><nobr>@col</nobr></td>
+                                            }
+
+                                        }
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
+
+
+</div>

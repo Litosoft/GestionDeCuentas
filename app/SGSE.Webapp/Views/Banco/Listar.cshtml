@@ -1,0 +1,195 @@
+﻿@section layoutNavbarLeft {
+    <li>
+        <a href="javascript:void(0);" id="btn_add">
+            <span class="splashy-document_letter_add"></span> Nuevo
+        </a>
+    </li>
+    <li class="dropdown-toggle">
+        <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true">
+            <span class="icon-with-child">
+                <span class="splashy-document_letter_download"></span>
+            </span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-left">
+            <li>
+                <a href="javascript:void(0);" id="btn_R1">
+                    Descargar Banco y Agencias
+                </a>
+            </li>
+            <li>
+                <a href="javascript:void(0);" id="btn_R2">
+                    Descargar Organos de Servicio, Banco y Agencias
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="javascript:void(0);" id="btn_ayuda">
+            <span class="splashy-help"></span>
+        </a>
+    </li>
+}
+
+<div class="title-bar">
+    <h2 class="title-bar-title">
+        <span class="d-ib">Bancos</span>
+    </h2>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover table-responsive" id="dt_main" width="100%">
+            <thead>
+                <tr>
+                    <th class="header-w2">N°</th>
+                    <th>Banco</th>
+                    <th class="header-w4">Acción</th>
+                </tr>
+            </thead>
+            <tbody id="tbody_dt">
+                <tr>
+                    <td>&nbsp;</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <input type="hidden" id="hdn_sid" value="0" />
+    </div>
+</div>
+
+@section layoutScripts{
+    <script type="text/javascript">
+        var ajax = {
+            data: "@Url.Action("WvJRpzl5", "Banco")",
+            exp1: "@Url.Action("R1zJ2UHV", "Banco")",
+            exp2: "@Url.Action("R2zJ2UHV", "Banco")",
+            lang: "@Url.Content("~/Content/lang/lang.json")",
+            dban: "@Url.Action("Detalle", "Banco", new { sid = "___id___" })",
+        }
+    </script>
+    <script type="text/javascript">
+        (function (b) {
+            ({
+                TABLE: "#dt_main", action: { buttons: { BUTTON_ADD: "#btn_add", BUTTON_R1: "#btn_R1", BUTTON_R2: "#btn_R2", BUTTON_HLP: "#btn_ayuda" } }, initControls: function () { this.$dt = b(this.TABLE); this.$btn_add = b(this.action.buttons.BUTTON_ADD); this.$btn_er1 = b(this.action.buttons.BUTTON_R1); this.$btn_er2 = b(this.action.buttons.BUTTON_R2); this.$btn_hlp = b(this.action.buttons.BUTTON_HLP); return this }, initTable: function () {
+                    this.$dt.DataTable({
+                        pageLength: 18, colReorder: { fixedColumnsLeft: 1, fixedColumnsRight: 1 }, processing: !0,
+                        serverSide: !0, ajax: ajax.data, columnDefs: [{ className: "text-center", targets: [0, 2] }], columns: [{ data: "Row" }, { data: "Nombre" }, { data: "CID", orderable: !1, render: function (a, b, d, e) { return '<a href="javascript:void(0);" class="href-edt" data-sid="' + a + '"><span class="icon icon-edit icon-grid"></span></a>' + ('<a href="javascript:void(0);" class="href-del" data-sid="' + a + '"><span class="icon icon-trash-o icon-grid"></span></a>') } }], rowCallback: function (a, c, d) { 0 == c.Situacion.IntValue && b("td", a).addClass("text-disabled") },
+                        language: { url: ajax.lang }
+                    }); return this
+                }, handleEdit: function (a) { a = a.currentTarget.getAttribute("data-sid"); window.location.href = ajax.dban.replace("___id___", a) }, handleAdd: function (a) { window.location.href = ajax.dban.replace("___id___", 0) }, handleEx1: function (a) { window.location.href = ajax.exp1 }, handleEx2: function (a) { window.location.href = ajax.exp2 }, handleDelete: function (a) { b.alert("No cuenta con los privilegios suficientes para esta operaci\u00f3n.") }, bindEvents: function () {
+                    this.$dt.delegate(".href-edt",
+                    "click", this.handleEdit.bind(this)); this.$dt.delegate(".href-del", "click", this.handleDelete.bind(this)); this.$btn_add.on("click", this.handleAdd.bind(this)); this.$btn_er1.on("click", this.handleEx1.bind(this)); this.$btn_er2.on("click", this.handleEx2.bind(this))
+                }, init: function () { this.initControls().initTable().bindEvents(); b(window).keydown(function (a) { if (13 == a.keyCode) return a.preventDefault(), !1 }) }
+            }).init()
+        })(jQuery);
+    </script>
+    @*
+    <script type="text/javascript">
+        'use strict';
+        (function ($) {
+            var main = {
+                TABLE: "#dt_main",
+                action: {
+                    buttons: {
+                        BUTTON_ADD: '#btn_add',
+                        BUTTON_R1: '#btn_R1',
+                        BUTTON_R2: '#btn_R2',
+                        BUTTON_HLP: '#btn_ayuda'
+                    }
+                },
+                initControls: function () {
+                    this.$dt = $(this.TABLE);
+                    this.$btn_add = $(this.action.buttons.BUTTON_ADD);
+                    this.$btn_er1 = $(this.action.buttons.BUTTON_R1);
+                    this.$btn_er2 = $(this.action.buttons.BUTTON_R2);
+                    this.$btn_hlp = $(this.action.buttons.BUTTON_HLP);
+                    return this;
+                },
+                initTable: function () {
+                    var that = this;
+                    var T = this.$dt.DataTable({
+                        pageLength: 18,
+                        colReorder: {
+                            fixedColumnsLeft: 1,
+                            fixedColumnsRight: 1
+                        },
+                        processing: true,
+                        serverSide: true,
+                        ajax: ajax.data,
+                        columnDefs: [{
+                            className: "text-center", targets: [0, 2]
+                        }],
+                        columns: [
+                            { "data": "Row" },
+                            { "data": "Nombre" },
+                            {
+                                "data": "CID",
+                                "orderable": false,
+                                "render": function (data, type, full, meta) {
+                                    var href_edt = '<a href="javascript:void(0);" class="href-edt" data-sid="' + data + '"><span class="icon icon-edit icon-grid"></span></a>';
+                                    var href_del = '<a href="javascript:void(0);" class="href-del" data-sid="' + data + '"><span class="icon icon-trash-o icon-grid"></span></a>';
+                                    return href_edt + href_del
+                                }
+                            }
+                        ],
+                        "rowCallback": function (row, data, index) {
+                            if (data.Situacion.IntValue == 0) {
+                                $('td', row).addClass('text-disabled');
+                            }
+                        },
+                        "language": {
+                            "url": ajax.lang
+                        }
+                    });
+                    return this;
+                },
+                handleEdit: function (e) {
+                    var s_id = e.currentTarget.getAttribute('data-sid');
+                    var url = ajax.dban;
+                    window.location.href = url.replace('___id___', s_id);
+                },
+
+                handleAdd: function (e) {
+                    var url = ajax.dban;
+                    window.location.href = url.replace('___id___', 0);
+                },
+
+                handleEx1: function (e) {
+                    window.location.href = ajax.exp1;
+                },
+
+                handleEx2: function (e) {
+                    window.location.href = ajax.exp2;
+                },
+
+                handleDelete: function (e) {
+                    $.alert("No cuenta con los privilegios suficientes para esta operación.");
+                },
+
+                bindEvents: function () {
+                    this.$dt.delegate('.href-edt', 'click', this.handleEdit.bind(this));
+                    this.$dt.delegate('.href-del', 'click', this.handleDelete.bind(this));
+                    this.$btn_add.on('click', this.handleAdd.bind(this));
+                    this.$btn_er1.on('click', this.handleEx1.bind(this));
+                    this.$btn_er2.on('click', this.handleEx2.bind(this));
+                },
+
+                init: function () {
+                    this.initControls().initTable().bindEvents();
+
+                    $(window).keydown(function (event) {
+                        if (event.keyCode == 13) {
+                            event.preventDefault();
+                            return false;
+                        }
+                    });
+                }
+            }
+
+            main.init();
+
+        })(jQuery);
+    </script>
+    *@
+}

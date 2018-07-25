@@ -1,0 +1,5 @@
+D:\Workspace\net\SGSE\app\SGSE.Security\bin\Release\SGSE.Security.dll
+D:\Workspace\net\SGSE\app\SGSE.Security\bin\Release\SGSE.Security.pdb
+D:\Workspace\net\SGSE\app\SGSE.Security\obj\Release\SGSE.Security.dll
+D:\Workspace\net\SGSE\app\SGSE.Security\obj\Release\SGSE.Security.pdb
+D:\Workspace\net\SGSE\app\SGSE.Security\obj\Release\SGSE.Security.csprojResolveAssemblyReference.cache

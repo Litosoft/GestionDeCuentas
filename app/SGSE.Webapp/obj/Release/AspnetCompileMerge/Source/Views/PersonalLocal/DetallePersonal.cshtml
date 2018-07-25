@@ -1,0 +1,1087 @@
+﻿@using SGSE.Webapp.Helpers
+@model SGSE.Webapp.Models.PersonalLocal.PersonalLocalDetalleViewModel
+@* Detalle de Personal Local - Organos de Servicio Exterior *@
+
+@section layoutHeader{
+    <style>
+        #gen_txt_obs {
+            height: 100px;
+            text-transform: uppercase;
+        }
+    </style>
+}
+
+<div class="title-bar">
+    <h2 class="title-bar-title">
+        <span id="spa_per"></span>
+        <small class="pull-right" style="font-size:11px; line-height:24px;">
+            <i class="icon icon-arrow-circle-left icon-lg"></i> <a href="@Url.Action("Personal","PersonalLocal")"> regresar a la lista de Personal Local</a>
+        </small>
+    </h2>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <p style="padding:8px; border:1px solid #ccccb7; background-color:#ffffe5; font-size:1.1em">
+            Puede modificar los datos que considere necesarios en este formulario. <strong>Las modificaciones están sujetas a la aprobación de la Jefeaura de Gestión de Servicio Exterior</strong>.
+        </p>
+        <div class="panel with-nav-tabs">
+            <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#tab_gen" data-toggle="tab">Datos Generales</a>
+                    </li>
+                    <li>
+                        <a href="#tab_con" data-toggle="tab">Contratos y Adendas</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div class="tab-content">
+                    @* Datos Generales *@
+                    <div class="tab-pane active" id="tab_gen">
+                        <div class="row">
+                            @* Datos *@
+
+                            @* Columna 1*@
+                            <div class="col-md-4">
+                                <table class="table-form" width="100%">
+                                    <tr>
+                                        <td style="width: 110px;">Nombres</td>
+                                        <td>
+                                            @Html.TextBoxCustom("gen_txt_nom", 45, 1, new { style = "background-color:#ffffe0; color:#333; font-weight:600;" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Apellidos</td>
+                                        <td>
+                                            @Html.TextBoxCustom("gen_txt_ape", 45, 2, new { style = "background-color:#ffffe0; color:#333; font-weight:600;" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Género</td>
+                                        <td>
+                                            @Html.DropDownList("gen_sel_gen", (IEnumerable<SelectListItem>)ViewBag.Genero, new { @class = "form-control", tabindex = "3" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>F. de Nacimiento</td>
+                                        <td>
+                                            <div class="input-with-icon">
+                                                <input id="gen_txt_nac" type="text" class="form-control text-uppercase vigencia" maxlength="10" autocomplete="off" data-provide="datepicker" data-date-today-btn="linked" tabindex="4">
+                                                <span class="icon icon-calendar input-icon"></span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nacionalidad</td>
+                                        <td>
+                                            @Html.DropDownList("gen_sel_pai", (IEnumerable<SelectListItem>)ViewBag.Nacionalidad, new { @class = "form-control", tabindex = "5" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Grado</td>
+                                        <td>
+                                            @Html.DropDownList("gen_sel_gra", (IEnumerable<SelectListItem>)ViewBag.Grado, new { @class = "form-control", tabindex = "6" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Especialidad</td>
+                                        <td>
+                                            @Html.DropDownList("gen_sel_esp", (IEnumerable<SelectListItem>)ViewBag.Especialidad, new { @class = "form-control", tabindex = "7" })
+                                        </td>
+                                    </tr>
+                                    
+                                </table>
+                            </div>
+                            @* Columna 2*@
+                            <div class="col-md-4">
+                                <table class="table-form" width="100%">
+                                    <tr>
+                                        <td style="width: 110px;">Tipo de Documento</td>
+                                        <td>
+                                            @Html.DropDownList("gen_sel_doc", (IEnumerable<SelectListItem>)ViewBag.TipoDocumento, new { @class = "form-control", tabindex = "8" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>N° de documento</td>
+                                        <td>
+                                            @Html.TextBoxCustom("gen_txt_num", 25, 8)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Estado Civil</td>
+                                        <td>
+                                            @Html.DropDownList("gen_sel_civ", (IEnumerable<SelectListItem>)ViewBag.EstadoCivil, new { @class = "form-control", tabindex = "9" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Situación Laboral</td>
+                                        <td>
+                                            @Html.DropDownList("gen_sel_sla", (IEnumerable<SelectListItem>)ViewBag.SituacionLaboral, new { @class = "form-control", tabindex = "10" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tipo Personal</td>
+                                        <td>
+                                            @Html.DropDownList("gen_sel_tpe", (IEnumerable<SelectListItem>)ViewBag.TipoPersonal, new { @class = "form-control", tabindex = "11" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Discapacidad</td>
+                                        <td>
+                                            <select class="form-control" id="gen_sel_dis" tabindex="12">
+                                                <option value="0">NO</option>
+                                                <option value="1">SI</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td>
+                                            @Html.TextBoxCustom("gen_txt_mai", 60, 13)
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            @* Columna 3 *@
+                            <div class="col-md-4">
+                                <table class="table-form" width="100%">
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table-form" width="100%">
+                                    <tr>
+                                        <td style="width: 110px;">Observaciones Generales</td>
+                                        <td>
+                                            @Html.TextAreaCustom("gen_txt_obs", 15, new { @onkeyup = "TextAreaObject.countChar(this, '#count_des_pm')" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><small id="count_des_pm" class="pull-right text-gray">max. 255 caracteres</small></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <button id="tab_btn_sav" class="btn btn-info btn-sm" tabindex="16">Grabar datos generales del personal</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <span class="text-log" id="gen_txt_audit"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            @{
+                                                if (Model.Auditoria != null)
+                                                {
+                                                    if (Model.Auditoria.Count() > 0)
+                                                    {
+                                                        <ul style="list-style: none; list-style-type: none;padding-left:0;">
+                                                            @foreach (var e in Model.Auditoria)
+                                                            {
+                                                                <li>@e.Registro</li>
+                                                            }
+                                                        </ul>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>Creó el registro.</span>
+                                                    }
+                                                }
+                                            }
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Datos del contrato *@
+                    <div class="tab-pane" id="tab_con">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    @{
+                                        <ul class="list-group" id="lst_contratos">
+                                            @if (Model.Contratos != null)
+                                            {
+                                                int i = 1;
+                                                foreach (var e in Model.Contratos)
+                                                {
+                                                    <li class="list-group-item">
+                                                        @i - <a class="href-edt" href="javascript:void(0);" data-sid="@e.CID">@e.StrValue</a>
+                                                    </li>
+                                                    i++;
+                                                }
+                                            }
+                                        </ul>
+                                    }
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @* Columna 1*@
+                                            <div class="col-md-4">
+                                                <table class="table-form" width="100%">
+                                                    <tr>
+                                                        <td style="width: 140px;">Tipo de contratación</td>
+                                                        <td>
+                                                            @Html.DropDownList("con_sel_tip", (IEnumerable<SelectListItem>)ViewBag.TipoDocumentoContrato, new { @class = "form-control", tabindex = "1" })
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Periodo Contractual</td>
+                                                        <td>
+                                                            <select id="con_sel_ind" class="form-control" tabindex="8">
+                                                                <option value="1">INDEFINIDO</option>
+                                                                <option value="0">DEFINIDO</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Cargo</td>
+                                                        <td>
+                                                            @Html.DropDownList("con_sel_car", (IEnumerable<SelectListItem>)ViewBag.Cargos, new { @class = "form-control", tabindex = "9" })
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Moneda</td>
+                                                        <td>
+                                                            @Html.DropDownList("con_sel_mon", (IEnumerable<SelectListItem>)ViewBag.Monedas, new { @class = "form-control", tabindex = "11" })
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 100px;">Remun. Bruta</td>
+                                                        <td>
+                                                            @Html.TextBoxCustom("con_txt_rem", 14, 10)
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Inicio de funciones</td>
+                                                        <td>
+                                                            <div class="input-with-icon">
+                                                                <input id="con_txt_ini" type="text" class="form-control text-uppercase vigencia" maxlength="10" autocomplete="off" data-provide="datepicker" data-date-today-btn="linked" tabindex="6">
+                                                                <span class="icon icon-calendar input-icon"></span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Mensaje de Autorización</td>
+                                                        <td>
+                                                            @Html.TextBoxCustom("con_txt_dau", 25, 12)
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 100px;">Tipo de Contrato</td>
+                                                        <td>
+                                                            @Html.DropDownList("con_sel_tco", (IEnumerable<SelectListItem>)ViewBag.TiposContrato, new { @class = "form-control", tabindex = "5" })
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    
+                                                    
+                                                    
+                                                </table>
+                                            </div>
+
+                                            @* Columna 2*@
+                                            <div class="col-md-4">
+                                                <table class="table-form" width="100%">
+                                                    
+                                                    <tr>
+                                                        <td>Número</td>
+                                                        <td>
+                                                            @Html.TextBoxCustom("con_txt_num", 25, 3)
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    @*<tr>
+                                                        <td style="width: 100px;">Referencia</td>
+                                                        <td>
+                                                            @Html.TextBoxCustom("con_txt_ref", 25, 2)
+                                                        </td>
+                                                    </tr>*@
+                                                    <tr>
+                                                        <td>Fecha de Contrato</td>
+                                                        <td>
+                                                            <div class="input-with-icon">
+                                                                <input id="con_txt_fco" type="text" class="form-control text-uppercase vigencia" maxlength="10" autocomplete="off" data-provide="datepicker" data-date-today-btn="linked" tabindex="4">
+                                                                <span class="icon icon-calendar input-icon"></span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        <td>Fecha de Término</td>
+                                                        <td>
+                                                            <div class="input-with-icon">
+                                                                <input id="con_txt_fte" type="text" class="form-control text-uppercase vigencia" maxlength="10" autocomplete="off" data-provide="datepicker" data-date-today-btn="linked" tabindex="7">
+                                                                <span class="icon icon-calendar input-icon"></span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        <td style="width: 100px;">Fecha de Autorización</td>
+                                                        <td>
+                                                            <div class="input-with-icon">
+                                                                <input id="con_txt_fau" type="text" class="form-control text-uppercase vigencia" maxlength="10" autocomplete="off" data-provide="datepicker" data-date-today-btn="linked" tabindex="13">
+                                                                <span class="icon icon-calendar input-icon"></span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                            @* Columna 3*@
+                                            <div class="col-md-4">
+                                                <table class="table-form" width="100%">
+                                                    <tr>
+                                                        <td style="width: 110px;">&nbsp;</td>
+                                                        <td>
+                                                            <span style="line-height:30px;">&nbsp;</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Fecha Inicio Funciones</td>
+                                                        <td>
+                                                            <div class="input-with-icon">
+                                                                <input id="con_txt_fif" type="text" class="form-control text-uppercase vigencia" maxlength="10" autocomplete="off" data-provide="datepicker" data-date-today-btn="linked" tabindex="14">
+                                                                <span class="icon icon-calendar input-icon"></span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-12">
+                                                <table class="table-form" width="100%">
+                                                    <tr>
+                                                        <td style="width: 140px;">Observaciones</td>
+                                                        <td>
+                                                            @Html.TextAreaCustom("con_txt_obs", 15, new { @onkeyup = "TextAreaObject.countChar(this, '#count_des_pm')" })
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2"><small id="count_des_pm" class="pull-right text-gray">max. 255 caracteres</small></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>
+                                                            <button id="btn_adj_doc" class="btn btn-default btn-sm" disabled tabindex="16">Adjuntar documento</button>
+                                                        </td>
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-12">
+                                                <table class="table-form" width="100%">
+                                                    <tr>
+                                                        <td style="width: 100px;">&nbsp;</td>
+                                                        <td>
+                                                            <button id="btn_sav_con" class="btn btn-info btn-sm" tabindex="17">Grabar contrato/adenda</button>
+                                                            <button id="btn_new_con" class="btn btn-default btn-sm" tabindex="18">Nuevo contrato/adenda</button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    @* Datos de la planilla *@
+                    <div class="tab-pane" id="tab_pla">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    <a href="javascript:void(1);" class="btn btn-sm btn-primary">Agregar concepto</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-responsive table-condensed table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>N°</th>
+                                            <th>Tipo</th>
+                                            <th>Concepto</th>
+                                            <th>Afecto al aporte</th>
+                                            <th>Tipo Afectación</th>
+                                            <th>Afectación</th>
+                                            <th>Monto</th>
+                                            <th>Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            if (Model.Aportes != null)
+                                            {
+                                                if (Model.Aportes.Count() > 0)
+                                                {
+                                                    foreach (var element in Model.Aportes)
+                                                    {
+                                                        <tr>
+                                                            <td>&nbsp;</td>
+                                                            <td>@element.Concepto.Texto</td>
+                                                            <td>@element.Descripcion</td>
+                                                            <td>@element.Afectacion.Texto</td>
+                                                            <td>@element.Operacion.Texto</td>
+                                                            <td>@element.TipoAfectacion.Texto</td>
+                                                            <td>@element.MontoAfectacion</td>
+                                                            <td class="header-w4">&nbsp;</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td>&nbsp;</td>
+                                                        <td>&nbsp;</td>
+                                                        <td>&nbsp;</td>
+                                                        <td>&nbsp;</td>
+                                                        <td>&nbsp;</td>
+                                                        <td>&nbsp;</td>
+                                                        <td class="header-w4">&nbsp;</td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td class="header-w4">&nbsp;</td>
+                                                </tr>
+                                            }
+                                        }
+
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <span id="tab_msg_err" class="text-danger text-error"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <small style="font-size:11px; line-height:24px;">
+                            <i class="icon icon-arrow-circle-left icon-lg"></i> <a href="@Url.Action("Personal","PersonalLocal")"> regresar a la lista de Personal Local</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<input type="hidden" value="" id="hdn_sid" />
+
+
+
+@section layoutScripts{
+    <script type="text/javascript">
+        var ajax = {
+            splo: "@Url.Action("Sp5AU25u", "PersonalLocal")",
+
+            gmnd: "@Url.Action("TU1sdEZJ", "PersonalLocal")",
+            gapo: "@Url.Action("OvEIqYav", "PersonalLocal")",
+            scta: "@Url.Action("NGZIbEEr", "PersonalLocal")",
+            scon: "@Url.Action("gO0MJEFp", "PersonalLocal")"
+        }
+    </script>
+
+    <script type="text/javascript">
+        'use strict';
+        (function ($) {
+            var modelo = {
+                getModelo: function () {
+                    return @Html.Raw(Json.Encode(Model))
+                }
+            };
+
+            var page = {
+                elements: {
+                    data: {
+                        SID: '#hdn_sid'
+                    },
+                },
+                model: modelo.getModelo(),
+                initElements: function () {
+                    this.$sid = $(this.elements.data.SID);
+                    return this;
+                },
+                initPlugins: function () {
+                    return this;
+                },
+                bindEvents: function () {
+                    return true;
+                },
+                init: function () {
+                    this.initElements().initPlugins().bindEvents();
+                    this.$sid.val(page.model.PersonalLocal.CID);
+                }
+            };
+
+            var tabs = {
+                elements: {
+                    buttons: {
+                        SAV: "#tab_btn_sav"
+                    },
+                    labels: {
+                        ERR: "#tab_msg_err"
+                    }
+                },
+                initElements: function () {
+                    this.$btn_sav = $(this.elements.buttons.SAV);
+                    this.$msg_err = $(this.elements.labels.ERR);
+                    return this;
+                },
+                handleSave: function () {
+                    var that = this;
+
+                    var rules = {
+                        ape: { id: that.tabgen.elements.inputs.APE, label: "Apellidos", minsize: 2, maxsize: 45 },
+                        nom: { id: that.tabgen.elements.inputs.NOM, label: "Nombres", minsize: 2, maxsize: 45 },
+                        fna: { id: that.tabgen.elements.inputs.NAC, label: "Fecha de Nacimiento", minsize: 10, maxsize: 10 },
+
+                    };
+                    var T = validaSimple.inputTexts(this.elements.labels.ERR, rules);
+                    if (T === false) return;
+
+
+                    this.$msg_err.empty();
+                    this.tabgen.$frm.prop("disabled", true);
+
+                    $.confirm({
+                        title: 'Confirmar Información',
+                        content: 'Tenga presente que los datos confirmados servirán como base para el proceso de <b>Rendición de Cuentas</b>',
+                        animationSpeed: 0,
+                        theme: 'supervan',
+                        buttons: {
+                            ok: {
+                                text: "Aceptar",
+                                btnClass: 'btn-primary',
+                                keys: ['enter'],
+                                action: function () {
+                                    that.handleConfirm();
+                                    that.tabgen.$frm.prop("disabled", false);
+                                }
+                            },
+                            cancel: function () {
+                                var sid = page.$sid.val();
+                                that.tabgen.$frm.prop("disabled", false);
+                            }
+                        }
+                    });
+
+                },
+                handleConfirm: function () {
+                    var that = this;
+                    var data = [];
+
+                    data.push(this.tabgen.$ape.val());
+                    data.push(this.tabgen.$nom.val());
+                    data.push(this.tabgen.$nac.val());
+
+                    data.push(this.tabgen.$gen.val());
+                    data.push(this.tabgen.$dis.val());
+                    data.push(this.tabgen.$pai.val());
+
+                    data.push(this.tabgen.$doc.val());
+                    data.push(this.tabgen.$num.val());
+                    data.push(this.tabgen.$mai.val());
+
+                    data.push(this.tabgen.$civ.val());
+                    data.push(this.tabgen.$gra.val());
+                    data.push(this.tabgen.$esp.val());
+                    data.push(this.tabgen.$tpe.val());
+
+                    data.push(this.tabgen.$sla.val());
+                    data.push(this.tabgen.$obs.val());
+                    data.push(page.$sid.val());
+
+                    var params = {
+                        dat: data
+                    };
+
+                    try {
+                        var request = $.ajax({
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(params),
+                            dataType: "json",
+                            type: "POST",
+                            url: ajax.splo,
+                            success: function (d) {
+                                var err = d.ERR;
+                                if (err == null || err == '' || err == "null") {
+                                    var dat = d.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+                                        if (dat.Estado === 1) {
+
+                                            //that.tabgen.$frm.prop("disabled", false);
+                                            //that.tabben.$frm.prop("disabled", false);
+                                            //that.tabpla.$frm.prop("disabled", false);
+
+                                            $.confirm({
+                                                title: '',
+                                                content: dat.Mensaje,
+                                                animationSpeed: 0,
+                                                theme: 'bootstrap',
+                                                buttons: {
+                                                    Lista: {
+                                                        text: '< Regresar a la lista',
+                                                        btnClass: 'btn-primary',
+                                                        action: function () {
+                                                            window.location.href = '@Url.Action("Personal", "PersonalLocal")';
+                                                        }
+                                                    },
+                                                    Cerrar: function () {
+                                                        text: 'Cerrar'
+                                                        var sid = page.$sid.val();
+                                                        that.tabgen.$ose.prop("disabled", (sid != 0));
+                                                    }
+                                                }
+                                            });
+                                        }
+                                        else {
+                                            toastr.error(dat.Mensaje);
+                                        }
+                                    }
+                                }
+                                else {
+                                    toastr.error(err);
+                                    that.tabgen.$frm.prop("disabled", false);
+                                    //that.tabben.$frm.prop("disabled", false);
+                                    //that.tabpla.$frm.prop("disabled", false);
+                                }
+                            }
+                        })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                toastr.error("Solicitud de servidor fallida. Error:" + textStatus);
+                            });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+
+                },
+                bindEvents: function () {
+                    this.$btn_sav.on('click', this.handleSave.bind(this));
+                },
+                init: function () {
+                    this.initElements().bindEvents();
+                    this.tabgen.init();
+                    this.tabcon.init();
+                    //this.tabpla.init();
+                },
+
+                // Informacion General
+                tabgen: {
+                    elements: {
+                        inputs: {
+                            FRM: "input[id^='gen_txt_'], select[id^='gen_sel_'], #gen_txt_obs",
+
+                            OSE: '#gen_sel_ose',
+                            APE: '#gen_txt_ape',
+                            NOM: '#gen_txt_nom',
+                            NAC: '#gen_txt_nac',
+
+                            GEN: '#gen_sel_gen',
+                            DIS: '#gen_sel_dis',
+                            PAI: '#gen_sel_pai',
+
+                            DOC: '#gen_sel_doc',
+                            NUM: '#gen_txt_num',
+                            MAI: '#gen_txt_mai',
+
+                            CIV: '#gen_sel_civ',
+                            GRA: '#gen_sel_gra',
+                            ESP: '#gen_sel_esp',
+                            TPE: '#gen_sel_tpe',
+
+                            SLA: '#gen_sel_sla',
+                            OBS: '#gen_txt_obs',
+                        },
+
+                        labels: {
+                            PER: '#spa_per',
+                            ADT: '#gen_txt_audit'
+                        },
+                    },
+                    initElements: function () {
+                        this.$frm = $(this.elements.inputs.FRM);
+
+                        this.$ose = $(this.elements.inputs.OSE);
+                        this.$ape = $(this.elements.inputs.APE);
+                        this.$nom = $(this.elements.inputs.NOM);
+                        this.$nac = $(this.elements.inputs.NAC);
+
+                        this.$gen = $(this.elements.inputs.GEN);
+                        this.$dis = $(this.elements.inputs.DIS);
+                        this.$pai = $(this.elements.inputs.PAI);
+
+                        this.$doc = $(this.elements.inputs.DOC);
+                        this.$num = $(this.elements.inputs.NUM);
+                        this.$mai = $(this.elements.inputs.MAI);
+
+                        this.$civ = $(this.elements.inputs.CIV);
+                        this.$gra = $(this.elements.inputs.GRA);
+                        this.$esp = $(this.elements.inputs.ESP);
+                        this.$tpe = $(this.elements.inputs.TPE);
+
+                        this.$sla = $(this.elements.inputs.SLA);
+                        this.$obs = $(this.elements.inputs.OBS);
+
+                        this.$per = $(this.elements.labels.PER);
+                        this.$adt = $(this.elements.labels.ADT);
+
+                        return this;
+                    },
+                    initPlugins: function () {
+                        return this;
+                    },
+
+                    fillTab: function () {
+                        var p = page.model.PersonalLocal;
+                        this.$per.text(p.Apellidos + ',' + p.Nombres);
+
+                        this.$ose.val(p.OrganoServicio.StrValue);
+                        this.$ape.val(p.Apellidos);
+                        this.$nom.val(p.Nombres);
+                        this.$nac.val(p.FechaNacimiento);
+
+                        this.$gen.val(p.Genero.StrValue);
+                        this.$dis.val(p.Discapacidad.IntValue);
+                        this.$pai.val(p.Nacionalidad.StrValue);
+
+                        this.$doc.val(p.TipoDocumento.StrValue);
+                        this.$num.val(p.NumeroDocumento);
+                        this.$mai.val(p.Email);
+
+                        this.$civ.val(p.EstadoCivil.StrValue);
+                        this.$gra.val(p.GradoProfesional.StrValue);
+                        this.$esp.val(p.Especialidad.StrValue);
+                        this.$tpe.val(p.TipoPersonal.StrValue);
+
+                        this.$sla.val(p.SituacionLaboral.StrValue);
+                        this.$obs.val(p.Observacion);
+                        if (p.RowAudit != null) {
+                            this.$adt.text(p.RowAudit.Log);
+                        }
+                    },
+
+                    bindEvents: function () {
+                        return true;
+                    },
+
+                    init: function () {
+                        this.initElements().initPlugins().bindEvents();
+                        this.fillTab();
+                    }
+                },
+
+                // Contratos
+                tabcon: {
+                    elements: {
+                        inputs: {
+                            FRM: "input[id^='con_txt_'], select[id^='con_sel_'], #con_txt_obs",
+
+                            TIP: '#con_sel_tip',
+                            NUM: '#con_txt_num',
+                            INI: '#con_txt_ini',
+                            CAR: '#con_sel_car',
+                            DAU: '#con_txt_dau',
+
+                            REF: '#con_txt_ref',
+                            FCO: '#con_txt_fco',
+                            FTE: '#con_txt_fte',
+                            REM: '#con_txt_rem',
+                            FAU: '#con_txt_fau',
+
+                            TCO: '#con_sel_tco',
+                            IND: '#con_sel_ind',
+                            MON: '#con_sel_mon',
+                            FIF: '#con_txt_fif',
+
+                            OBS: '#con_txt_obs',
+                        },
+                        buttons: {
+                            ADJ: "#btn_adj_doc",
+                            SAV: "#btn_sav_con",
+                            NEW: "#btn_new_con",
+                            EDT: ".href-edt"
+                        },
+                        lists: {
+                            CON: "#lst_contratos"
+                        }
+                    },
+                    initElements: function () {
+                        this.$frm = $(this.elements.inputs.FRM);
+
+                        this.$tip = $(this.elements.inputs.TIP);
+                        this.$num = $(this.elements.inputs.NUM);
+                        this.$ini = $(this.elements.inputs.INI);
+                        this.$car = $(this.elements.inputs.CAR);
+                        this.$dau = $(this.elements.inputs.DAU);
+
+                        this.$ref = $(this.elements.inputs.REF);
+                        this.$fco = $(this.elements.inputs.FCO);
+                        this.$fte = $(this.elements.inputs.FTE);
+                        this.$rem = $(this.elements.inputs.REM);
+                        this.$fau = $(this.elements.inputs.FAU);
+
+                        this.$tco = $(this.elements.inputs.TCO);
+                        this.$ind = $(this.elements.inputs.IND);
+                        this.$mon = $(this.elements.inputs.MON);
+                        this.$fif = $(this.elements.inputs.FIF);
+
+                        this.$obs = $(this.elements.inputs.OBS);
+                        this.$lst = $(this.elements.lists.CON);
+
+                        this.$btn_adj = $(this.elements.buttons.ADJ);
+                        this.$btn_sav = $(this.elements.buttons.SAV);
+                        this.$btn_new = $(this.elements.buttons.NEW);
+                        this.$btn_edt = $(this.elements.buttons.EDT);
+
+                        return this;
+                    },
+                    initPlugins: function () {
+                        this.$rem.inputmask("numeric", {
+                            radixPoint: ".",
+                            groupSeparator: ",",
+                            digits: 2,
+                            autoGroup: true,
+                            rightAlign: false,
+                            oncleared: function () { self.Value(''); }
+                        });
+                        return this;
+                    },
+
+                    fillTab: function () {
+                        var p = page.model.PersonalLocal.Contrato;
+
+                        this.$num.val(p.Numero);
+                        this.$fco.val(p.FechaContrato);
+                        this.$tco.val(p.TipoContrato.StrValue);
+                        this.$ini.val(p.FechaInicio);
+
+                        this.$fte.val(p.FechaTermino);
+                        this.$ind.val(p.Indefinido);
+                        this.$car.val(p.Cargo.StrValue);
+                        this.$rem.val(p.RemuneracionBruta);
+
+                        this.$mon.val(p.Moneda.StrValue);
+                        this.$dau.val(p.DocumentoAutorizacion);
+                        this.$fau.val(p.FechaAutorizacion);
+                        this.$fif.val(p.FechaInicioFuncion);
+
+                        this.$obs.val(p.Observacion);
+                    },
+
+                    handleSave: function () {
+                        var that = this;
+
+                        var rules = {
+                            num: { id: that.elements.inputs.NUM, label: "Número de Documento", minsize: 1, maxsize: 25 },
+                            fin: { id: that.elements.inputs.INI, label: "Fecha de Inicio del contrato", minsize: 10, maxsize: 10 },
+                            nom: { id: that.elements.inputs.DAU, label: "Documento de Autorización", minsize: 2, maxsize: 25 },
+                            fco: { id: that.elements.inputs.FCO, label: "Fecha de Contrato", minsize: 10, maxsize: 10 },
+                            fna: { id: that.elements.inputs.FAU, label: "Fecha de Autorización", minsize: 10, maxsize: 10 },
+                            rem: { id: that.elements.inputs.REM, label: "Remuneración Bruta", minsize: 2, maxsize: 18 },
+                            fif: { id: that.elements.inputs.FIF, label: "Fecha de inicio de funcion", minsize: 10, maxsize: 10 }
+                        };
+                        
+                        var T = validaSimple.inputTexts(tabs.elements.labels.ERR, rules);
+                        if (T === false) return;
+                        
+
+                        var rules_sel = {
+                            tdo: { id: that.elements.inputs.TIP, label: "Tipo de Documento" },
+                            tdo: { id: that.elements.inputs.CAR, label: "Cargo" },
+                            tpo: { id: that.elements.inputs.TCO, label: "Tipo de Contrato" },
+                            per: { id: that.elements.inputs.IND, label: "Periodo Indefinido" },
+                            mon: { id: that.elements.inputs.MON, label: "Moneda" }
+                        }
+                        var S = validaSimple.inputSelect(tabs.elements.labels.ERR, rules_sel);
+                        if (S === false) return;
+
+                        tabs.$msg_err.empty();
+                        this.$frm.prop("disabled", true);
+
+                        $.confirm({
+                            title: 'Confirmar Información',
+                            content: 'Tenga presente que los datos confirmados servirán como base para el proceso de <b>Rendición de Cuentas</b>',
+                            animationSpeed: 0,
+                            theme: 'supervan',
+                            buttons: {
+                                ok: {
+                                    text: "Aceptar",
+                                    btnClass: 'btn-primary',
+                                    keys: ['enter'],
+                                    action: function () {
+                                        that.handleConfirm();
+                                        that.$frm.prop("disabled", false);
+                                    }
+                                },
+                                cancel: function () {
+                                    var sid = page.$sid.val();
+                                    that.$frm.prop("disabled", false);
+                                }
+                            }
+                        });
+                    },
+
+                    handleConfirm: function () {
+                        var that = this;
+                        var data = [];
+
+                        data.push(this.$tip.val());
+                        data.push(this.$num.val());
+                        data.push(this.$ini.val());
+                        data.push(this.$car.val());
+                        data.push(this.$dau.val());
+
+                        data.push(this.$ref.val());
+                        data.push(this.$fco.val());
+                        data.push(this.$fte.val());
+                        data.push(this.$rem.val());
+                        data.push(this.$fau.val());
+
+                        data.push(this.$tco.val());
+                        data.push(this.$ind.val());
+                        data.push(this.$mon.val());
+                        data.push(this.$fif.val());
+
+                        data.push(this.$obs.val());
+                        data.push(page.$sid.val());
+
+                        var params = {
+                            dat: data
+                        };
+
+                        try {
+                            var request = $.ajax({
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(params),
+                                dataType: "json",
+                                type: "POST",
+                                url: ajax.scon,
+                                success: function (d) {
+                                    var err = d.ERR;
+                                    if (err == null || err == '' || err == "null") {
+                                        var dat = d.DATA;
+                                        if (dat != null && dat != "" && dat != "null") {
+                                            if (dat.Estado === 1) {
+
+                                                //that.tabgen.$frm.prop("disabled", false);
+                                                //that.tabben.$frm.prop("disabled", false);
+                                                //that.tabpla.$frm.prop("disabled", false);
+
+                                                $.confirm({
+                                                    title: '',
+                                                    content: dat.Mensaje,
+                                                    animationSpeed: 0,
+                                                    theme: 'bootstrap',
+                                                    buttons: {
+                                                        Lista: {
+                                                            text: '< Regresar a la lista',
+                                                            btnClass: 'btn-primary',
+                                                            action: function () {
+                                                                window.location.href = '@Url.Action("Personal", "PersonalLocal")';
+                                                            }
+                                                        },
+                                                        Cerrar: function () {
+                                                            text: 'Cerrar'
+                                                            var sid = page.$sid.val();
+                                                            //that.tabgen.$ose.prop("disabled", (sid != 0));
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                            else {
+                                                toastr.error(dat.Mensaje);
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        toastr.error(err);
+                                        that.$frm.prop("disabled", false);
+                                        //that.tabben.$frm.prop("disabled", false);
+                                        //that.tabpla.$frm.prop("disabled", false);
+                                    }
+                                }
+                            })
+                                .fail(function (jqXHR, textStatus, errorThrown) {
+                                    toastr.error("Solicitud de servidor fallida. Error:" + textStatus);
+                                });
+                        }
+                        catch (e) {
+                            toastr.error("Error en solicitud: " + e.message);
+                        }
+
+                    },
+
+                    handleEdit: function (e) {
+                        var s_id = e.currentTarget.getAttribute('data-sid');
+                        // ajax traer info
+                        alert("ooo");
+
+                    },
+
+
+                    bindEvents: function () {
+                        this.$btn_sav.on('click', this.handleSave.bind(this));
+                        this.$lst.delegate('.href-edt', 'click', this.handleEdit.bind(this));
+                    },
+
+                    init: function () {
+                        this.initElements().initPlugins().bindEvents();
+                        this.fillTab();
+                    }
+                }
+
+
+            };
+
+            page.init();
+            tabs.init();
+
+        })(jQuery);
+    </script>
+}

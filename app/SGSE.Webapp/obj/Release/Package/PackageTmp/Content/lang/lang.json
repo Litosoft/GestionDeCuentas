@@ -1,0 +1,16 @@
+﻿{
+  "emptyTable": "No hay datos disponibles",
+  "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+  "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+  "infoFiltered": "(filtrados de _MAX_ registros)",
+  "lengthMenu": "Mostrar&nbsp; _MENU_  &nbsp;registros",
+  "loadingRecords": "Cargando...",
+  "processing": "Procesando...",
+  "paginate": {
+    "previous": "&laquo;",
+    "next": "&raquo;"
+  },
+  "search": "_INPUT_",
+  "searchPlaceholder": "Buscar…",
+  "zeroRecords": "No se encontraron registros"
+}

@@ -1,0 +1,845 @@
+﻿@using SGSE.Webapp.Helpers
+@model SGSE.Webapp.Models.CuentaCte.CuentaCteDetalleViewModel
+
+@* Titulo *@
+<div class="title-bar">
+    <h2 class="title-bar-title">
+        Información de Cuenta Bancaria <span id="spa_ose"></span>
+        <small class="pull-right" style="font-size:11px; line-height:24px;">
+            <i class="icon icon-arrow-circle-left icon-lg"></i> <a href="@Url.Action("Listar","CuentaCte")"> regresar a la lista de cuentas</a>
+        </small>
+    </h2>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel with-nav-tabs">
+            <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#tab_gen" data-toggle="tab">Datos Generales</a>
+                    </li>
+                    <li>
+                        <a href="#tab_ben" data-toggle="tab">Beneficiario Cuenta</a>
+                    </li>
+                    <li>
+                        <a href="#tab_pla" data-toggle="tab">Plantilla de Transferencia</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="panel-body">
+                <div class="tab-content">
+                    @* Datos Generales *@
+                    <div class="tab-pane active" id="tab_gen">
+                        <div class="row">
+                            @* Columna 1*@
+                            <div class="col-md-4">
+                                <table class="table-form" width="100%">
+                                    <tr>
+                                        <td style="width: 100px;">Órgano de Servicio</td>
+                                        <td>
+                                            @Html.DropDownList("gen_sel_ose", Model.OrganosServicio, new { @class = "form-control", tabindex = "1" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Moneda</td>
+                                        <td>
+                                            <select class="form-control" id="gen_sel_mnd" tabindex="2"></select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Swift / B.I.C.</td>
+                                        <td>
+                                            @Html.TextBoxCustom("gen_txt_bic", 11, 7)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>RIB</td>
+                                        <td>
+                                            @Html.TextBoxCustom("gen_txt_rib", 23, 10)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>ABI</td>
+                                        <td>
+                                            @Html.TextBoxCustom("gen_txt_abi", 9, 13)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fecha Apertura</td>
+                                        <td>
+                                            <div class="input-with-icon">
+                                                <input id="gen_txt_ini" type="text" class="form-control text-uppercase vigencia" maxlength="10" autocomplete="off" data-provide="datepicker" data-date-today-btn="linked" tabindex="15">
+                                                <span class="icon icon-calendar input-icon"></span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Documento Aut.</td>
+                                        <td>
+                                            @Html.TextBoxCustom("gen_txt_doc", 15, 17)
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            @* Columna 2*@
+                            <div class="col-md-4">
+                                <table class="table-form" width="100%">
+                                    <tr>
+                                        <td style="width: 100px;">Número de Cuenta</td>
+                                        <td>
+                                            @Html.TextBoxCustom("gen_txt_cta", 34, 2)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Destino Cuenta</td>
+                                        <td>
+                                            @Html.DropDownList("gen_sel_des", Model.DestinosCuenta, new { @class = "form-control", tabindex = "5" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>IBAN</td>
+                                        <td>
+                                            @Html.TextBoxCustom("gen_txt_iba", 30, 8)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>CBU</td>
+                                        <td>
+                                            @Html.TextBoxCustom("gen_txt_cbu", 22, 11)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>CAB</td>
+                                        <td>
+                                            @Html.TextBoxCustom("gen_txt_cab", 5, 14)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fecha Cierre</td>
+                                        <td>
+                                            <div class="input-with-icon">
+                                                <input id="gen_txt_fin" type="text" class="form-control text-uppercase vigencia" maxlength="10" autocomplete="off" data-provide="datepicker" data-date-today-btn="linked" tabindex="16">
+                                                <span class="icon icon-calendar input-icon"></span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>F. Documento</td>
+                                        <td>
+                                            <div class="input-with-icon">
+                                                <input id="gen_txt_fdo" type="text" class="form-control text-uppercase vigencia" maxlength="10" autocomplete="off" data-provide="datepicker" data-date-today-btn="linked" tabindex="18">
+                                                <span class="icon icon-calendar input-icon"></span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            @* Columna 3 *@
+                            <div class="col-md-4">
+                                <table class="table-form" width="100%">
+                                    <tr>
+                                        <td style="width: 100px;">Banco / Agencia</td>
+                                        <td>
+                                            <select class="form-control" id="gen_sel_age" tabindex="3"></select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Código de Ruteo</td>
+                                        <td>
+                                            @Html.DropDownList("gen_sel_rut", Model.CodigosRuteo, new { @class = "form-control", tabindex = "6" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>ABA</td>
+                                        <td>
+                                            @Html.TextBoxCustom("gen_txt_aba", 9, 9)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>BSB</td>
+                                        <td>
+                                            @Html.TextBoxCustom("gen_txt_bsb", 6, 12)
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table-form" width="100%">
+                                    <tr>
+                                        <td style="width: 100px;">Apoderado Cta.</td>
+                                        <td>
+                                            <select class="form-control" id="gen_sel_apo" tabindex="19"></select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Observaciones</td>
+                                        <td>
+                                            @Html.TextAreaCustom("gen_txt_obs", 20, new { @onkeyup = "TextAreaObject.countChar(this, '#count_des_pm')" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><small id="count_des_pm" class="pull-right text-gray">max. 255 caracteres</small></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <span class="text-log" id="gen_txt_audit"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            @{
+                                                if (Model.Auditoria != null)
+                                                {
+                                                    if (Model.Auditoria.Count() > 0)
+                                                    {
+                                                        <ul style="list-style: none; list-style-type: none;padding-left:0;">
+                                                            @foreach (var e in Model.Auditoria)
+                                                            {
+                                                                <li>@e.Registro</li>
+                                                            }
+                                                        </ul>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>Creó el registro.</span>
+                                                    }
+                                                }
+                                            }
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Datos de inscripcion de la cuenta *@
+                    <div class="tab-pane" id="tab_ben">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <table class="table-form" width="100%">
+                                    <tr>
+                                        <td style="width: 100px;">Nombre del Beneficiario</td>
+                                        <td>
+                                            @Html.TextBoxCustom("ben_txt_nom", 35, 1)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Domicilio 1</td>
+                                        <td>
+                                            @Html.TextBoxCustom("ben_txt_di1", 35, 2)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Domicilio 2</td>
+                                        <td>
+                                            @Html.TextBoxCustom("ben_txt_di2", 35, 3)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Domicilio 3</td>
+                                        <td>
+                                            @Html.TextBoxCustom("ben_txt_di3", 35, 4)
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Plantilla de Transferencia *@
+                    <div class="tab-pane" id="tab_pla">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <table class="table-form" width="100%">
+                                    <tr>
+                                        <th colspan="2">
+                                            <p class="p-subtitulo">
+                                                1.Entidad Responsable por Transacción
+                                            </p>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 100px;">Entidad</td>
+                                        <td>
+                                            @Html.DropDownList("pla_sel_ent", Model.EntidadesPublicas, new { @class = "form-control", tabindex = "1" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cuenta Origen</td>
+                                        <td>
+                                            @Html.DropDownList("pla_sel_cta", Model.CuentasEntidad, new { @class = "form-control", tabindex = "2" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tipo de Cuenta de Destino</td>
+                                        <td>
+                                            <select id="pla_sel_des" class="form-control">
+                                                <option value="ElcmZzyiKNXNtPlsXmOKiw==">- NINGUNO -</option>
+                                                <option value="LCTyJwkqH0dhFgmcrJHUlg==">CUENTA CORRIENTE</option>
+                                                <option value="NZ7Nlf5aXIqB1RgwzYo2Pg==">IBAN</option>
+                                                <option value="s07p8KQ+BsQC02w9Uj532A==">RIB</option>
+                                                <option value="Gg06/leY5XV6/MA8rqo7tA==">CBU</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="col-md-3">
+                                <table class="table-form" width="100%">
+                                    <tr>
+                                        <th colspan="2">
+                                            <p class="p-subtitulo">
+                                                2.Cuenta Intermedia
+                                            </p>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 100px;">Banco Agencia</td>
+                                        <td>
+                                            @Html.DropDownList("pla_sel_age", Model.AgenciasBancoIntermedio, new { @class = "form-control", tabindex = "3" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Dato adicional</td>
+                                        <td>
+                                            @Html.TextBoxCustom("pla_txt_dat", 35, 4)
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="col-md-3">
+                                <table class="table-form" width="100%">
+                                    <tr>
+                                        <th colspan="2">
+                                            <p class="p-subtitulo">
+                                                3.Ruteo Intermedio
+                                            </p>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 100px;">Método de Ruteo</td>
+                                        <td>
+                                            @Html.DropDownList("pla_sel_mru", Model.CodigosRuteoIntermedio, new { @class = "form-control", tabindex = "5" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Código de Ruteo</td>
+                                        <td>
+                                            @Html.TextBoxCustom("pla_txt_rut", 11, 6)
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-3">
+                                <table class="table-form" width="100%">
+                                    <tr>
+                                        <th colspan="2">
+                                            <p class="p-subtitulo">
+                                                4.Subsidiaria solicitante
+                                            </p>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 100px;">Entidad</td>
+                                        <td>
+                                            @Html.DropDownList("pla_sel_ben", Model.EntidadesPublicas, new { @class = "form-control", tabindex = "7" })
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <p>&nbsp;</p>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <span id="tab_msg_err" class="text-danger text-error"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <button id="tab_btn_sav" class="btn btn-success btn-sm">Grabar</button>
+                        <small class="pull-right" style="font-size:11px; line-height:24px;">
+                            <i class="icon icon-arrow-circle-left icon-lg"></i> <a href="@Url.Action("Listar","CuentaCte")"> regresar a la lista de cuentas</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<input type="hidden" value="" id="hdn_sid" />
+
+@section layoutScripts{
+    <script type="text/javascript">
+        var ajax = {
+            gage: "@Url.Action("NVdqVjlt", "CuentaCte")",
+            gmnd: "@Url.Action("TU1sdEZJ", "CuentaCte")",
+            gapo: "@Url.Action("OvEIqYav", "CuentaCte")",
+            scta: "@Url.Action("NGZIbEEr", "CuentaCte")"
+        }
+    </script>
+    
+    <script type="text/javascript">
+        'use strict';
+        (function ($) {
+            var modelo = {
+                getModelo: function () {
+                    return @Html.Raw(Json.Encode(Model))
+                }
+            };
+
+            var page = {
+                elements: {
+                    data: {
+                        SID: '#hdn_sid'
+                    },
+                },
+                initElements: function () {
+                    this.$sid = $(this.elements.data.SID);
+                    return this;
+                },
+                initPlugins: function () {
+                    return this;
+                },
+                bindEvents: function () {
+                    return true;
+                },
+                init: function () {
+                    this.initElements().initPlugins().bindEvents();
+                }
+            };
+
+            var tabs = {
+                elements: {
+                    buttons: {
+                        SAV: "#tab_btn_sav"
+                    },
+                    labels: {
+                        ERR: "#tab_msg_err"
+                    }
+                },
+                initElements: function () {
+                    this.$btn_sav = $(this.elements.buttons.SAV);
+                    this.$msg_err = $(this.elements.labels.ERR);
+                    return this;
+                },
+
+                handleSave: function () {
+                    var that = this;
+
+                    var sel = this.tabgen.$ose.find(":selected").text();
+                    if (sel === "- NINGUNO - ") {
+                        this.$msg_err.html('Debe seleccionar un valor de la lista <strong>Órgano de Servicio</strong>');
+                        this.tabgen.$ose.focus();
+                        return false;
+                    }
+
+                    var rules = {
+                        cta: { id: that.tabgen.elements.inputs.CTA, label: "Número de Cuenta", minsize: 3, maxsize: 34 },
+                    };
+                    var T = validaSimple.inputTexts(this.elements.labels.ERR, rules);
+                    if (T === false) return;
+
+                    var rules_sel = {
+                        tpo: { id: that.tabgen.elements.inputs.MND, label: 'Moneda' },
+                    }
+                    var S = validaSimple.inputSelect(this.elements.labels.ERR, rules_sel);
+                    if (S === false) return;
+
+                    this.$msg_err.empty();
+                    this.tabgen.$frm.prop("disabled", true);
+                    this.tabben.$frm.prop("disabled", true);
+                    this.tabpla.$frm.prop("disabled", true);
+
+                    $.confirm({
+                        title: 'Grabar Información',
+                        content: '¿Esta seguro de grabar la información?',
+                        animationSpeed: 0,
+                        theme: 'bootstrap',
+                        buttons: {
+                            ok: {
+                                text: "Aceptar!",
+                                btnClass: 'btn-primary',
+                                keys: ['enter'],
+                                action: function () {
+                                    that.handleConfirm();
+                                }
+                            },
+                            cancel: function () {
+                                var sid = page.$sid.val();
+                                that.tabgen.$frm.prop("disabled", false);
+                                that.tabben.$frm.prop("disabled", false);
+                                that.tabpla.$frm.prop("disabled", false);
+                                that.tabgen.$ose.prop("disabled", (sid != 0));
+                            }
+                        }
+                    });
+                },
+
+                handleConfirm: function () {
+                    var that = this;
+                    var data = [];
+                    data.push(this.tabgen.$ose.val());
+                    data.push(this.tabgen.$mnd.val());
+                    data.push(this.tabgen.$bic.val());
+                    data.push(this.tabgen.$rib.val());
+                    data.push(this.tabgen.$abi.val());
+                    data.push(this.tabgen.$ini.val());
+                    data.push(this.tabgen.$doc.val());
+
+                    data.push(this.tabgen.$cta.val());
+                    data.push(this.tabgen.$des.val());
+                    data.push(this.tabgen.$iba.val());
+                    data.push(this.tabgen.$cbu.val());
+                    data.push(this.tabgen.$cab.val());
+                    data.push(this.tabgen.$fin.val());
+                    data.push(this.tabgen.$fdo.val());
+
+                    data.push(this.tabgen.$age.val());
+                    data.push(this.tabgen.$rut.val());
+                    data.push(this.tabgen.$aba.val());
+                    data.push(this.tabgen.$bsb.val());
+
+                    data.push(this.tabgen.$apo.val());
+                    data.push(this.tabgen.$obs.val());
+
+                    data.push(this.tabben.$ben.val());
+                    data.push(this.tabben.$di1.val());
+                    data.push(this.tabben.$di2.val());
+                    data.push(this.tabben.$di3.val());
+
+                    data.push(this.tabpla.$ent.val());
+                    data.push(this.tabpla.$cta.val());
+                    data.push(this.tabpla.$des.val());
+                    data.push(this.tabpla.$age.val());
+                    data.push(this.tabpla.$dat.val());
+                    data.push(this.tabpla.$mru.val());
+                    data.push(this.tabpla.$rut.val());
+                    data.push(this.tabpla.$ben.val());
+                    data.push(page.$sid.val());
+
+                    var params = {
+                        dat: data
+                    };
+
+                    try {
+                        var request = $.ajax({
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(params),
+                            dataType: "json",
+                            type: "POST",
+                            url: ajax.scta,
+                            success: function (d) {
+
+                                var err = d.ERR;
+                                if (err == null || err == '' || err == "null") {
+                                    var dat = d.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+                                        if (dat.Estado === 1) {
+
+                                            that.tabgen.$frm.prop("disabled", false);
+                                            that.tabben.$frm.prop("disabled", false);
+                                            that.tabpla.$frm.prop("disabled", false);
+
+                                            $.confirm({
+                                                title: '',
+                                                content: dat.Mensaje,
+                                                animationSpeed: 0,
+                                                theme: 'bootstrap',
+                                                buttons: {
+                                                    Lista: {
+                                                        text: '< Regresar a la lista',
+                                                        btnClass: 'btn-primary',
+                                                        action: function () {
+                                                            window.location.href = '@Url.Action("Listar", "CuentaCte")';
+                                                        }
+                                                    },
+                                                    Cerrar: function () {
+                                                        text: 'Cerrar'
+                                                        var sid = page.$sid.val();
+                                                        that.tabgen.$ose.prop("disabled", (sid != 0));
+                                                    }
+                                                }
+                                            });
+                                        }
+                                        else {
+                                            toastr.error(dat.Mensaje);
+                                        }
+                                    }
+                                }
+                                else {
+                                    toastr.error(err);
+                                    that.tabgen.$frm.prop("disabled", false);
+                                    that.tabben.$frm.prop("disabled", false);
+                                    that.tabpla.$frm.prop("disabled", false);
+                                }
+                            }
+                        })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                toastr.error("Solicitud de servidor fallida. Error:" + textStatus);
+                            });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+
+                bindEvents: function () {
+                    this.$btn_sav.on('click', this.handleSave.bind(this));
+                },
+
+                init: function () {
+                    this.initElements().bindEvents();
+                    this.tabgen.init();
+                    this.tabben.init();
+                    this.tabpla.init();
+                },
+
+                // Informacion General
+                tabgen: {
+                    elements: {
+                        inputs: {
+                            FRM: "input[id^='gen_txt_'], select[id^='gen_sel_'], #gen_txt_obs",
+
+                            OSE: '#gen_sel_ose',
+                            MND: '#gen_sel_mnd',
+                            BIC: '#gen_txt_bic',
+                            RIB: '#gen_txt_rib',
+                            ABI: '#gen_txt_abi',
+                            INI: '#gen_txt_ini',
+                            DOC: '#gen_txt_doc',
+
+                            CTA: '#gen_txt_cta',
+                            DES: '#gen_sel_des',
+                            IBA: '#gen_txt_iba',
+                            CBU: '#gen_txt_cbu',
+                            CAB: '#gen_txt_cab',
+                            FIN: '#gen_txt_fin',
+                            FDO: '#gen_txt_fdo',
+
+                            AGE: '#gen_sel_age',
+                            RUT: '#gen_sel_rut',
+                            ABA: '#gen_txt_aba',
+                            BSB: '#gen_txt_bsb',
+
+                            APO: '#gen_sel_apo',
+                            OBS: '#gen_txt_obs',
+                        },
+
+                        labels: {
+                            TIT: '#spa_ose',
+                            ADT: '#gen_txt_audit'
+                        },
+
+                    },
+
+                    initElements: function () {
+                        this.$frm = $(this.elements.inputs.FRM);
+
+                        this.$ose = $(this.elements.inputs.OSE);
+                        this.$mnd = $(this.elements.inputs.MND);
+                        this.$bic = $(this.elements.inputs.BIC);
+                        this.$rib = $(this.elements.inputs.RIB);
+                        this.$abi = $(this.elements.inputs.ABI);
+                        this.$ini = $(this.elements.inputs.INI);
+                        this.$doc = $(this.elements.inputs.DOC);
+
+                        this.$cta = $(this.elements.inputs.CTA);
+                        this.$des = $(this.elements.inputs.DES);
+                        this.$iba = $(this.elements.inputs.IBA);
+                        this.$cbu = $(this.elements.inputs.CBU);
+                        this.$cab = $(this.elements.inputs.CAB);
+                        this.$fin = $(this.elements.inputs.FIN);
+                        this.$fdo = $(this.elements.inputs.FDO);
+
+                        this.$age = $(this.elements.inputs.AGE);
+                        this.$rut = $(this.elements.inputs.RUT);
+                        this.$aba = $(this.elements.inputs.ABA);
+                        this.$bsb = $(this.elements.inputs.BSB);
+
+                        this.$apo = $(this.elements.inputs.APO);
+                        this.$obs = $(this.elements.inputs.OBS);
+
+                        this.$tit = $(this.elements.labels.TIT);
+                        this.$adt = $(this.elements.labels.ADT);
+
+                        return this;
+                    },
+
+                    initPlugins: function () {
+                        return this;
+                    },
+
+                    fillTab: function () {
+                        var m = modelo.getModelo();
+                        page.$sid.val(m.CID);
+
+                        var cta = m.CuentaCorriente;
+                        this.$ose.prop("disabled", (cta.OrganoServicio !== null));
+
+                        if (cta.OrganoServicio !== null) {
+                            this.$ose.val(cta.OrganoServicio.CID);
+                            this.$tit.text(cta.OrganoServicio.Abreviatura);
+
+                            Helper.ajaxSelectList(ajax.gmnd, cta.OrganoServicio.CID, this.$mnd, cta.Moneda.CID);
+                            Helper.ajaxSelectList(ajax.gage, cta.OrganoServicio.CID, this.$age, cta.Agencia.CID);
+                            Helper.ajaxSelectList(ajax.gapo, cta.OrganoServicio.CID, this.$apo, cta.Apoderado.CID);
+                        }
+                        if (cta.Documento !== null) {
+                            this.$doc.val(cta.Documento.Numero);
+                            this.$fdo.val(cta.Documento.Fecha);
+                        }
+                        if (cta.Destino !== null) {
+                            this.$des.val(cta.Destino.CID);
+                        }
+                        if (cta.CodigoRuteo != null) {
+                            this.$rut.val(cta.CodigoRuteo.CID);
+                        }
+
+                        this.$bic.val(cta.Swift);
+                        this.$rib.val(cta.RIB);
+                        this.$abi.val(cta.ABI);
+                        this.$ini.val(cta.FechaApertura);
+
+                        this.$cta.val(cta.NumeroCuenta);
+                        this.$iba.val(cta.Iban);
+                        this.$cbu.val(cta.CBU);
+                        this.$cab.val(cta.CAB);
+                        this.$fin.val(cta.FechaCierre);
+
+                        this.$aba.val(cta.ABA);
+                        this.$bsb.val(cta.BSB);
+
+                        this.$obs.val(cta.Observacion);
+                        if (cta.RowAudit != null) {
+                            this.$adt.text(cta.RowAudit.Log);
+                        }
+                    },
+
+                    handleChangeOse: function (e) {
+                        var sid = this.$ose.val();
+
+                        Helper.ajaxSelectList(ajax.gmnd, sid, this.$mnd);
+                        Helper.ajaxSelectList(ajax.gapo, sid, this.$apo);
+                        Helper.ajaxSelectList(ajax.gage, sid, this.$age);
+                    },
+
+                    handleShowLog: function(e){
+                        var sid = e.currentTarget.getAttribute('data-sid');
+                    },
+
+                    bindEvents: function () {
+                        this.$ose.on('change', this.handleChangeOse.bind(this));
+                    },
+
+                    init: function () {
+                        this.initElements().initPlugins().bindEvents();
+                        this.fillTab();
+                    }
+                },
+
+                // Beneficiarios de Cuenta
+                tabben: {
+                    elements: {
+                        inputs: {
+                            FRM: "input[id^='ben_txt_']",
+                            BEN: "#ben_txt_nom",
+                            DI1: "#ben_txt_di1",
+                            DI2: "#ben_txt_di2",
+                            DI3: "#ben_txt_di3"
+                        }
+                    },
+                    initElements: function () {
+                        this.$frm = $(this.elements.inputs.FRM);
+                        this.$ben = $(this.elements.inputs.BEN);
+                        this.$di1 = $(this.elements.inputs.DI1);
+                        this.$di2 = $(this.elements.inputs.DI2);
+                        this.$di3 = $(this.elements.inputs.DI3);
+                        return this;
+                    },
+                    fillTab: function () {
+                        var m = modelo.getModelo();
+                        var cta = m.CuentaCorriente;
+
+                        this.$ben.val(cta.BeneficiarioNombre);
+                        this.$di1.val(cta.BeneficiarioDir1);
+                        this.$di2.val(cta.BeneficiarioDir2);
+                        this.$di3.val(cta.BeneficiarioDir3);
+                    },
+                    init: function () {
+                        this.initElements().fillTab();
+                    }
+                },
+
+                // Plantilla de Transferencia
+                tabpla: {
+                    elements: {
+                        inputs: {
+                            FRM: "input[id^='pla_txt_'], select[id^='pla_sel_']",
+                            ENT: "#pla_sel_ent",
+                            CTA: "#pla_sel_cta",
+                            DES: "#pla_sel_des",
+                            AGE: "#pla_sel_age",
+                            DAT: "#pla_txt_dat",
+                            MRU: "#pla_sel_mru",
+                            RUT: "#pla_txt_rut",
+                            BEN: "#pla_sel_ben",
+                        }
+                    },
+                    initElements: function () {
+                        this.$frm = $(this.elements.inputs.FRM);
+                        this.$ent = $(this.elements.inputs.ENT);
+                        this.$cta = $(this.elements.inputs.CTA);
+                        this.$des = $(this.elements.inputs.DES);
+                        this.$age = $(this.elements.inputs.AGE);
+                        this.$dat = $(this.elements.inputs.DAT);
+                        this.$mru = $(this.elements.inputs.MRU);
+                        this.$rut = $(this.elements.inputs.RUT);
+                        this.$ben = $(this.elements.inputs.BEN);
+
+                        return this;
+                    },
+                    fillTab: function () {
+                        var m = modelo.getModelo();
+                        var cta = m.CuentaCorriente.Plantilla;
+
+                        this.$ent.val(cta.Entidad.StrValue);
+                        this.$cta.val(cta.CuentaOrigen.StrValue);
+                        this.$des.val(cta.TipoDestino.StrValue);
+                        this.$age.val(cta.Agencia.StrValue);
+                        this.$dat.val(cta.DatoAdicional);
+                        this.$mru.val(cta.MetodoRuteo.StrValue);
+                        this.$rut.val(cta.CodigoRuteo);
+                        this.$ben.val(cta.EntidadSolicitante.StrValue);
+                    },
+
+                    init: function () {
+                        this.initElements().fillTab();
+                    }
+                }
+
+            };
+
+            page.init();
+            tabs.init();
+
+        })(jQuery);
+    </script>
+}
+

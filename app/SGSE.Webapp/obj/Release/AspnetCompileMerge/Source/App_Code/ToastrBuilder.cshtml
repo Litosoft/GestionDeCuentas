@@ -1,0 +1,35 @@
+﻿@using SGSE.Entidad.Componentes
+
+@helper ShowToastMessages(Toastr toastr)
+{
+if (toastr != null)
+{
+        <script>
+            $(document).ready(function () {
+                toastr.options.closeButton = '@toastr.ShowCloseButton';
+                toastr.options.newestOnTop = '@toastr.ShowNewestOnTop';
+                toastr.options.positionClass = '@toastr.Position';
+
+                @foreach (ToastMessage message in toastr.ToastMessages)
+                {
+                    string toastTypeValue = message.ToastType.ToString("F").ToLower();
+                    @: var optionsOverride = {  /* opciones específicas */ };
+
+                    if (message.IsSticky)
+                    {
+                        @:optionsOverride.timeOut = 0;
+                        @:optionsOverride.extendedTimeout = 0;
+                        @:optionsOverride.hideDuration = 0;
+                    }
+
+                    string toastMessageTrim = string.Empty;
+                    if (message.Message!= null) {
+                        toastMessageTrim = message.Message.Replace(System.Environment.NewLine, ". ");
+                    }
+
+                    @:toastr['@toastTypeValue']('@toastMessageTrim', '@message.Title', optionsOverride);
+                }
+            });
+        </script>
+}
+}

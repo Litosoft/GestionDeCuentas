@@ -1,0 +1,100 @@
+/*! Custom styles for this template */
+html {
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.login {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 360px;
+}
+
+.login-body {
+    padding: 30px;
+}
+
+.login-brand {
+    display: block;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 140px;
+}
+
+.login-footer {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .login-body {
+        background-color: #fff;
+        border: 1px solid #f2f5f8;
+        border-radius: 0;
+        -webkit-box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+        margin-bottom: 15px;
+        margin-top: 15px;
+    }
+}
+
+.form-control {
+    font-size: 12px !important;
+}
+
+/* Captcha */
+
+.captcha_wrap {
+    float: left;
+    height: 110px;
+    overflow: auto;
+    width: 280px;
+    overflow: hidden;
+    margin: 10px;
+    background-color: #fff;
+}
+
+.captcha {
+    font-size: 12px;
+    color: #333;
+    font-weight:600;
+    border-bottom: 1px solid #CCC;
+    background-color: #fff;
+}
+
+#sortable {
+    list-style-type: none;
+    margin: 5px 0px 0px 0px;
+    padding: 0;
+}
+
+    #sortable li {
+        margin: 3px 3px 3px 0;
+        padding: 1px;
+        float: left;
+        width: 30px;
+        height: 30px;
+        font-size: 18px;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
+        
+        -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.5);
+        -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.5);
+        text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+        background: #a8182b url(images/overlay.png) repeat-x scroll 50% 50%;
+        color: #fff;
+        font-weight: normal;
+    }
+
+.text-upper {
+    text-transform: uppercase;
+}

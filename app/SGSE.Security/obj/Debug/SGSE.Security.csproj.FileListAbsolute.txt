@@ -1,0 +1,22 @@
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Security\bin\Debug\SGSE.Security.dll
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Security\bin\Debug\SGSE.Security.pdb
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Security\obj\Debug\SGSE.Security.dll
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Security\obj\Debug\SGSE.Security.pdb
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Security\obj\Debug\SGSE.Security.csprojResolveAssemblyReference.cache
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Security\bin\Debug\SGSE.Security.dll
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Security\bin\Debug\SGSE.Security.pdb
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Security\obj\Debug\SGSE.Security.dll
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Security\obj\Debug\SGSE.Security.pdb
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Security\bin\Debug\SGSE.Security.dll
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Security\bin\Debug\SGSE.Security.pdb
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Security\obj\Debug\SGSE.Security.dll
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Security\obj\Debug\SGSE.Security.pdb
+D:\Workspace\net\SGSE\SGSE\SGSE.Security\bin\Debug\SGSE.Security.dll
+D:\Workspace\net\SGSE\SGSE\SGSE.Security\bin\Debug\SGSE.Security.pdb
+D:\Workspace\net\SGSE\SGSE\SGSE.Security\obj\Debug\SGSE.Security.dll
+D:\Workspace\net\SGSE\SGSE\SGSE.Security\obj\Debug\SGSE.Security.pdb
+D:\Workspace\net\SGSE\app\SGSE.Security\bin\Debug\SGSE.Security.dll
+D:\Workspace\net\SGSE\app\SGSE.Security\bin\Debug\SGSE.Security.pdb
+D:\Workspace\net\SGSE\app\SGSE.Security\obj\Debug\SGSE.Security.dll
+D:\Workspace\net\SGSE\app\SGSE.Security\obj\Debug\SGSE.Security.pdb
+D:\Workspace\net\SGSE\app\SGSE.Security\obj\Debug\SGSE.Security.csprojResolveAssemblyReference.cache

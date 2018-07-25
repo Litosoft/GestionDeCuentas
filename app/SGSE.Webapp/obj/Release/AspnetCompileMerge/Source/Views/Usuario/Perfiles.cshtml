@@ -1,0 +1,680 @@
+﻿@using SGSE.Webapp.Helpers
+@model List<SGSE.Entidad.BEPerfil>
+
+@section layoutHeader {
+    <link href="@Url.Content("~/Scripts/plugins/jstree/css/jstree.css")" rel="stylesheet" />
+}
+
+@section layoutNavbarLeft{
+    <li>
+        <a href="javascript:void(0);" id="btn_add">
+            <span class="splashy-document_letter_add"></span> Nuevo
+        </a>
+    </li>
+}
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="title-bar-title">
+            <span class="ds-ib">Perfiles</span>
+        </h2>
+    </div>
+</div>
+<p>&nbsp;</p>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover" id="dt_perfil">
+            <thead>
+                <tr>
+                    <th class="header-w2">N°</th>
+                    <th>Nombre</th>
+                    <th>Abreviatura</th>
+                    <th>Descripción</th>
+                    <th class="header-w4"></th>
+                    <th class="header-w3">Acción</th>
+                </tr>
+            </thead>
+            <tbody id="tbody_p">
+                @{
+                    if (Model.Count > 0)
+                    {
+                        foreach (var e in Model)
+                        {
+                            <tr>
+                                <td class="text-center">@e.Row</td>
+                                <td>@e.Nombre</td>
+                                <td>@e.Abreviatura</td>
+                                <td>@e.Descripcion</td>
+                                <td class="text-center">
+                                    <button class="btn btn-default btn-xs btn-per" data-sid="@e.CID" type="button">Permisos</button>
+                                </td>
+                                <td class="text-center">
+                                    <a href="javascript:void(0);" class="href-edt" data-sid="@e.CID"><span class="icon icon-edit icon-lg icon-grid"></span></a>
+                                    <a href="javascript:void(0);" class="href-del" data-sid="@e.CID"><span class="icon icon-trash-o icon-lg icon-grid"></span></a>&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" valign="middle" align="center">
+                                Sin Datos
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <input type="hidden" id="hdn_sid" value="0" />
+
+    </div>
+</div>
+
+@section layoutModals {
+    @* modal perfil: datos generales del perfil *@
+    <div id="m_perf" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h5 class="modal-title" id="defModalHead">Perfil</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table-form" width="100%">
+                                <tr>
+                                    <td style="width: 100px;">Nombre</td>
+                                    <td>@Html.TextBoxCustom("txt_nom", 35, 1)</td>
+                                </tr>
+                                <tr>
+                                    <td>Abreviatura</td>
+                                    <td>@Html.TextBoxCustom("txt_abr", 10, 2)</td>
+                                </tr>
+                                <tr>
+                                    <td>Descripción</td>
+                                    <td>@Html.TextBoxCustom("txt_des", 35, 3)</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">&nbsp;</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 spacer_15">
+                            <span id="msg_err" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <input type="hidden" id="hdn_sid" value="0" />
+                </div>
+
+                <div class="modal-footer pie-modal-bg pie-modal-borde">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-left">
+                                <button id="btn_sav" class="btn btn-primary btn-sm">Grabar</button>
+                            </div>
+
+                            <button class="btn btn-default btn-sm" style="margin-right:10px;" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Opciones *@
+    <div id="m_opciones" class="modal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h5 class="modal-title" id="defModalHead">Opciones para el Perfil</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>Seleccione los elementos permitidos al perfil:</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="js_menu">
+
+                            </div>
+                        </div>
+                    </div>
+                    <p>&nbsp;</p>
+                    <div class="row">
+                        <div class="col-md-12 spacer_15">
+                            <span id="msg_err_opc" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <input type="hidden" id="hdn_sid_opc" value="0" />
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <div class="pull-left">
+                                    <a id="btn_opc_sav" href="javascript:void(0);" class="btn btn-primary btn-sm">Grabar</a>
+                                </div>
+
+                                <button type="button" class="btn btn-default btn-sm btn-default-modal" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section layoutScripts{
+    <script src="@Url.Content("~/Scripts/plugins/jstree/jstree.min.js")"></script>
+    <script type="text/javascript">
+        var ajax = {
+            sper: "@Url.Action("aytQVy91", "Usuario")",
+            gper: "@Url.Action("TjQxYWpE", "Usuario")",
+            lang: "@Url.Content("~/Content/lang/lang.json")",
+
+            gjtp: "@Url.Action("XVxJ3pT0", "Usuario")",
+            sjtp: "@Url.Action("ZFppSXFj", "Usuario")",
+
+            list: "@Url.Action("Perfiles", "Usuario")"
+        }
+    </script>
+    <script type="text/javascript">
+        (function (a) {
+            var h = {
+                elements: { IDM: "#m_opciones", SAV: "#btn_opc_sav", ERR: "#msg_err_opc", SID: "#hdn_sid_opc", controls: { DIV_TREE: "#js_menu", TREE_LI: "#js_menu li" } }, initControls: function (b) { this.$modal = a(this.elements.IDM); this.$btnsav = a(this.elements.SAV); this.$msgerr = a(this.elements.ERR); this.$divtree = a(this.elements.controls.DIV_TREE); this.$tree_li = a(this.elements.controls.TREE_LI); this.$sid = a(this.elements.SID); return this }, initUI: function () { this.$divtree.prop("disabled", !1); this.$msgerr.empty(); return this },
+                initPlugins: function () { a(".modal-dialog").draggable({ handle: ".modal-header" }); this.$modal.on("hidden.bs.modal", function (b) { a("#tbody_p tr").siblings().removeClass("rowSelect") }); return this }, show: function (b) { this.$sid.val(b); this.gettre(b); this.initUI().$modal.modal({ backdrop: "static", keyboard: !1 }) }, gettre: function (b) { this.$divtree.jstree("destroy"); return this.$divtree.jstree({ core: { multiple: !0, animation: 0, data: { url: ajax.gjtp, data: function (a) { return { sid: b } } } }, plugins: ["checkbox"] }) }, handleSave: function () {
+                    var b =
+                    this; a.confirm({ title: "Grabar Informaci\u00f3n", content: "\u00bfEsta seguro de grabar la informaci\u00f3n?", animationSpeed: 0, theme: "bootstrap", buttons: { ok: { text: "Aceptar!", btnClass: "btn-primary", keys: ["enter"], action: function () { b.handleConfirm() } }, cancel: function () { b.$divtree.prop("disabled", !1) } } })
+                }, handleConfirm: function () {
+                    var b = this, c = []; c.push(this.$sid.val()); var d = []; d = this.$divtree.jstree(!0).get_selected(); var g = []; this.$divtree.find(".jstree-undetermined").each(function (b, d) { g.push(a(d).closest(".jstree-node").attr("id")) });
+                    var e = []; e.push(c); e.push(d); e.push(g); a.ajax({ contentType: "application/json; charset=utf-8", data: JSON.stringify(e), dataType: "json", type: "POST", url: ajax.sjtp, success: function (a) { if (null != a || "" !== a || "null" !== a) { var d = a.ERR; null == d || "" == d || "null" == d ? (a = a.DATA, null != a && "" != a && "null" != a ? 1 === a.Estado ? (b.$modal.modal("hide"), toastr.success(a.Mensaje)) : toastr.info(a.Mensaje) : (toastr.error("No se han recibido datos del servidor. Consulte con el administrador del sistema."), b.$modal.modal("hide"))) : toastr.error(d) } else toastr.error("No se han recibido datos del servidor. Consulte con el administrador del sistema.") } })
+                },
+                bindEvents: function () { this.$btnsav.on("click", this.handleSave.bind(this)) }, init: function () { this.initControls().initUI().initPlugins().bindEvents() }
+            }, f = {
+                elements: { IDM: "#m_perf", inputs: { FRM: "input[id^='txt_']", NOM: "#txt_nom", ABR: "#txt_abr", DES: "#txt_des", SID: "#hdn_sid" }, buttons: { SAV: "#btn_sav" }, labels: { ERR: "#msg_err" } }, initControls: function () {
+                    this.$modal = a(this.elements.IDM); this.$inputs = a(this.elements.inputs.FRM); this.$err = a(this.elements.labels.ERR); this.$nom = a(this.elements.inputs.NOM); this.$abr =
+                    a(this.elements.inputs.ABR); this.$des = a(this.elements.inputs.DES); this.$sid = a(this.elements.inputs.SID); this.$btn_sav = a(this.elements.buttons.SAV); return this
+                }, initUI: function () { this.$inputs.val(""); this.$inputs.prop("disabled", !1); this.$err.empty(); return this }, initPlugins: function () { a(".modal-dialog").draggable({ handle: ".modal-header" }); this.$modal.on("hidden.bs.modal", function (b) { a("#tbody_p tr").siblings().removeClass("rowSelect") }); return this }, fill: function (a) {
+                    this.$nom.val(a.Nombre); this.$abr.val(a.Abreviatura);
+                    this.$des.val(a.Descripcion); this.$sid.val(a.CID)
+                }, getPerfilData: function (b) { var c = this; try { a.ajax({ contentType: "application/json; charset=utf-8", data: JSON.stringify({ sid: b }), dataType: "json", type: "POST", url: ajax.gper, success: function (a) { var b = a.ERR; null == b || "" == b || "null" == b ? (a = a.DATA, null != a && "" != a && "null" != a ? c.fill(a) : toastr.info("No se encontraron datos.")) : toastr.error(b) } }).fail(function (a, b, c) { toastr.error("Solicitud de servidor fallida.") }) } catch (d) { toastr.error("Error en solicitud: " + d.message) } },
+                show: function (a) { this.$sid.val(a); "number" !== typeof a && this.getPerfilData(a); this.initUI().$modal.modal({ backdrop: "static", keyboard: !1 }); this.$nom.focus() }, handleSave: function (b) {
+                    var c = this; !1 !== validaSimple.inputTexts(this.elements.labels.ERR, { nom: { id: this.elements.inputs.NOM, label: "Nombre", minsize: 2, maxsize: 35 } }) && (this.$err.empty(), this.$inputs.prop("disabled", !0), a.confirm({
+                        title: "Grabar Informaci\u00f3n", content: "\u00bfEsta seguro de grabar la informaci\u00f3n?", animationSpeed: 0, theme: "bootstrap",
+                        buttons: { ok: { text: "Aceptar!", btnClass: "btn-primary", keys: ["enter"], action: function () { c.handleConfirm() } }, cancel: function () { c.$inputs.prop("disabled", !1) } }
+                    }))
+                }, handleConfirm: function (b) {
+                    var c = this; b = []; b.push(this.$nom.val()); b.push(this.$abr.val()); b.push(this.$des.val()); b.push(this.$sid.val()); a.ajax({
+                        contentType: "application/json; charset=utf-8", data: JSON.stringify(b), dataType: "json", type: "POST", url: ajax.sper, success: function (a) {
+                            if (null != a || "" !== a || "null" !== a) {
+                                var b = a.ERR; null == b || "" == b || "null" ==
+                                b ? (a = a.DATA, null != a && "" != a && "null" != a ? 1 === a.Estado ? window.location.href = ajax.list : helper.bootstrapToastr(a.Tipo, a.Mensaje) : (toastr.error("No se han recibido datos del servidor. Consulte con el administrador del sistema."), c.$modal.modal("hide"))) : toastr.error(b)
+                            } else toastr.error("No se han recibido datos del servidor. Consulte con el administrador del sistema.")
+                        }
+                    }).fail(function (a, b) { toastr.error("Solicitud de servidor fallida."); c.$modal.modal("hide") })
+                }, bindEvents: function () {
+                    this.$btn_sav.on("click",
+                    this.handleSave.bind(this))
+                }, init: function () { this.initControls().initUI().initPlugins().bindEvents() }
+            }; ({
+                elements: { tables: { dt: "#dt_perfil" }, buttons: { SAV: "#btn_add" } }, initControls: function () { this.$dt = a(this.elements.tables.dt); this.$btn_sav = a(this.elements.buttons.SAV); return this }, initTable: function () { this.$dt.DataTable({ pageLength: 18, bLengthChange: !1, columnDefs: [{ targets: [4, 5], orderable: !1 }], language: { url: ajax.lang } }); return this }, handleEdit: function (b) {
+                    var c = b.currentTarget.getAttribute("data-sid");
+                    a(b.currentTarget.parentElement.parentElement).addClass("rowSelect"); f.show(c)
+                }, handleAdd: function (a) { f.show(0) }, handleDel: function (b) { a.alert("No tiene los permisos necesarios.") }, handlePer: function (b) { var c = b.currentTarget.getAttribute("data-sid"); a(b.currentTarget.parentElement.parentElement).addClass("rowSelect"); h.show(c) }, bindEvents: function () {
+                    this.$dt.delegate(".btn-per", "click", this.handlePer.bind(this)); this.$dt.delegate(".href-edt", "click", this.handleEdit.bind(this)); this.$dt.delegate(".href-del",
+                    "click", this.handleDel.bind(this)); this.$btn_sav.on("click", this.handleAdd.bind(this))
+                }, init: function () { this.initControls().initTable().bindEvents(); a(window).keydown(function (a) { if (13 == a.keyCode) return a.preventDefault(), !1 }) }
+            }).init(); f.init(); h.init()
+        })(jQuery);
+    </script>
+    @*
+    <script type="text/javascript">
+        'use strict';
+        (function ($) {
+
+            var modalopc = {
+                elements: {
+                    IDM: "#m_opciones",
+                    SAV: "#btn_opc_sav",
+                    ERR: "#msg_err_opc",
+                    SID: "#hdn_sid_opc",
+                    controls: {
+                        DIV_TREE: '#js_menu',
+                        TREE_LI: '#js_menu li'
+                    },
+                },
+                initControls: function (e) {
+                    this.$modal = $(this.elements.IDM);
+                    this.$btnsav = $(this.elements.SAV);
+                    this.$msgerr = $(this.elements.ERR);
+
+                    this.$divtree = $(this.elements.controls.DIV_TREE);
+                    this.$tree_li = $(this.elements.controls.TREE_LI);
+                    this.$sid = $(this.elements.SID);
+
+                    return this;
+                },
+                initUI: function () {
+                    this.$divtree.prop("disabled", false);
+                    this.$msgerr.empty();
+                    return this;
+                },
+                initPlugins: function () {
+                    $('.modal-dialog').draggable({
+                        handle: ".modal-header"
+                    });
+                    this.$modal.on('hidden.bs.modal', function (e) {
+                        $('#tbody_p tr').siblings().removeClass('rowSelect');
+                    });
+                    return this;
+                },
+                show: function (i) {
+                    this.$sid.val(i);
+                    this.gettre(i);
+                    this.initUI().$modal.modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                },
+
+                gettre: function (i) {
+                    var that = this;
+
+                    this.$divtree.jstree('destroy');
+
+                    var lTree = this.$divtree.jstree({
+                        'core': {
+                            'multiple': true,
+                            'animation': 0,
+                            'data': {
+                                'url': ajax.gjtp,
+                                'data': function (n) {
+                                    return { 'sid': i };
+                                }
+                            }
+                        },
+                        'plugins': ["checkbox"]
+                    });
+                    return lTree;
+
+                }, //. gettre
+
+                handleSave: function(){
+                    var that = this;
+                    $.confirm({
+                        title: 'Grabar Información',
+                        content: '¿Esta seguro de grabar la información?',
+                        animationSpeed: 0,
+                        theme: 'bootstrap',
+                        buttons: {
+                            ok: {
+                                text: "Aceptar!",
+                                btnClass: 'btn-primary',
+                                keys: ['enter'],
+
+                                action: function () {
+                                    that.handleConfirm();
+                                }
+                            },
+                            cancel: function () {
+                                that.$divtree.prop("disabled", false);
+                            }
+                        }
+                    });
+                },
+
+                handleConfirm: function(){
+                    var that = this;
+
+                    var arr_id = [];
+                    arr_id.push(this.$sid.val());
+
+                    var checked_ids = [];
+                    checked_ids = this.$divtree.jstree(true).get_selected();
+
+                    var checked_ids_und = [];
+                    this.$divtree.find(".jstree-undetermined").each(function (i, element) {
+                        checked_ids_und.push($(element).closest('.jstree-node').attr("id"));
+                    });
+
+                    var params = [];
+                    params.push(arr_id);
+                    params.push(checked_ids);
+                    params.push(checked_ids_und);
+
+                    var request = $.ajax({
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(params),
+                        dataType: "json",
+                        type: "POST",
+                        url: ajax.sjtp,
+
+                        success: function (o) {
+                            if (o != null || o !== '' || o !== "null") {
+                                var __err = o.ERR;
+                                if (__err == null || __err == '' || __err == "null") {
+                                    var dat = o.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+                                        if (dat.Estado === 1) {
+                                            that.$modal.modal('hide');
+                                            toastr.success(dat.Mensaje);
+                                        }
+                                        else {
+                                            toastr.info(dat.Mensaje);
+                                        }
+                                    }
+                                    else {
+                                        toastr.error("No se han recibido datos del servidor. Consulte con el administrador del sistema.");
+                                        that.$modal.modal('hide');
+                                    }
+                                }
+                                else {
+                                    toastr.error(__err);
+                                }
+                            }
+                            else {
+                                toastr.error("No se han recibido datos del servidor. Consulte con el administrador del sistema.");
+                            }
+                        }
+                    });
+                },
+
+                bindEvents: function () {
+                    this.$btnsav.on('click', this.handleSave.bind(this));
+                },
+
+                init: function () {
+                    this.initControls().initUI().initPlugins().bindEvents();
+                }
+            };
+
+
+            var modal = {
+                elements: {
+                    IDM: "#m_perf",
+                    inputs: {
+                        FRM: "input[id^='txt_']",
+                        NOM: '#txt_nom',
+                        ABR: '#txt_abr',
+                        DES: '#txt_des',
+                        SID: "#hdn_sid"
+                    },
+                    buttons: {
+                        SAV: "#btn_sav"
+                    },
+                    labels: {
+                        ERR: "#msg_err"
+                    }
+                },
+
+                initControls: function () {
+                    this.$modal = $(this.elements.IDM);
+                    this.$inputs = $(this.elements.inputs.FRM);
+                    this.$err = $(this.elements.labels.ERR);
+
+                    this.$nom = $(this.elements.inputs.NOM);
+                    this.$abr = $(this.elements.inputs.ABR);
+                    this.$des = $(this.elements.inputs.DES);
+
+                    this.$sid = $(this.elements.inputs.SID);
+
+                    // Buttons
+                    this.$btn_sav = $(this.elements.buttons.SAV);
+
+                    return this;
+                },
+
+                initUI: function () {
+                    this.$inputs.val('');
+                    this.$inputs.prop("disabled", false);
+                    this.$err.empty();
+                    return this;
+                },
+
+                initPlugins: function () {
+                    $('.modal-dialog').draggable({
+                        handle: ".modal-header"
+                    });
+                    this.$modal.on('hidden.bs.modal', function (e) {
+                        $('#tbody_p tr').siblings().removeClass('rowSelect');
+                    });
+                    return this;
+                },
+
+                fill: function (d) {
+                    this.$nom.val(d.Nombre);
+                    this.$abr.val(d.Abreviatura);
+                    this.$des.val(d.Descripcion);
+                    this.$sid.val(d.CID);
+                },
+
+                getPerfilData: function (i) {
+                    var that = this;
+                    try {
+                        var params = { sid: i };
+                        var request = $.ajax({
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(params),
+                            dataType: "json",
+                            type: "POST",
+                            url: ajax.gper,
+                            success: function (d) {
+                                var err = d.ERR;
+                                if (err == null || err == '' || err == "null") {
+                                    var dat = d.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+                                        that.fill(dat);
+                                    }
+                                    else {
+                                        toastr.info("No se encontraron datos.");
+                                    }
+                                }
+                                else {
+                                    toastr.error(err);
+                                }
+                            }
+                        })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                toastr.error("Solicitud de servidor fallida.");
+                            });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+
+                show: function (i) {
+                    this.$sid.val(i);
+                    if (typeof (i) !== "number") {
+                        this.getPerfilData(i);
+                    }
+                    this.initUI().$modal.modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    this.$nom.focus();
+                },
+
+                handleSave: function (e) {
+                    var that = this;
+                    var rules_txt = {
+                        nom: { id: this.elements.inputs.NOM, label: 'Nombre', minsize: 2, maxsize: 35 },
+                    };
+                    var T = validaSimple.inputTexts(this.elements.labels.ERR, rules_txt);
+                    if (T === false) return;
+
+                    this.$err.empty();
+                    this.$inputs.prop("disabled", true);
+
+                    $.confirm({
+                        title: 'Grabar Información',
+                        content: '¿Esta seguro de grabar la información?',
+                        animationSpeed: 0,
+                        theme: 'bootstrap',
+                        buttons: {
+                            ok: {
+                                text: "Aceptar!",
+                                btnClass: 'btn-primary',
+                                keys: ['enter'],
+
+                                action: function () {
+                                    that.handleConfirm();
+                                }
+                            },
+                            cancel: function () {
+                                that.$inputs.prop("disabled", false);
+                            }
+                        }
+                    });
+                },
+
+                handleConfirm: function (e) {
+                    var that = this;
+                    var params = [];
+
+                    params.push(this.$nom.val());
+                    params.push(this.$abr.val());
+                    params.push(this.$des.val());
+                    params.push(this.$sid.val());
+
+                    var request = $.ajax({
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(params),
+                        dataType: "json",
+                        type: "POST",
+                        url: ajax.sper,
+
+                        success: function (o) {
+                            if (o != null || o !== '' || o !== "null") {
+                                var __err = o.ERR;
+                                if (__err == null || __err == '' || __err == "null") {
+                                    var dat = o.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+                                        if (dat.Estado === 1) {
+                                            window.location.href = ajax.list;
+                                        }
+                                        else {
+                                            helper.bootstrapToastr(dat.Tipo, dat.Mensaje);
+                                        }
+                                    }
+                                    else {
+                                        toastr.error("No se han recibido datos del servidor. Consulte con el administrador del sistema.");
+                                        that.$modal.modal('hide');
+                                    }
+                                }
+                                else {
+                                    toastr.error(__err);
+                                }
+                            }
+                            else {
+                                toastr.error("No se han recibido datos del servidor. Consulte con el administrador del sistema.");
+                            }
+                        }
+                    });
+
+                    request.fail(function (jqXHR, textStatus) {
+                        toastr.error("Solicitud de servidor fallida.");
+                        that.$modal.modal('hide');
+                    });
+
+                },
+
+                bindEvents: function () {
+                    this.$btn_sav.on('click', this.handleSave.bind(this));
+                },
+
+                init: function () {
+                    this.initControls().initUI().initPlugins().bindEvents();
+                }
+            }
+
+            var page = {
+                elements: {
+                    tables: {
+                        dt: "#dt_perfil"
+                    },
+                    buttons: {
+                        SAV: "#btn_add"
+                    }
+                },
+                initControls: function () {
+                    this.$dt = $(this.elements.tables.dt);
+                    this.$btn_sav = $(this.elements.buttons.SAV);
+                    return this;
+                },
+                initTable: function () {
+                    var that = this;
+                    var T = this.$dt.DataTable({
+                        pageLength: 18,
+                        "bLengthChange": false,
+                        columnDefs: [{
+                            "targets": [4, 5],
+                            "orderable": false,
+                        }],
+                        "language": {
+                            "url": ajax.lang
+                        }
+                    });
+                    return this;
+                },
+
+                handleEdit: function (e) {
+                    var sid = e.currentTarget.getAttribute('data-sid');
+                    var row = e.currentTarget.parentElement.parentElement;
+                    $(row).addClass('rowSelect');
+                    modal.show(sid);
+                },
+
+                handleAdd: function (e) {
+                    modal.show(0);
+                },
+
+                handleDel: function (e) {
+                    $.alert("No tiene los permisos necesarios.");
+                },
+
+                handlePer: function (e) {
+                    var sid = e.currentTarget.getAttribute('data-sid');
+                    var row = e.currentTarget.parentElement.parentElement;
+                    $(row).addClass('rowSelect');
+
+                    modalopc.show(sid);
+                },
+
+                bindEvents: function () {
+                    this.$dt.delegate('.btn-per', 'click', this.handlePer.bind(this));
+                    this.$dt.delegate('.href-edt', 'click', this.handleEdit.bind(this));
+                    this.$dt.delegate('.href-del', 'click', this.handleDel.bind(this));
+                    this.$btn_sav.on('click', this.handleAdd.bind(this));
+                },
+
+                init: function () {
+                    this.initControls().initTable().bindEvents();
+
+                    $(window).keydown(function (event) {
+                        if (event.keyCode == 13) {
+                            event.preventDefault();
+                            return false;
+                        }
+                    });
+                },
+            };  //: page
+
+            page.init();
+            modal.init();
+            modalopc.init();
+
+        })(jQuery);
+    </script>
+    *@
+}

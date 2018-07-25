@@ -1,0 +1,27 @@
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Entidad\bin\Debug\SGSE.Entidad.dll
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Entidad\bin\Debug\SGSE.Entidad.pdb
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Entidad\obj\Debug\SGSE.Entidad.dll
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Entidad\obj\Debug\SGSE.Entidad.pdb
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Entidad\obj\Debug\SGSE.Entidad.csprojResolveAssemblyReference.cache
+D:\Users\vneyrat\Desktop\SGSE\SGSE\Webapp\SGSE\SGSE.Entidad\bin\Debug\SGSE.Entidad.dll
+D:\Users\vneyrat\Desktop\SGSE\SGSE\Webapp\SGSE\SGSE.Entidad\bin\Debug\SGSE.Entidad.pdb
+D:\Users\vneyrat\Desktop\SGSE\SGSE\Webapp\SGSE\SGSE.Entidad\obj\Debug\SGSE.Entidad.csprojResolveAssemblyReference.cache
+D:\Users\vneyrat\Desktop\SGSE\SGSE\Webapp\SGSE\SGSE.Entidad\obj\Debug\SGSE.Entidad.dll
+D:\Users\vneyrat\Desktop\SGSE\SGSE\Webapp\SGSE\SGSE.Entidad\obj\Debug\SGSE.Entidad.pdb
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Entidad\bin\Debug\SGSE.Entidad.dll
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Entidad\bin\Debug\SGSE.Entidad.pdb
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Entidad\obj\Debug\SGSE.Entidad.dll
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Entidad\obj\Debug\SGSE.Entidad.pdb
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Entidad\bin\Debug\SGSE.Entidad.dll
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Entidad\bin\Debug\SGSE.Entidad.pdb
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Entidad\obj\Debug\SGSE.Entidad.dll
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Entidad\obj\Debug\SGSE.Entidad.pdb
+D:\Workspace\net\SGSE\SGSE\SGSE.Entidad\bin\Debug\SGSE.Entidad.dll
+D:\Workspace\net\SGSE\SGSE\SGSE.Entidad\bin\Debug\SGSE.Entidad.pdb
+D:\Workspace\net\SGSE\SGSE\SGSE.Entidad\obj\Debug\SGSE.Entidad.dll
+D:\Workspace\net\SGSE\SGSE\SGSE.Entidad\obj\Debug\SGSE.Entidad.pdb
+D:\Workspace\net\SGSE\app\SGSE.Entidad\bin\Debug\SGSE.Entidad.dll
+D:\Workspace\net\SGSE\app\SGSE.Entidad\bin\Debug\SGSE.Entidad.pdb
+D:\Workspace\net\SGSE\app\SGSE.Entidad\obj\Debug\SGSE.Entidad.dll
+D:\Workspace\net\SGSE\app\SGSE.Entidad\obj\Debug\SGSE.Entidad.pdb
+D:\Workspace\net\SGSE\app\SGSE.Entidad\obj\Debug\SGSE.Entidad.csprojResolveAssemblyReference.cache

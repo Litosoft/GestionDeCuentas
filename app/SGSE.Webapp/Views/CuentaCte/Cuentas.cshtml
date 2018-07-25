@@ -1,0 +1,178 @@
+﻿@using SGSE.Webapp.Helpers
+
+@section layoutNavbarLeft {
+    <li>
+        <a href="javascript:void(0);" id="btn_exportar">
+            <span class="splashy-documents_okay"></span> Exportar
+        </a>
+    </li>
+}
+
+@if (User.OrganoServicio_CID == string.Empty)
+{
+    <div class="title-bar">
+        <h2 class="title-bar-title">
+            <span class="d-ib">Cuentas Corrientes</span>
+        </h2>
+    </div>
+
+     <div class="row gutter-xs">
+            <div class="col-sm-10">
+                <div class="row gutter-xs">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                El usuario no esta asociado a un Órgano de Servicio. No tiene acceso al registro de Cuentas Corrientes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+}
+else
+{
+<div class="title-bar">
+    <h2 class="title-bar-title">
+        <span class="d-ib">Cuentas Corrientes @ViewBag.OSE</span>
+    </h2>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover table-responsive" id="dt_main" width="100%">
+            <thead>
+                <tr>
+                    <th class="header-w2">N°</th>
+                    <th>Órgano de Servicio</th>
+                    <th class="header-w8">N° de Cuenta</th>
+                    <th>Moneda</th>
+                    <th>Banco</th>
+                    <th>Situación</th>
+                    <th class="header-w4">Acción</th>
+                </tr>
+            </thead>
+            <tbody id="tbody_dt">
+                <tr>
+                    <td>&nbsp;</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-center"></td>
+                </tr>
+            </tbody>
+        </table>
+        <input type="hidden" id="hdn_sid" value="0" />
+    </div>
+</div>
+}
+@section layoutScripts{
+    <script type="text/javascript">
+        var ajax = {
+            data: "@Url.Action("WvJRpzl5", "CuentaCte")",
+            lang: "@Url.Content("~/Content/lang/lang.json")",
+
+            expo: "@Url.Action("PLus9XJE", "CuentaCte")"
+        }
+    </script>
+
+    <script type="text/javascript">
+        'use strict';
+        (function ($) {
+
+            var page = {
+
+                TABLE: "#dt_main",
+                action: {
+                    buttons: {
+                        BUTTON_EXP: '#btn_exportar',
+                        BUTTON_HLP: '#btn_ayuda'
+                    }
+                },
+
+                initControls: function () {
+                    this.$dt = $(this.TABLE);
+                    this.$btn_exp = $(this.action.buttons.BUTTON_EXP);
+                    this.$btn_hlp = $(this.action.buttons.BUTTON_HLP);
+                    return this;
+                },
+
+                initTable: function () {
+                    var that = this;
+                    var T = this.$dt.DataTable({
+                        pageLength: 18,
+                        colReorder: {
+                            fixedColumnsLeft: 1,
+                            fixedColumnsRight: 1
+                        },
+                        processing: true,
+                        serverSide: true,
+                        ajax: {
+                            "url": ajax.data,
+                            "data": function (d) {
+                                d.mose = "@ViewBag.OSESID";
+                            }
+                        }
+                        ,
+                        columnDefs: [{
+                            className: "text-center", targets: [0, 3, 5, 6]
+                        }],
+                        columns: [
+                            { "data": "Row" },
+                            { "data": "OrganoServicio.Abreviatura" },
+                            { "data": "NumeroCuenta" },
+                            { "data": "Moneda.ISO4217" },
+                            { "data": "Agencia.Nombre" },
+                            { "data": "Situacion.StrValue" },
+                            {
+                                "data": "CID",
+                                "orderable": false,
+                                "render": function (data, type, full, meta) {
+                                    var href_edt = '<a href="javascript:void(0);" class="href-edt" data-sid="' + data + '"><span class="icon icon-edit icon-grid"></span></a>';
+                                    return href_edt;
+                                }
+                            }
+                        ],
+                        "language": {
+                            "url": ajax.lang
+                        },
+                        "rowCallback": function (row, data, index) {
+                            var st = data.Situacion.IntValue;
+                            switch (st) {
+                                case 9:
+                                    $('td', row).addClass('row-danger');
+                                    break;
+                                case 8:
+                                    $('td', row).addClass('row-warning');
+                                    break;
+                            }
+                        },
+                    });
+                    return this;
+                },
+
+                handleEdit: function (e) {
+                    var s_id = e.currentTarget.getAttribute('data-sid');
+                    var url = '@Url.Action("DetalleCuenta", "CuentaCte", new { sid = "___id___" })';
+                    window.location.href = url.replace('___id___', s_id);
+                },
+
+                handleExp: function (e) {
+                    window.location.href = ajax.expo;
+                },
+
+                bindEvents: function () {
+                    this.$dt.delegate('.href-edt', 'click', this.handleEdit.bind(this));
+                    this.$btn_exp.on('click', this.handleExp.bind(this));
+
+                },
+
+                init: function () {
+                    this.initControls().initTable().bindEvents();
+                }
+            }
+            page.init();
+        })(jQuery);
+    </script>
+}

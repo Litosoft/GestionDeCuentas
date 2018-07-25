@@ -1,0 +1,389 @@
+﻿@using SGSE.Webapp.Helpers
+@model SGSE.Webapp.Models.OrganoServicio.OrganoServicioDetalleViewModel
+
+@* Titulo *@
+<div class="title-bar">
+    <h2 class="title-bar-title">
+        <span class="d-ib">Organos de Servicio Exterior</span>
+    </h2>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel with-nav-tabs">
+            <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#tab_gen" data-toggle="tab">Datos Generales</a>
+                    </li>
+                    <li>
+                        <a href="#tab_mas" data-toggle="tab">Otros Datos</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div class="tab-content">
+                    @* Datos Generales *@
+                    <div class="tab-pane active" id="tab_gen">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <table class="table-form" width="100%">
+                                    <tr>
+                                        <td style="width: 100px;">Nombre</td>
+                                        <td>
+                                            @Html.TextBoxCustom("gen_txt_nom", 100, 1)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 100px;">Abreviatura</td>
+                                        <td>
+                                            @Html.TextBoxCustom("gen_txt_abr", 25, 2)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 100px;">Tipo</td>
+                                        <td>
+                                            @Html.DropDownList("gen_sel_tpo", Model.TiposOrganoServicio, new { @class = "form-control", tabindex = "3" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 100px;">País</td>
+                                        <td>
+                                            @Html.DropDownList("gen_sel_pai", Model.Paises, new { @class = "form-control", tabindex = "4" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 100px;">Codigo Interop</td>
+                                        <td>
+                                            @Html.TextBoxCustom("gen_txt_cod", 5, 5)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 100px;">Jefatura de Servicio</td>
+                                        <td>
+                                            @Html.DropDownList("gen_sel_jse", Model.JefaturasServicio, new { @class = "form-control", tabindex = "6" })
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Datos de Inscripcion de Cuenta de Asignación *@
+                    <div class="tab-pane" id="tab_mas">
+                        <div class="row">
+                            <div class="col-md-12">
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <span id="gen_tab_err" class="text-danger text-error"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <button id="gen_btn_sav" class="btn btn-primary btn-sm">Grabar</button>
+                        <button id="gen_btn_ret" class="btn btn-default btn-sm" style="margin-right:10px;">Regresar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" value="" id="hdn_sid" />
+
+@section layoutModals {
+
+
+
+}
+
+@section layoutScripts{
+
+    <script type="text/javascript">
+        var ajax = {
+            sose: "@Url.Action("aTIya1Nr", "OrganoServicio")",
+            gjsr: "@Url.Action("dklHc0hk", "OrganoServicio")"
+        }
+    </script>
+    <script type="text/javascript">
+        (function (b) {
+            var g = { getModelo: function () { return @Html.Raw(Json.Encode(Model)) } }, d = {
+                elements: { data: { SID: "#hdn_sid" } }, initElements: function () { this.$sid = b(this.elements.data.SID); return this }, dataFill: {
+                    general: function () {
+                        var a = g.getModelo(); d.$sid.val(a.CID); var b = e.general; b.$nom.val(a.OrganoServicio.Nombre); b.$abr.val(a.OrganoServicio.Abreviatura); b.$tpo.val(a.OrganoServicio.TipoOrgano.StrValue); b.$pai.val(a.OrganoServicio.Pais.CID); b.$cod.val(a.OrganoServicio.CodigoInterop); b.$jse.val(a.OrganoServicio.JefaturaServicio.StrValue);
+                        Helper.ajaxSelectList(ajax.gjsr, d.$sid.val(), e.general.$jse, a.OrganoServicio.JefaturaServicio.StrValue)
+                    }
+                }, init: function () { this.initElements().dataFill.general() }
+            }, e = {
+                general: {
+                    elements: { inputs: { FRM: "input[id^='gen_txt_'], select[id^='gen_sel_']", NOM: "#gen_txt_nom", ABR: "#gen_txt_abr", TPO: "#gen_sel_tpo", PAI: "#gen_sel_pai", COD: "#gen_txt_cod", JSE: "#gen_sel_jse" }, buttons: { SAV: "#gen_btn_sav", RET: "#gen_btn_ret" }, labels: { ERR: "#gen_tab_err" } }, initElements: function () {
+                        this.$form = b(this.elements.inputs.FRM); this.$nom =
+                        b(this.elements.inputs.NOM); this.$abr = b(this.elements.inputs.ABR); this.$tpo = b(this.elements.inputs.TPO); this.$pai = b(this.elements.inputs.PAI); this.$cod = b(this.elements.inputs.COD); this.$jse = b(this.elements.inputs.JSE); this.$btn_sav = b(this.elements.buttons.SAV); this.$btn_ret = b(this.elements.buttons.RET); this.$err = b(this.elements.labels.ERR); return this
+                    }, initPlugins: function () { return this }, handleSave: function (a) {
+                        var c = this; 0 != validaSimple.inputTexts(this.elements.labels.ERR, {
+                            nom: {
+                                id: c.elements.inputs.NOM,
+                                label: "Nombre", minsize: 3, maxsize: 100
+                            }, abr: { id: c.elements.inputs.ABR, label: "Abreviatura", minsize: 4, maxsize: 25 }
+                        }) && 0 != validaSimple.inputSelect(this.elements.labels.ERR, { tpo: { id: c.elements.inputs.TPO, label: "Tipo" }, pai: { id: c.elements.inputs.PAI, label: "Pa\u00eds" }, jse: { id: c.elements.inputs.JSE, label: "Jefatura de Servicio" } }) && (this.$err.empty(), this.$form.prop("disabled", !0), b.confirm({
+                            title: "Grabar Informaci\u00f3n", content: "\u00bfEsta seguro de grabar la informaci\u00f3n?", animationSpeed: 0, theme: "bootstrap",
+                            buttons: { ok: { text: "Aceptar!", btnClass: "btn-primary", keys: ["enter"], action: function () { e.general.handleConfirm() } }, cancel: function () { c.$form.prop("disabled", !1) } }
+                        }))
+                    }, handleConfirm: function (a) {
+                        var c = this; a = []; a.push(this.$nom.val()); a.push(this.$abr.val()); a.push(this.$tpo.val()); a.push(this.$pai.val()); a.push(this.$cod.val()); a.push(this.$jse.val()); a.push(d.$sid.val()); try {
+                            b.ajax({
+                                contentType: "application/json; charset=utf-8", data: JSON.stringify(a), dataType: "json", type: "POST", url: ajax.sose, success: function (a) {
+                                    var f =
+                                    a.ERR; null == f || "" == f || "null" == f ? (a = a.DATA, null != a && "" != a && "null" != a && (1 === a.Estado ? (d.$sid.val(a.CID), c.$form.prop("disabled", !1), b.alert(a.Mensaje)) : toastr.error(a.Mensaje))) : toastr.error(f)
+                                }
+                            }).fail(function (a, b, c) { toastr.error("Solicitud de servidor fallida.") })
+                        } catch (h) { toastr.error("Error en solicitud: " + h.message) }
+                    }, handleReturn: function (a) { window.location.href = '@Url.Action("Listar", "OrganoServicio")' }, handleTipo: function (a) { a = this.$pai.val(); Helper.ajaxSelectList(ajax.gjsr, a, this.$jse) }, bindEvents: function () {
+                        this.$pai.on("change",
+                        this.handleTipo.bind(this)); this.$btn_sav.on("click", this.handleSave.bind(this)); this.$btn_ret.on("click", this.handleReturn.bind(this))
+                    }, init: function () { this.initElements().bindEvents(); b(window).keydown(function (a) { if (13 == a.keyCode) return a.preventDefault(), !1 }) }
+                }
+            }; e.general.initElements().initPlugins().init(); d.init()
+        })(jQuery);
+    </script>
+    @*
+    <script type="text/javascript">
+        'use strict';
+        (function ($) {
+
+            var modelo = {
+                getModelo: function () {
+                    return "@Html.Raw(Json.Encode(Model))"
+                }
+            }
+
+
+            var page = {
+
+                elements: {
+                    data: {
+                        SID: '#hdn_sid'
+                    },
+                },
+
+                initElements: function(){
+                    this.$sid = $(this.elements.data.SID);
+                    return this;
+                },
+
+                dataFill: {
+                    general: function () {
+                        var m = modelo.getModelo();
+                        page.$sid.val(m.CID);
+
+                        var g = tabs.general;
+                        g.$nom.val(m.OrganoServicio.Nombre);
+                        g.$abr.val(m.OrganoServicio.Abreviatura);
+                        g.$tpo.val(m.OrganoServicio.TipoOrgano.StrValue);
+                        g.$pai.val(m.OrganoServicio.Pais.CID);
+                        g.$cod.val(m.OrganoServicio.CodigoInterop);
+                        g.$jse.val(m.OrganoServicio.JefaturaServicio.StrValue);
+                        Helper.ajaxSelectList(ajax.gjsr,
+                            page.$sid.val(),
+                            tabs.general.$jse,
+                            m.OrganoServicio.JefaturaServicio.StrValue)
+                    }
+                },
+
+                init: function () {
+                    this.initElements().dataFill.general();
+                }
+            };
+
+            var tabs = {
+                general: {
+                    elements: {
+                        inputs: {
+                            FRM: "input[id^='gen_txt_'], select[id^='gen_sel_']",
+
+                            NOM: "#gen_txt_nom",
+                            ABR: "#gen_txt_abr",
+                            TPO: "#gen_sel_tpo",
+                            PAI: "#gen_sel_pai",
+                            COD: "#gen_txt_cod",
+                            JSE: "#gen_sel_jse"
+                        },
+                        buttons: {
+                            SAV: "#gen_btn_sav",
+                            RET: "#gen_btn_ret"
+                        },
+                        labels: {
+                            ERR: "#gen_tab_err"
+                        }
+                    },
+
+                    initElements: function () {
+                        this.$form = $(this.elements.inputs.FRM);
+
+                        this.$nom = $(this.elements.inputs.NOM);
+                        this.$abr = $(this.elements.inputs.ABR);
+                        this.$tpo = $(this.elements.inputs.TPO);
+                        this.$pai = $(this.elements.inputs.PAI);
+                        this.$cod = $(this.elements.inputs.COD);
+                        this.$jse = $(this.elements.inputs.JSE);
+
+                        this.$btn_sav = $(this.elements.buttons.SAV);
+                        this.$btn_ret = $(this.elements.buttons.RET);
+
+                        this.$err = $(this.elements.labels.ERR);
+
+                        return this;
+                    },
+
+                    initPlugins: function () {
+                        return this;
+                    },
+
+                    handleSave: function (e) {
+                        var that = this;
+                        var rules = {
+                            nom: {
+                                id: that.elements.inputs.NOM, label: 'Nombre', minsize: 3, maxsize: 100
+                            },
+                            abr: {
+                                id: that.elements.inputs.ABR, label: 'Abreviatura', minsize: 4, maxsize: 25
+                            }
+                        };
+                        var T = validaSimple.inputTexts(this.elements.labels.ERR, rules);
+                        if (T == false) return;
+
+                        var rules_sel = {
+                            tpo: {
+                                id: that.elements.inputs.TPO, label: 'Tipo'
+                            },
+                            pai: {
+                                id: that.elements.inputs.PAI, label: 'País'
+                            },
+                            jse: {
+                                id: that.elements.inputs.JSE, label: 'Jefatura de Servicio'
+                            },
+                        }
+                        var S = validaSimple.inputSelect(this.elements.labels.ERR, rules_sel);
+                        if (S == false) return;
+
+                        this.$err.empty();
+                        this.$form.prop("disabled", true);
+
+                        /* Dialog */
+                        $.confirm({
+                            title: 'Grabar Información',
+                            content: '¿Esta seguro de grabar la información?',
+                            animationSpeed: 0,
+                            theme: 'bootstrap',
+                            buttons: {
+                                ok: {
+
+                                    text: "Aceptar!",
+                                    btnClass: 'btn-primary',
+                                    keys: ['enter'],
+
+                                    action: function () {
+                                        tabs.general.handleConfirm();
+
+                                    }
+                                },
+                                cancel: function () {
+                                    that.$form.prop("disabled", false);
+                                }
+                            }
+                        });
+                        /**/
+
+
+                    },
+
+                    handleConfirm: function (e) {
+                        var that = this;
+                        var params = [];
+                        params.push(this.$nom.val());
+                        params.push(this.$abr.val());
+                        params.push(this.$tpo.val());
+                        params.push(this.$pai.val());
+                        params.push(this.$cod.val());
+                        params.push(this.$jse.val());
+                        params.push(page.$sid.val());
+
+                        try {
+                            var request = $.ajax({
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(params),
+                                dataType: "json",
+                                type: "POST",
+                                url: ajax.sose,
+                                success: function (d) {
+                                    var err = d.ERR;
+                                    if (err == null || err == '' || err == "null") {
+                                        var dat = d.DATA;
+                                        if (dat != null && dat != "" && dat != "null") {
+                                            if (dat.Estado === 1) {
+                                                page.$sid.val(dat.CID);
+                                                that.$form.prop("disabled", false);
+                                                $.alert(dat.Mensaje);
+                                            }
+                                            else {
+                                                toastr.error(dat.Mensaje);
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        toastr.error(err);
+                                    }
+                                }
+                            }).fail(function (jqXHR, textStatus, errorThrown) {
+                                toastr.error("Solicitud de servidor fallida.");
+                            });
+
+                        }
+                        catch (e) {
+                            toastr.error("Error en solicitud: " + e.message);
+                        }
+                    },
+
+                    handleReturn: function (e) {
+                        window.location.href = '@Url.Action("Listar", "OrganoServicio")';
+                    },
+
+                    handleTipo: function (e) {
+                        var id = this.$pai.val();
+                        Helper.ajaxSelectList(ajax.gjsr, id, this.$jse);
+                    },
+
+                    bindEvents: function () {
+                        this.$pai.on('change', this.handleTipo.bind(this));
+                        this.$btn_sav.on('click', this.handleSave.bind(this));
+                        this.$btn_ret.on('click', this.handleReturn.bind(this));
+                    },
+
+                    init: function () {
+                        this.initElements().bindEvents();
+
+                        $(window).keydown(function (event) {
+                            if (event.keyCode == 13) {
+                                event.preventDefault();
+                                return false;
+                            }
+                        });
+                    }
+                }
+            }
+
+            tabs.general.initElements().initPlugins().init();
+            page.init();
+
+        })(jQuery);
+    </script>
+    *@
+}

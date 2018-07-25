@@ -1,0 +1,85 @@
+﻿@model SGSE.Webapp.Models.Account.CustomMenuModel
+
+<nav id="sidenav" class="sidenav-collapse">
+    <ul class="sidenav">
+        <li class="sidenav-heading">Men&uacute; de Opciones</li>
+        @{
+            if (Model.ItemsMenu != null)
+            {
+                var Menu = Model.ItemsMenu;
+                string css = string.Empty;
+
+                if (Menu.Count() > 0)
+                {
+                    var pas = Menu.Where(p => p.Nivel == 0);
+                    var his = Menu.Where(h => h.Nivel == 1);
+                    var nis = Menu.Where(n => n.Nivel == 2);
+
+                    foreach (var p in pas)
+                    {
+                        css = (p.Metodo == Model.selectMethod && p.Controlador == Model.selectController) ? "active" : string.Empty;
+
+                        var hijos = his.Where(q => q.Padre.IntValue == p.Id);
+                        if (hijos.Count() > 0)
+                        {
+                            <li class="sidenav-item has-subnav">
+                                <a href="#" aria-haspopup="true">
+                                    <span class="sidenav-icon icon @p.Icono"></span>
+                                    <span class="sidenav-label">@p.Nombre</span>
+                                </a>
+                                <ul class="sidenav-subnav collapse">
+                                    <li class="sidenav-subheading">@p.Nombre</li>
+                                    @foreach (var h in hijos)
+                                    {
+                                        var nietos = nis.Where(z => z.Padre.IntValue == h.Id);
+                                        css = (h.Metodo == Model.selectMethod && h.Controlador == Model.selectController) ? "active" : string.Empty;
+
+                                        if (nietos.Count() > 0)
+                                        {
+                                            <li class="sidenav-item has-subnav">
+                                                <a href="#" aria-haspopup="true">
+                                                    <span class="sidenav-label">@h.Nombre</span>
+                                                </a>
+                                                <ul class="sidenav-subnav collapse">
+                                                    <li class="sidenav-subheading">@h.Nombre</li>
+                                                    @foreach (var n in nietos)
+                                                    {
+                                                        css = (n.Metodo == Model.selectMethod && n.Controlador == Model.selectController) ? "active" : string.Empty;
+                                                        <li class="@css"><a href="@Url.Action(n.Metodo, n.Controlador)">@n.Nombre</a></li>
+                                                    }
+                                                </ul>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li><a href="@Url.Action(h.Metodo, h.Controlador)">@h.Nombre</a></li>
+                                        }
+                                    }
+
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="sidenav-item @css">
+                                <a href="@Url.Action(p.Metodo, p.Controlador)" >
+                                    <span class="sidenav-icon icon @p.Icono"></span>
+                                    <span class="sidenav-label">@p.Nombre</span>
+                                </a>
+                            </li>
+                        }
+                    }
+                }
+                else
+                {
+                    <li class="sidenav-item">
+                        <a href="javascript:void(1);">
+                            <span class="sidenav-icon icon icon-info"></span>
+                            <span class="sidenav-label">No tiene autorización</span>
+                        </a>
+                    </li>
+                }
+            }
+        }
+    </ul>
+</nav>

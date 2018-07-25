@@ -1,0 +1,720 @@
+﻿@model SGSE.Webapp.Models.Usuario.UsuarioViewModel
+@using SGSE.Webapp.Helpers
+@section layoutNavbarLeft{
+    <li>
+        <a href="javascript:void(0);" id="btn_add">
+            <span class="splashy-document_letter_add"></span> Nuevo
+        </a>
+    </li>
+    <li>
+        <a href="javascript:void(0);" id="btn_exportar">
+            <span class="splashy-documents_okay"></span> Exportar
+        </a>
+    </li>
+    <li>
+        <a href="javascript:void(0);" id="btn_ayuda">
+            <span class="splashy-help"></span>
+        </a>
+    </li>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="title-bar-title">
+            <span class="ds-ib">Usuarios del Aplicativo</span>
+        </h2>
+    </div>
+</div>
+<p>&nbsp;</p>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover table-responsive" id="tbl_lista" width="100%">
+            <thead>
+                <tr>
+                    <th class="">N°</th>
+                    <th>Apellido</th>
+                    <th>Usuario</th>
+                    <th>Unidad</th>
+                    <th>Organo Servicio</th>
+                    <th>Vigencia</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody id="tbody_dt">
+                <tr>
+                    <td>&nbsp;</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <input type="hidden" id="hdn_sid" value="0" />
+    </div>
+</div>
+
+@section layoutModals {
+    <div id="m_usr" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom:1px dotted #ccc !important;">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h5 class="modal-title" id="defModalHead">Usuario</h5>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table-form" width="100%">
+                                <tr>
+                                    <td style="width: 100px;">Apellidos</td>
+                                    <td>
+                                        @Html.TextBoxCustom("txt_ape", 35, 1)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>
+                                        @Html.TextBoxCustom("txt_ema", 50, 3)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Usuario</td>
+                                    <td>
+                                        @Html.TextBoxCustom("txt_usr", 12, 5)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Desde</td>
+                                    <td>
+                                        <div class="input-with-icon">
+                                            <input id="txt_des" type="text" class="form-control text-uppercase cal-vig" maxlength="10" autocomplete="off" data-provide="datepicker" data-date-today-btn="linked" tabindex="7">
+                                            <span class="icon icon-calendar input-icon"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Unidad Orgánica</td>
+                                    <td>
+                                        @Html.DropDownList("sel_und", Model.UnidadesOrganicas, new { @class = "form-control", tabindex = "9" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Organo de Servicio</td>
+                                    <td>
+                                        @Html.DropDownList("sel_ose", Model.OrganosServicio, new { @class = "form-control", tabindex = "11" })
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table-form" width="100%">
+                                <tr>
+                                    <td style="width: 100px;">Nombres</td>
+                                    <td>
+                                        @Html.TextBoxCustom("txt_nom", 35, 2)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 100px;">Teléfono</td>
+                                    <td>
+                                        @Html.TextBoxCustom("txt_tel", 35, 4)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 100px;">Contraseña</td>
+                                    <td>
+                                        @*@Html.TextPasswordCustom("txt_pwd", 12, 6)*@
+                                        @Html.TextBoxCustom("txt_pwd", 12, 6)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Hasta</td>
+                                    <td>
+                                        <div class="input-with-icon">
+                                            <input id="txt_has" type="text" class="form-control text-uppercase cal-vig" maxlength="10" autocomplete="off" data-provide="datepicker" data-date-today-btn="linked" tabindex="8">
+                                            <span class="icon icon-calendar input-icon"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>País</td>
+                                    <td>
+                                        @Html.DropDownList("sel_pai", Model.Paises, new { @class = "form-control", tabindex = "10" })
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table-form">
+                                <tr>
+                                    <td style="height:34px; width: 100px;">Perfil</td>
+                                    <td>
+                                        @Html.DropDownList("sel_per", Model.Perfiles, new { @class = "form-control", multiple = "multiple", tabindex = "11" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Rol</td>
+                                    <td>
+                                        @Html.DropDownList("sel_rol", Model.Roles, new { @class = "form-control", tabindex = "10" })
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table-form">
+                                <tr>
+                                    <td style="height:34px; width: 100px;">Dominio</td>
+                                    <td>
+                                        <label class="custom-control custom-control-primary custom-checkbox">
+                                            <input id="chk_dom" class="custom-control-input" type="checkbox" name="mode">
+                                            <span class="custom-control-indicator"></span>
+                                            <span class="custom-control-label">Es usuario de dominio</span>
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height:34px; width: 100px;">Sesión</td>
+                                    <td>
+                                        <label class="custom-control custom-control-primary custom-checkbox">
+                                            <input id="chk_cam" class="custom-control-input" type="checkbox" name="mode">
+                                            <span class="custom-control-indicator"></span>
+                                            <span class="custom-control-label">Solicitar cambio de contraseña al iniciar sesión</span>
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height:34px; width: 100px;">Estado</td>
+                                    <td>
+                                        <label class="custom-control custom-control-danger custom-checkbox">
+                                            <input id="chk_est" class="custom-control-input" type="checkbox" value="checked" name="mode">
+                                            <span class="custom-control-indicator"></span>
+                                            <span class="custom-control-label text-danger">Deshabilitar usuario</span>
+                                        </label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="hdn_sid" value="0" />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span id="msg_err" class="text-danger text-error"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer pie-modal-bg pie-modal-borde">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button id="btn_sav" class="btn btn-primary btn-sm pull-left">Grabar</button>
+                            <button class="btn btn-default btn-sm" style="margin-right:10px;" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+@section layoutScripts{
+    <script type="text/javascript">
+        var ajax = {
+            data: "@Url.Action("VEdTdnlP", "Usuario")",
+            lang: "@Url.Content("~/Content/lang/lang.json")",
+            expo: "@Url.Action("Ly92dDhv", "Usuario")",
+
+            susr: "@Url.Action("clc2N1ZQ", "Usuario")",
+            gusr: "@Url.Action("V0I0MmZV", "Usuario")"
+        }
+    </script>
+    <script type="text/javascript">
+        (function (b) {
+            var d = {
+                elements: { IDM: "#m_usr", inputs: { FRM: "input[id^='txt_'], input[id^='chk_'], select[id^='sel_']", APE: "#txt_ape", NOM: "#txt_nom", MAI: "#txt_ema", TEL: "#txt_tel", USR: "#txt_usr", PWD: "#txt_pwd", INI: "#txt_des", FIN: "#txt_has", UND: "#sel_und", PAI: "#sel_pai", OSE: "#sel_ose", DOM: "#chk_dom", SES: "#chk_cam", EST: "#chk_est", PER: "#sel_per", ROL: "#sel_rol", SID: "#hdn_sid" }, controls: { CAL: ".cal-vig" }, buttons: { SAV: "#btn_sav" }, labels: { ERR: "#msg_err" } }, initControls: function () {
+                    this.$modal = b(this.elements.IDM);
+                    this.$inputs = b(this.elements.inputs.FRM); this.$err = b(this.elements.labels.ERR); this.$ape = b(this.elements.inputs.APE); this.$nom = b(this.elements.inputs.NOM); this.$mai = b(this.elements.inputs.MAI); this.$tel = b(this.elements.inputs.TEL); this.$usr = b(this.elements.inputs.USR); this.$pwd = b(this.elements.inputs.PWD); this.$ini = b(this.elements.inputs.INI); this.$fin = b(this.elements.inputs.FIN); this.$und = b(this.elements.inputs.UND); this.$pai = b(this.elements.inputs.PAI); this.$ose = b(this.elements.inputs.OSE); this.$dom =
+                    b(this.elements.inputs.DOM); this.$ses = b(this.elements.inputs.SES); this.$est = b(this.elements.inputs.EST); this.$per = b(this.elements.inputs.PER); this.$rol = b(this.elements.inputs.ROL); this.$sid = b(this.elements.inputs.SID); this.$btn_sav = b(this.elements.buttons.SAV); this.$objs = b(this.elements.controls.CAL); return this
+                }, initUI: function () { this.$inputs.val(""); this.$inputs.prop("disabled", !1); this.$err.empty(); return this }, initPlugins: function () {
+                    b(".modal-dialog").draggable({ handle: ".modal-header" }); this.$modal.on("hidden.bs.modal",
+                    function (a) { b("#tbody_dt tr").siblings().removeClass("rowSelect") }); this.$per.select2(); return this
+                }, fill: function (a) {
+                    this.$ape.val(a.Apellidos); this.$nom.val(a.Nombres); this.$mai.val(a.Email); this.$tel.val(a.Telefono); this.$usr.val(a.Login.user); this.$pwd.val(a.Login.pass); this.$ini.val(a.Desde); this.$fin.val(a.Hasta); this.$und.val(a.Unidad.CID); this.$pai.val(a.Pais.CID); this.$ose.val(a.OrganoServicio.CID); this.$dom.prop("checked", a.IsDominio); this.$ses.prop("checked", a.CambiarPwd); this.$est.prop("checked",
+                    !a.Estado.IntValue); this.$sid.val(a.CID); var c = []; b.each(a.Perfiles, function (a, b) { c.push(b.CID) }); this.$per.val(c).trigger("change"); this.$rol.val(a.Rol.StrValue)
+                }, getUsuarioData: function (a) {
+                    var c = this; try {
+                        b.ajax({ contentType: "application/json; charset=utf-8", data: JSON.stringify({ sid: a }), dataType: "json", type: "POST", url: ajax.gusr, success: function (a) { var b = a.ERR; null == b || "" == b || "null" == b ? (a = a.DATA, null != a && "" != a && "null" != a ? c.fill(a) : toastr.info("No se encontraron datos.")) : toastr.error(b) } }).fail(function (a,
+                        b, c) { toastr.error("Solicitud de servidor fallida en " + window.location.href + " (" + ajax.gpar + ")") })
+                    } catch (f) { toastr.error("Error en solicitud: " + f.message) }
+                }, show: function (a) { this.$sid.val(a); "number" !== typeof a && this.getUsuarioData(a); this.initUI().$modal.modal({ backdrop: "static", keyboard: !1 }); this.$ape.focus() }, handleSave: function (a) {
+                    var c = this; a = this.$dom.is(":checked") ? {
+                        ape: { id: c.elements.inputs.APE, label: "Apellidos", minsize: 2, maxsize: 35 }, nom: { id: c.elements.inputs.NOM, label: "Nombres", minsize: 2, maxsize: 35 },
+                        mai: { id: c.elements.inputs.MAI, label: "Email", minsize: 5, maxsize: 50 }, lan: { id: c.elements.inputs.USR, label: "Usuario", minsize: 3, maxsize: 12 }, des: { id: c.elements.inputs.INI, label: "Desde", minsize: 10, maxsize: 10 }, has: { id: c.elements.inputs.FIN, label: "Hasta", minsize: 10, maxsize: 10 }
+                    } : {
+                        ape: { id: c.elements.inputs.APE, label: "Apellidos", minsize: 2, maxsize: 35 }, nom: { id: c.elements.inputs.NOM, label: "Nombres", minsize: 2, maxsize: 35 }, mai: { id: c.elements.inputs.MAI, label: "Email", minsize: 5, maxsize: 50 }, lan: {
+                            id: c.elements.inputs.USR,
+                            label: "Usuario", minsize: 3, maxsize: 12
+                        }, pwd: { id: c.elements.inputs.PWD, label: "Contrase\u00f1a", minsize: 3, maxsize: 12 }, des: { id: c.elements.inputs.INI, label: "Desde", minsize: 10, maxsize: 10 }, has: { id: c.elements.inputs.FIN, label: "Hasta", minsize: 10, maxsize: 10 }
+                    }; !1 !== validaSimple.inputTexts(this.elements.labels.ERR, a) && !1 !== validaSimple.inputSelect(this.elements.labels.ERR, {
+                        und: { id: c.elements.inputs.UND, label: "Unidad Org\u00e1nica" }, pai: { id: c.elements.inputs.PAI, label: "Pa\u00eds" }, ose: {
+                            id: c.elements.inputs.OSE,
+                            label: "\u00d3rgano de Servicio"
+                        }
+                    }) && (this.$err.empty(), this.$inputs.prop("disabled", !0), b.confirm({ title: "Grabar Informaci\u00f3n", content: "\u00bfEsta seguro de grabar la informaci\u00f3n?", animationSpeed: 0, theme: "bootstrap", buttons: { ok: { text: "Aceptar!", btnClass: "btn-primary", keys: ["enter"], action: function () { c.handleConfirm() } }, cancel: function () { c.$inputs.prop("disabled", !1) } } }))
+                }, handleConfirm: function (a) {
+                    var c = this; a = {
+                        ape: this.$ape.val(), nom: this.$nom.val(), mai: this.$mai.val(), tel: this.$tel.val(),
+                        usr: this.$usr.val(), pwd: this.$pwd.val(), ini: this.$ini.val(), fin: this.$fin.val(), und: this.$und.val(), pai: this.$pai.val(), ose: this.$ose.val(), dom: this.$dom.prop("checked") ? 1 : 0, ses: this.$ses.prop("checked") ? 1 : 0, est: this.$est.prop("checked") ? 0 : 1, per: this.$per.val(), rol: this.$rol.val(), sid: this.$sid.val()
+                    }; b.ajax({
+                        contentType: "application/json; charset=utf-8", data: JSON.stringify(a), dataType: "json", type: "POST", url: ajax.susr, success: function (a) {
+                            if (null != a || "" !== a || "null" !== a) {
+                                var b = a.ERR; null == b || "" == b ||
+                                "null" == b ? (a = a.DATA, null != a && "" != a && "null" != a ? 1 === a.Estado ? (c.$modal.modal("hide"), toastr.success(a.Mensaje), e.reloadTable()) : helper.bootstrapToastr(a.Tipo, a.Mensaje) : (toastr.error("No se han recibido datos del servidor. Consulte con el administrador del sistema."), c.$modal.modal("hide"))) : toastr.error(b)
+                            } else toastr.error("No se han recibido datos del servidor. Consulte con el administrador del sistema.")
+                        }
+                    }).fail(function (a, b) { toastr.error("Solicitud de servidor fallida."); c.$modal.modal("hide") })
+                },
+                handleDominio: function (a) { this.$dom.is(":checked") ? (this.$pwd.val(""), this.$pwd.prop("disabled", !0)) : this.$pwd.prop("disabled", !1) }, handleNo: function (a) { this.$inputs.prop("disabled", !1); this.$acc_pre.toggle(); this.$acc_def.toggle() }, bindEvents: function () { this.$dom.on("change", this.handleDominio.bind(this)); this.$btn_sav.on("click", this.handleSave.bind(this)) }, init: function () { this.initControls().initUI().initPlugins().bindEvents() }
+            }, e = {
+                elements: { tables: { dt: "#tbl_lista" }, buttons: { SAV: "#btn_add", EXP: "#btn_exportar" } },
+                initControls: function () { this.$dt = b(this.elements.tables.dt); this.$btn_sav = b(this.elements.buttons.SAV); this.$btn_exp = b(this.elements.buttons.EXP); return this }, reloadTable: function () { this.$dt.DataTable().ajax.reload() }, initTable: function () {
+                    this.$dt.DataTable({
+                        pageLength: 18, processing: !0, serverSide: !0, ajax: ajax.data, columnDefs: [{ className: "text-center", targets: [0, 6] }], columns: [{ data: "Row" }, { data: "Apellidos" }, { data: "Login.user" }, { data: "Unidad.Abreviatura" }, { data: "OrganoServicio.Abreviatura" },
+                        { data: "Hasta" }, { data: "CID", orderable: !1, render: function (a, b, d, e) { return '<a href="javascript:void(0);" class="href-edt" data-sid="' + a + '"><span class="icon icon-edit icon-lg icon-grid"></span></a></a>' } }], language: { url: ajax.lang }, rowCallback: function (a, c, d) { "I" == c.Estado.StrValue && b("td", a).css("color", "Red") }
+                    }); return this
+                }, handleEdit: function (a) { var c = a.currentTarget.getAttribute("data-sid"); b(a.currentTarget.parentElement.parentElement).addClass("rowSelect"); d.show(c) }, handleAddUsuario: function (a) { d.show(0) },
+                handleExpUsuario: function () { window.location.href = ajax.expo }, bindEvents: function () { this.$dt.delegate(".href-edt", "click", this.handleEdit.bind(this)); this.$btn_sav.on("click", this.handleAddUsuario.bind(this)); this.$btn_exp.on("click", this.handleExpUsuario.bind(this)) }, init: function () { this.initControls().initTable().bindEvents(); b(window).keydown(function (a) { if (13 == a.keyCode) return a.preventDefault(), !1 }) }
+            }; e.init(); d.init()
+        })(jQuery);
+    </script>
+    @*
+    <script type="text/javascript">
+        'use strict';
+        (function ($) {
+            var modal = {
+                elements: {
+                    IDM: "#m_usr",
+                    inputs: {
+                        FRM: "input[id^='txt_'], input[id^='chk_'], select[id^='sel_']",
+                        APE: '#txt_ape',
+                        NOM: '#txt_nom',
+                        MAI: '#txt_ema',
+                        TEL: '#txt_tel',
+                        USR: '#txt_usr',
+                        PWD: '#txt_pwd',
+                        INI: '#txt_des',
+                        FIN: '#txt_has',
+
+                        UND: '#sel_und',
+                        PAI: '#sel_pai',
+                        OSE: '#sel_ose',
+
+                        DOM: '#chk_dom',
+                        SES: '#chk_cam',
+                        EST: '#chk_est',
+
+                        PER: '#sel_per',
+                        ROL: '#sel_rol',
+                        SID: "#hdn_sid"
+                    },
+                    controls: {
+                        CAL: ".cal-vig"
+                    },
+                    buttons: {
+                        SAV: "#btn_sav"
+                    },
+                    labels: {
+                        ERR: "#msg_err"
+                    }
+                },
+
+                initControls: function () {
+                    this.$modal = $(this.elements.IDM);
+                    this.$inputs = $(this.elements.inputs.FRM);
+                    this.$err = $(this.elements.labels.ERR);
+
+                    this.$ape = $(this.elements.inputs.APE);
+                    this.$nom = $(this.elements.inputs.NOM);
+                    this.$mai = $(this.elements.inputs.MAI);
+                    this.$tel = $(this.elements.inputs.TEL);
+                    this.$usr = $(this.elements.inputs.USR);
+                    this.$pwd = $(this.elements.inputs.PWD);
+                    this.$ini = $(this.elements.inputs.INI);
+                    this.$fin = $(this.elements.inputs.FIN);
+
+                    this.$und = $(this.elements.inputs.UND);
+                    this.$pai = $(this.elements.inputs.PAI);
+                    this.$ose = $(this.elements.inputs.OSE);
+
+                    this.$dom = $(this.elements.inputs.DOM);
+                    this.$ses = $(this.elements.inputs.SES);
+                    this.$est = $(this.elements.inputs.EST);
+
+                    this.$per = $(this.elements.inputs.PER);
+                    this.$rol = $(this.elements.inputs.ROL);
+                    this.$sid = $(this.elements.inputs.SID);
+
+                    // Buttons
+                    this.$btn_sav = $(this.elements.buttons.SAV);
+                    this.$objs = $(this.elements.controls.CAL);
+
+                    return this;
+                },
+
+                initUI: function () {
+                    this.$inputs.val('');
+                    this.$inputs.prop("disabled", false);
+                    this.$err.empty();
+                    return this;
+                },
+
+                initPlugins: function () {
+                    $('.modal-dialog').draggable({
+                        handle: ".modal-header"
+                    });
+                    this.$modal.on('hidden.bs.modal', function (e) {
+                        $('#tbody_dt tr').siblings().removeClass('rowSelect');
+                    });
+                    this.$per.select2();
+
+                    return this;
+                },
+                fill: function (d) {
+                    this.$ape.val(d.Apellidos);
+                    this.$nom.val(d.Nombres);
+                    this.$mai.val(d.Email);
+                    this.$tel.val(d.Telefono);
+                    this.$usr.val(d.Login.user);
+                    this.$pwd.val(d.Login.pass);
+                    this.$ini.val(d.Desde);
+                    this.$fin.val(d.Hasta);
+
+                    this.$und.val(d.Unidad.CID);
+                    this.$pai.val(d.Pais.CID);
+                    this.$ose.val(d.OrganoServicio.CID);
+
+                    this.$dom.prop('checked', d.IsDominio);
+                    this.$ses.prop('checked', d.CambiarPwd);
+                    this.$est.prop('checked', !d.Estado.IntValue);
+
+                    this.$sid.val(d.CID);
+
+                    var arr = [];
+                    $.each(d.Perfiles, function (id, option) {
+                        arr.push(option.CID);
+                    });
+                    this.$per.val(arr).trigger("change");
+                    this.$rol.val(d.Rol.StrValue);
+                },
+
+                getUsuarioData: function (i) {
+                    var that = this;
+                    try {
+                        var params = { sid: i };
+                        var request = $.ajax({
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(params),
+                            dataType: "json",
+                            type: "POST",
+                            url: ajax.gusr,
+                            success: function (d) {
+                                var err = d.ERR;
+                                if (err == null || err == '' || err == "null") {
+                                    var dat = d.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+                                        that.fill(dat);
+                                    }
+                                    else {
+                                        toastr.info("No se encontraron datos.");
+                                    }
+                                }
+                                else {
+                                    toastr.error(err);
+                                }
+                            }
+                        })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                toastr.error("Solicitud de servidor fallida en " + window.location.href + " (" + ajax.gpar + ")");
+                            });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+
+                show: function (i) {
+                    this.$sid.val(i);
+                    if (typeof (i) !== "number") {
+                        this.getUsuarioData(i);
+                    }
+                    this.initUI().$modal.modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    this.$ape.focus();
+                },
+
+                handleSave: function (e) {
+                    var that = this;
+                    var rules_txt;
+
+                    var isdomain = this.$dom.is(":checked");
+
+                    if (!isdomain) {
+                        rules_txt = {
+                            ape: { id: that.elements.inputs.APE, label: 'Apellidos', minsize: 2, maxsize: 35 },
+                            nom: { id: that.elements.inputs.NOM, label: 'Nombres', minsize: 2, maxsize: 35 },
+                            mai: { id: that.elements.inputs.MAI, label: 'Email', minsize: 5, maxsize: 50 },
+                            lan: { id: that.elements.inputs.USR, label: 'Usuario', minsize: 3, maxsize: 12 },
+                            pwd: { id: that.elements.inputs.PWD, label: 'Contraseña', minsize: 3, maxsize: 12 },
+                            des: { id: that.elements.inputs.INI, label: 'Desde', minsize: 10, maxsize: 10 },
+                            has: { id: that.elements.inputs.FIN, label: 'Hasta', minsize: 10, maxsize: 10 }
+                        };
+                    } else {
+                        rules_txt = {
+                            ape: { id: that.elements.inputs.APE, label: 'Apellidos', minsize: 2, maxsize: 35 },
+                            nom: { id: that.elements.inputs.NOM, label: 'Nombres', minsize: 2, maxsize: 35 },
+                            mai: { id: that.elements.inputs.MAI, label: 'Email', minsize: 5, maxsize: 50 },
+                            lan: { id: that.elements.inputs.USR, label: 'Usuario', minsize: 3, maxsize: 12 },
+                            des: { id: that.elements.inputs.INI, label: 'Desde', minsize: 10, maxsize: 10 },
+                            has: { id: that.elements.inputs.FIN, label: 'Hasta', minsize: 10, maxsize: 10 }
+                        };
+                    }
+                    var T = validaSimple.inputTexts(this.elements.labels.ERR, rules_txt);
+                    if (T === false) return;
+
+                    var rules_sel = {
+                        und: { id: that.elements.inputs.UND, label: 'Unidad Orgánica' },
+                        pai: { id: that.elements.inputs.PAI, label: 'País' },
+                        ose: { id: that.elements.inputs.OSE, label: 'Órgano de Servicio' }
+                    }
+                    var S = validaSimple.inputSelect(this.elements.labels.ERR, rules_sel);
+                    if (S === false) return;
+
+                    this.$err.empty();
+                    this.$inputs.prop("disabled", true);
+
+                    $.confirm({
+                        title: 'Grabar Información',
+                        content: '¿Esta seguro de grabar la información?',
+                        animationSpeed: 0,
+                        theme: 'bootstrap',
+                        buttons: {
+                            ok: {
+                                text: "Aceptar!",
+                                btnClass: 'btn-primary',
+                                keys: ['enter'],
+
+                                action: function () {
+                                    that.handleConfirm();
+                                }
+                            },
+                            cancel: function () {
+                                that.$inputs.prop("disabled", false);
+                            }
+                        }
+                    });
+
+                },
+
+                handleConfirm: function (e) {
+                    var that = this;
+                    var params = {
+                        ape: this.$ape.val(),
+                        nom: this.$nom.val(),
+                        mai: this.$mai.val(),
+                        tel: this.$tel.val(),
+                        usr: this.$usr.val(),
+                        pwd: this.$pwd.val(),
+                        ini: this.$ini.val(),
+                        fin: this.$fin.val(),
+                        und: this.$und.val(),
+                        pai: this.$pai.val(),
+                        ose: this.$ose.val(),
+                        dom: (this.$dom.prop('checked') ? 1 : 0),
+                        ses: (this.$ses.prop('checked') ? 1 : 0),
+                        est: (this.$est.prop('checked') ? 0 : 1),
+                        per: this.$per.val(),
+                        rol: this.$rol.val(),
+                        sid: this.$sid.val()
+                    };
+
+                    var request = $.ajax({
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(params),
+                        dataType: "json",
+                        type: "POST",
+                        url: ajax.susr,
+
+                        success: function (o) {
+                            if (o != null || o !== '' || o !== "null") {
+                                var __err = o.ERR;
+                                if (__err == null || __err == '' || __err == "null") {
+                                    var dat = o.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+                                        if (dat.Estado === 1) {
+                                            that.$modal.modal('hide');
+                                            toastr.success(dat.Mensaje);
+                                            page.reloadTable();
+                                        }
+                                        else {
+                                            helper.bootstrapToastr(dat.Tipo, dat.Mensaje);
+                                        }
+                                    }
+                                    else {
+                                        toastr.error("No se han recibido datos del servidor. Consulte con el administrador del sistema.");
+                                        that.$modal.modal('hide');
+                                    }
+                                }
+                                else {
+                                    toastr.error(__err);
+                                }
+                            }
+                            else {
+                                toastr.error("No se han recibido datos del servidor. Consulte con el administrador del sistema.");
+                            }
+                        }
+                    });
+
+                    request.fail(function (jqXHR, textStatus) {
+                        toastr.error("Solicitud de servidor fallida.");
+                        that.$modal.modal('hide');
+                    });
+
+                },
+
+                handleDominio: function (e) {
+                    var isdomain = this.$dom.is(":checked");
+                    if (isdomain) {
+                        this.$pwd.val('');
+                        this.$pwd.prop("disabled", true);
+                    } else {
+                        this.$pwd.prop("disabled", false);
+                    }
+                },
+
+                handleNo: function (e) {
+                    this.$inputs.prop("disabled", false);
+                    this.$acc_pre.toggle();
+                    this.$acc_def.toggle();
+                },
+
+                bindEvents: function () {
+                    this.$dom.on('change', this.handleDominio.bind(this));
+                    this.$btn_sav.on('click', this.handleSave.bind(this));
+                },
+
+                init: function () {
+                    this.initControls().initUI().initPlugins().bindEvents();
+                }
+            }
+            var page = {
+                elements: {
+                    tables: {
+                        dt: "#tbl_lista"
+                    },
+                    buttons: {
+                        SAV: "#btn_add",
+                        EXP: "#btn_exportar"
+                    }
+                },
+                initControls: function () {
+                    this.$dt = $(this.elements.tables.dt);
+                    this.$btn_sav = $(this.elements.buttons.SAV);
+                    this.$btn_exp = $(this.elements.buttons.EXP);
+                    return this;
+                },
+                reloadTable: function () {
+                    this.$dt.DataTable().ajax.reload();
+                },
+                initTable: function () {
+                    var that = this;
+                    var T = this.$dt.DataTable({
+                        pageLength: 18,
+                        processing: true,
+                        serverSide: true,
+                        ajax: ajax.data,
+                        columnDefs: [{
+                            className: "text-center", targets: [0, 6]
+                        }],
+                        columns: [
+                            { "data": "Row" },
+                            { "data": "Apellidos" },
+                            { "data": "Login.user" },
+                            { "data": "Unidad.Abreviatura" },
+                            { "data": "OrganoServicio.Abreviatura" },
+                            { "data": "Hasta" },
+                            {
+                                "data": "CID",
+                                "orderable": false,
+                                "render": function (data, type, full, meta) {
+                                    return '<a href="javascript:void(0);" class="href-edt" data-sid="' + data + '"><span class="icon icon-edit icon-lg icon-grid"></span></a></a>';
+                                }
+                            }
+                        ],
+                        "language": {
+                            "url": ajax.lang
+                        },
+                        rowCallback:
+                            function (row, data, index) {
+                                if (data.StrValue.Valor == 'I') {
+                                    $('td', row).css('color', 'Red');
+                                }
+                            }
+                    });
+                    return this;
+                },
+
+                handleEdit: function (e) {
+                    var sid = e.currentTarget.getAttribute('data-sid');
+                    var row = e.currentTarget.parentElement.parentElement;
+                    $(row).addClass('rowSelect');
+                    modal.show(sid);
+                },
+                handleAddUsuario: function (e) {
+                    modal.show(0);
+                },
+                handleExpUsuario: function () {
+                    window.location.href = ajax.expo;
+                },
+
+                bindEvents: function () {
+                    this.$dt.delegate('.href-edt', 'click', this.handleEdit.bind(this));
+                    this.$btn_sav.on('click', this.handleAddUsuario.bind(this));
+                    this.$btn_exp.on('click', this.handleExpUsuario.bind(this));
+                },
+
+                init: function () {
+                    this.initControls().initTable().bindEvents();
+
+                    $(window).keydown(function (event) {
+                        if (event.keyCode == 13) {
+                            event.preventDefault();
+                            return false;
+                        }
+                    });
+                },
+            };  //: page
+
+            page.init();
+            modal.init();
+
+        })(jQuery);
+    </script>
+    *@
+}
+
+

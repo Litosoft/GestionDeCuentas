@@ -1,0 +1,36 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Error interno del servidor</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700">
+    @Styles.Render("~/Content/error")
+</head>
+<body>
+    <div class="error">
+        <div class="error-body">
+            <h1 class="error-heading">Error Interno del Servidor</h1>
+            <h4 class="error-subheading">Parece que algo salio mal!</h4>
+            <p>
+                Seguimos estos errores automáticamente, pero si el problema persiste, siéntase libre de <a href="mailto:vneyrat@rree.gob.pe">contactarnos</a>.
+            </p>
+            <p>&nbsp;</p>
+            <p>
+                @Html.ActionLink("Regresar a la página inicial", "Index", "Home", null, new { @class = "btn btn-primary btn-thick" })
+            </p>
+        </div>
+        <div class="error-footer">
+            <p>
+                <small>© 2018 Ministerio de Relaciones Exteriores del Perú</small>
+            </p>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/scripts-base")
+</body>
+</html>

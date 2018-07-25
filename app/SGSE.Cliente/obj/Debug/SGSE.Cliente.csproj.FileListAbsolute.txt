@@ -1,0 +1,55 @@
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Cliente\bin\Debug\SGSE.Cliente.exe.config
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Cliente\bin\Debug\SGSE.Cliente.exe
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Cliente\bin\Debug\SGSE.Cliente.pdb
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Cliente\bin\Debug\SGSE.Security.dll
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Cliente\bin\Debug\SGSE.Security.pdb
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.csprojResolveAssemblyReference.cache
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.Properties.Resources.resources
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.UI.ui_security.resources
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.csproj.GenerateResource.Cache
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.exe
+D:\Workspace\net\SGSE\Webapp\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.pdb
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Cliente\bin\Debug\SGSE.Cliente.exe.config
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Cliente\bin\Debug\SGSE.Cliente.exe
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Cliente\bin\Debug\SGSE.Cliente.pdb
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Cliente\bin\Debug\SGSE.Security.dll
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Cliente\bin\Debug\SGSE.Security.pdb
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.csprojResolveAssemblyReference.cache
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.Properties.Resources.resources
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.UI.ui_security.resources
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.csproj.GenerateResource.Cache
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.exe
+D:\Users\vneyrat\Desktop\SGSE\SGSE\web\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.pdb
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Cliente\bin\Debug\SGSE.Cliente.exe.config
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Cliente\bin\Debug\SGSE.Cliente.exe
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Cliente\bin\Debug\SGSE.Cliente.pdb
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Cliente\bin\Debug\SGSE.Security.dll
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Cliente\bin\Debug\SGSE.Security.pdb
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.csprojResolveAssemblyReference.cache
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.Properties.Resources.resources
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.UI.ui_security.resources
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.csproj.GenerateResource.Cache
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.exe
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.pdb
+D:\Workspace\net\SGSE\SGSE\SGSE.Cliente\bin\Debug\SGSE.Cliente.exe.config
+D:\Workspace\net\SGSE\SGSE\SGSE.Cliente\bin\Debug\SGSE.Cliente.exe
+D:\Workspace\net\SGSE\SGSE\SGSE.Cliente\bin\Debug\SGSE.Cliente.pdb
+D:\Workspace\net\SGSE\SGSE\SGSE.Cliente\bin\Debug\SGSE.Security.dll
+D:\Workspace\net\SGSE\SGSE\SGSE.Cliente\bin\Debug\SGSE.Security.pdb
+D:\Workspace\net\SGSE\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.csprojResolveAssemblyReference.cache
+D:\Workspace\net\SGSE\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.Properties.Resources.resources
+D:\Workspace\net\SGSE\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.UI.ui_security.resources
+D:\Workspace\net\SGSE\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.csproj.GenerateResource.Cache
+D:\Workspace\net\SGSE\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.exe
+D:\Workspace\net\SGSE\SGSE\SGSE.Cliente\obj\Debug\SGSE.Cliente.pdb
+D:\Workspace\net\SGSE\app\SGSE.Cliente\bin\Debug\SGSE.Cliente.exe.config
+D:\Workspace\net\SGSE\app\SGSE.Cliente\bin\Debug\SGSE.Cliente.exe
+D:\Workspace\net\SGSE\app\SGSE.Cliente\bin\Debug\SGSE.Cliente.pdb
+D:\Workspace\net\SGSE\app\SGSE.Cliente\bin\Debug\SGSE.Security.dll
+D:\Workspace\net\SGSE\app\SGSE.Cliente\bin\Debug\SGSE.Security.pdb
+D:\Workspace\net\SGSE\app\SGSE.Cliente\obj\Debug\SGSE.Cliente.csprojResolveAssemblyReference.cache
+D:\Workspace\net\SGSE\app\SGSE.Cliente\obj\Debug\SGSE.Cliente.Properties.Resources.resources
+D:\Workspace\net\SGSE\app\SGSE.Cliente\obj\Debug\SGSE.Cliente.UI.ui_security.resources
+D:\Workspace\net\SGSE\app\SGSE.Cliente\obj\Debug\SGSE.Cliente.csproj.GenerateResource.Cache
+D:\Workspace\net\SGSE\app\SGSE.Cliente\obj\Debug\SGSE.Cliente.exe
+D:\Workspace\net\SGSE\app\SGSE.Cliente\obj\Debug\SGSE.Cliente.pdb

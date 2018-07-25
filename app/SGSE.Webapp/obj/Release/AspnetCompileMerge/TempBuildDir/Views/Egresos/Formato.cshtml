@@ -1,0 +1,610 @@
+﻿@using SGSE.Entidad
+@using SGSE.Webapp.Helpers
+@model SGSE.Webapp.Models.Egresos.FormatEgresosViewModel
+
+@* Titulo *@
+<div class="title-bar">
+    <h2 class="title-bar-title">
+        <span class="d-ib">Registro de Gastos</span>
+    </h2>
+</div>
+@{
+    var ose_cid = SGSE.Security.Peach.DecriptText(User.OrganoServicio_CID);
+    if (ose_cid == string.Empty)
+    {
+        <div class="row gutter-xs">
+            <div class="col-sm-10">
+                <div class="row gutter-xs">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                El usuario no esta asociado a un Órgano de Servicio. No tiene acceso al registro de Gastos
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row gutter-xs">
+            <div class="col-sm-10">
+                <div class="row gutter-xs">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col-md-4">
+                                    <table class="table-form" width="100%">
+                                        <tr>
+                                            <td style="width: 110px;">Cuenta de Cargo</td>
+                                            <td>
+                                                @Html.DropDownList("sel_ctacar", Model.CuentasOse, new { @class = "form-control", tabindex = "1" })
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gutter-xs">
+                    <div class="col-md-12">
+
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <table class="table-form" width="100%">
+                                            <tr>
+                                                <td style="width: 110px;">N° de Registro</td>
+                                                <td>
+                                                    <span style="font-weight:600; font-size:12px;">@Model.MaxRegistro</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-3 col-md-offset-6">
+                                        <table class="table-form" width="100%">
+                                            <tr>
+                                                <td style="width: 110px;">Fecha del Gasto</td>
+                                                <td>
+                                                    <div class="input-with-icon">
+                                                        <input id="txt_fecgto" type="text" class="form-control text-uppercase vigencia" maxlength="10" autocomplete="off" data-provide="datepicker" data-date-today-btn="linked" tabindex="3">
+                                                        <span class="icon icon-calendar input-icon"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table-form" width="100%">
+                                            <tr>
+                                                <td style="width: 110px;">Nombre del Proveedor</td>
+                                                <td>
+                                                    @Html.DropDownList("sel_provdo", Model.Proveedores, new { @class = "form-control text-upper", tabindex = "3" })
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Detalle del Gasto</td>
+                                                <td>
+                                                    @Html.TextAreaCustom("txt_detgas", 4, new { @onkeyup = "TextAreaObject.countChar(this, '#count_des_pm')" })
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><small id="count_des_pm" class="pull-right text-gray">max. 255 caracteres</small></td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row gutter-xs">
+            <div class="col-sm-3">
+                <div class="row gutter-xs">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Forma de Pago</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table-form" width="100%">
+                                            <tr>
+                                                <td style="width: 110px;">Forma de Pago</td>
+                                                <td>
+                                                    @Html.DropDownList("sel_forpag", Model.ItemsFormaPago, new { @class = "form-control", tabindex = "5" })
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>N°</td>
+                                                <td>
+                                                    @Html.TextBoxCustom("txt_nroope", 8, 35)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>&nbsp;</td>
+                                                <td>
+                                                    <label class="custom-control custom-control-primary custom-checkbox">
+                                                        <input class="custom-control-input" name="mode" type="checkbox" id="chk_cajach" tabindex="7">
+                                                        <span class="custom-control-indicator"></span>
+                                                        <span class="custom-control-label">Es un gasto de caja chica</span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-7">
+                <div class="row gutter-xs">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table-form" width="100%" id="tbl_main">
+                                    <tr>
+                                        <td>DESTINO DEL GASTO</td>
+                                        <td>PROGRAMA</td>
+                                        <td>RUBRO</td>
+                                        <td>IMPORTE</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DropDownList("sel_despag", Model.ItemsDestinoGasto, new { @class = "form-control", tabindex = "8" })
+                                        </td>
+                                        <td>
+                                            @Html.DropDownList("sel_proggt", Model.ItemsProgramasPoliticos, new { @class = "form-control", tabindex = "9" })
+                                        </td>
+                                        <td>
+                                            @{
+                                                try
+                                                {
+                                                    var ItemsGasto = Model.ItemsClasificador;
+
+                                                    int niveles = ItemsGasto.Max(p => p.Nivel);
+                                                    var genericas = ItemsGasto.Where(p => p.Tipo.IntValue == 0);
+
+                                                    var nivel1 = ItemsGasto.Where(p => p.Nivel == 1);
+                                                    var nivel2 = ItemsGasto.Where(p => p.Nivel == 2);
+                                                    var nivel3 = ItemsGasto.Where(p => p.Nivel == 3);
+                                                    var nivel4 = ItemsGasto.Where(p => p.Nivel == 4);
+                                                    var nivel5 = ItemsGasto.Where(p => p.Nivel == 5);
+
+                                                    <select class="form-control" id="sel_clagas" tabindex="10">
+                                                        @{
+                                                            foreach (BEClasificadorItem item1 in nivel1)
+                                                            {
+                                                                <optgroup label="@item1.CodigoClase @item1.Nombre">
+                                                                    @foreach (BEClasificadorItem item2 in nivel2)
+                                                                    {
+                                                                        if (item2.Tipo.IntValue == 0 && item2.ItemSuperior == item1.Id)
+                                                                        {
+                                                                            <optgroup label="@item2.CodigoClase @item2.Nombre">
+                                                                                @foreach (BEClasificadorItem item3 in nivel3)
+                                                                                {
+                                                                                    if (item3.Tipo.IntValue == 0 && item3.ItemSuperior == item2.Id)
+                                                                                    {
+                                                                                        <optgroup label="@item3.CodigoClase @item3.Nombre">
+                                                                                            @foreach (BEClasificadorItem item4 in nivel4)
+                                                                                            {
+                                                                                                if (item4.Tipo.IntValue == 0 && item4.ItemSuperior == item3.Id)
+                                                                                                {
+                                                                                                    <optgroup label="@item4.CodigoClase @item4.Nombre">
+                                                                                                        @foreach (BEClasificadorItem item5 in nivel5)
+                                                                                                        {
+                                                                                                            if (item5.Tipo.IntValue == 1 && item5.ItemSuperior == item4.Id)
+                                                                                                            {
+                                                                                                                <option value="@item5.Id">@item5.CodigoClase @item5.Nombre</option>
+                                                                                                            }
+                                                                                                        }
+                                                                                                    </optgroup>
+                                                                                                }
+                                                                                                else if (item4.Tipo.IntValue == 1 && item4.ItemSuperior == item3.Id)
+                                                                                                {
+                                                                                                    <option value="@item4.Id">@item4.CodigoClase @item4.Nombre</option>
+                                                                                                }
+                                                                                            }
+
+                                                                                        </optgroup>
+                                                                                    }
+                                                                                    else if (item3.Tipo.IntValue == 1 && item3.ItemSuperior == item2.Id)
+                                                                                    {
+                                                                                        <option value="@item3.Id">@item3.CodigoClase @item3.Nombre</option>
+                                                                                    }
+                                                                                }
+                                                                            </optgroup>
+                                                                        }
+                                                                        else if (item2.Tipo.IntValue == 1 && item2.ItemSuperior == item1.Id)
+                                                                        {
+                                                                            <option value="@item2.Id">@item2.CodigoClase @item2.Nombre</option>
+                                                                        }
+                                                                    }
+                                                                </optgroup>
+                                                            }
+                                                        }
+                                                    </select>
+                                                            }
+                                                            catch (Exception ex)
+                                                            {
+                                                                <span class="text-danger">@ex.Message</span>
+                                                            }
+
+
+                                            }
+
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxCustom("txt_impgas", 13, 11)
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(1);" id="href_plus"><span class="icon icon-plus icon-lg" style="color:#444;"></span></a>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <span style="line-height:24px;" id="span_importe_error" class="text-danger pull-right">&nbsp;</span>
+
+                                <table class="table-form table table-stripped table-bordered table-condensed" width="100%">
+                                    <thead>
+                                        <tr style="background-color:#dddddb">
+                                            <th>DESTINO DEL GASTO</th>
+                                            <th>PROGRAMA</th>
+                                            <th>RUBRO</th>
+                                            <th>IMPORTE</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="body_gasto" class="tbody_gasto">
+                                        <tr>
+                                            <td colspan="3">
+                                                <span class="pull-right"><strong>TOTAL MONEDA LOCAL</strong></span>
+                                            </td>
+                                            <td class="text-right">
+                                                <span id="span_total" style="font-weight:600;"></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row gutter-xs">
+            <div class="col-sm-10">
+                <div class="row gutter-xs">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <button id="btn_sav" class="btn btn-info btn-sm">Grabar Formato de Egreso</button>
+                                <span id="msg_err" class="text-danger text-error" style="margin-left:32px;"></span>
+
+                                @Html.ActionLink("Generar el Documento", "generaFormatoEgreso", "Egresos", null, new { target = "_blank" })
+
+                                <small class="pull-right" style="font-size:11px; line-height:24px;">
+                                    <i class="icon icon-arrow-circle-left text-primary icon-lg"></i><a href="@Url.Action("Cuentas", "CuentaCte")"> regresar a la lista</a>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @section layoutScripts{
+            <script src="@Url.Content("~/Scripts/plugins/inputmask/jquery.inputmask.bundle.js")"></script>
+            <script src="@Url.Content("~/Scripts/plugins/accounting.min.js")"></script>
+            <script type="text/javascript">
+                'use strict';
+                (function ($) {
+                    var page = {
+                        MAX_ROWS: 13,
+                        INT_CANT: 2,
+                        elements: {
+                            inputs: {
+                                CTA: '#sel_ctacar',
+                                FEC: '#txt_fecgto',
+                                PRV: '#sel_provdo',
+                                DET: '#txt_detgas',
+                                FPG: '#sel_forpag',
+                                NRO: '#txt_nroope',
+                                ICC: '#chk_cajach',
+
+                                DES: '#sel_despag',
+                                PRG: '#sel_proggt',
+                                CLA: '#sel_clagas',
+                                IMP: '#txt_impgas',
+                            },
+
+                            table: {
+                                BDG: '#body_gasto',
+                                MAI: '#tbl_main'
+                            },
+
+                            labels: {
+                                ERR_IMP: '#span_importe_error',
+                                TOT: '#span_total',
+                                ERR: '#msg_err'
+                            },
+
+                            buttons: {
+                                ADD: '#href_plus',
+                                DEL: '.href_del',
+                                SAV: '#btn_sav'
+                            }
+                        },
+
+                        initElements: function () {
+                            this.$cta = $(this.elements.inputs.CTA);
+                            this.$fec = $(this.elements.inputs.FEC);
+                            this.$prv = $(this.elements.inputs.PRV);
+                            this.$det = $(this.elements.inputs.DET);
+                            this.$fpg = $(this.elements.inputs.FPG);
+                            this.$nro = $(this.elements.inputs.NRO);
+                            this.$icc = $(this.elements.inputs.ICC);
+
+                            this.$des = $(this.elements.inputs.DES);
+                            this.$prg = $(this.elements.inputs.PRG);
+                            this.$cla = $(this.elements.inputs.CLA);
+                            this.$imp = $(this.elements.inputs.IMP);
+
+                            this.$errimp = $(this.elements.labels.ERR_IMP);
+                            this.$msgerr = $(this.elements.labels.ERR);
+                            this.$total = $(this.elements.labels.TOT);
+
+                            this.$tbl = $(this.elements.table.MAI);
+                            this.$tb_body = $(this.elements.table.BDG);
+
+                            this.$btn_add = $(this.elements.buttons.ADD);
+                            this.$btn_del = $(this.elements.buttons.DEL);
+                            this.$btn_sav = $(this.elements.buttons.SAV);
+                            return this;
+                        },
+
+                        initPlugIns: function () {
+                            this.$imp.inputmask("numeric", {
+                                radixPoint: ".",
+                                groupSeparator: ",",
+                                digits: 2,
+                                autoGroup: true,
+                                rightAlign: false,
+                                oncleared: function () { self.Value(''); }
+                            });
+                            return this;
+                        },
+
+                        handleadd: function (e) {
+
+                            if (this.$imp.val() == 0 || this.$imp.val() == null || this.$imp.val().length == 0 || this.$imp.val() == '') {
+                                this.$errimp.text("Debe ingresar el importe.");
+                                this.$imp.focus();
+                                return;
+                            }
+                            this.$errimp.html("&nbsp");
+
+                            var des = this.$des.find(":selected").text();
+                            var prg = this.$prg.find(":selected").text();
+                            var cla = this.$cla.find(":selected").text();
+                            var imp = accounting.toFixed(this.$imp.val(), 2);
+
+                            var sid = this.$des.val() + 'Æ' + this.$prg.val() + 'Æ' + this.$cla.val() + 'Æ' + imp;
+                            var sic = this.$des.val() + 'Æ' + this.$prg.val() + 'Æ' + this.$cla.val();
+                            /*
+                            if (this.rowExist(sic)) {
+                                this.$errimp.text("El destino, programa y rubro ya fue ingresado.");
+                                return;
+                            }*/
+
+                            var new_row = $("<tr>");
+                            var cols = "";
+
+                            cols += '<td>' + des + '</td>';
+                            cols += '<td>' + prg + '</td>';
+                            cols += '<td><input type="hidden" name="hd_sic" value="' + sic + '">' + cla + '</td>';
+                            cols += '<td class="text-right"><input type="hidden" name="hd_imp" value="' + imp + '">' + accounting.formatNumber(imp, 2, ",", ".") + '</td>';
+                            cols += '<td style="width:32px; text-align:center"><input type="hidden" name="hd_row" value="' + sid + '"><a href="javascript:void(1);" class="href-del" data-sid="' + sid + '"><span class="icon icon-trash-o icon-lg" style="color:#444;"></span></a></td>';
+                            new_row.append(cols);
+                            new_row.insertBefore('.tbody_gasto > tr:first');
+
+                            this.$imp.val('');
+                            this.$imp.focus();
+
+                            this.INT_CANT++;
+                            if (this.INT_CANT > this.MAX_ROWS) {
+                                this.$btn_add.hide();
+                                this.$imp.val('');
+                                this.$errimp.text("Alcanzó el límite maximo de registros.");
+                            }
+
+                            this.calcularTotal();
+                        },
+
+                        checkGasto: function (e) {
+                            var total = 0;
+                            this.$tb_body.find('input[name^="hd_imp"]').each(function () {
+                                total += +$(this).val();
+                            });
+                            return total;
+                        },
+
+                        calcularTotal: function (e) {
+                            var total = 0;
+                            this.$tb_body.find('input[name^="hd_imp"]').each(function () {
+                                total += +$(this).val();
+                            });
+                            this.$total.text(accounting.formatNumber(total, 2, ",", "."));
+                        },
+
+                        rowExist: function (rw) {
+                            var ret = false;
+                            this.$tb_body.find('input[name^="hd_sic"]').each(function (i) {
+                                if ($(this).val() == rw) {
+                                    ret = true;
+                                    return false;
+                                }
+                            });
+                            return ret;
+                        },
+
+                        handletipopag: function (e) {
+                            var e = this.$fpg.find(":selected").text();
+                            if (e == "COMISION BANCARIA") {
+                                this.$nro.val('');
+                                this.$nro.attr("disabled", "disabled");
+                                this.$icc.prop('checked', false);
+                                this.$icc.attr("disabled", "disabled");
+                            }
+                            else {
+                                this.$nro.removeAttr("disabled");
+                                this.$icc.removeAttr("disabled");
+                            }
+                        },
+
+                        handledel: function (e) {
+                            $(this).closest("tr").remove();
+
+                        },
+
+                        handleEnter: function (e) {
+                            if (e.keyCode == 13) {
+                                if (this.INT_CANT > this.MAX_ROWS) {
+                                    this.$btn_add.hide();
+                                    this.$imp.val('');
+                                    this.$errimp.text("Alcanzó el límite maximo de registros.");
+                                }
+                                else {
+                                    this.handleadd();
+                                }
+
+                            }
+                        },
+
+                        handlesav: function (e) {
+                            var that = this;
+
+                            var e = this.$fpg.find(":selected").text();
+                            var rules = {};
+                            if (e == "COMISION BANCARIA") {
+                                rules = {
+                                    fga: { id: this.elements.inputs.FEC, label: "Fecha del gasto", minsize: 10, maxsize: 10 },
+                                    dtl: { id: this.elements.inputs.DET, label: "Detalle del gasto", minsize: 4, maxsize: 255 }
+                                };
+                            } else {
+                                rules = {
+                                    fga: { id: this.elements.inputs.FEC, label: "Fecha del gasto", minsize: 10, maxsize: 10 },
+                                    dtl: { id: this.elements.inputs.DET, label: "Detalle del gasto", minsize: 4, maxsize: 255 },
+                                    nro: { id: this.elements.inputs.NRO, label: "N° Cuenta/Cheque", minsize: 4, maxsize: 35 },
+                                };
+                            }
+                            var T = validaSimple.inputTexts(this.elements.labels.ERR, rules);
+                            if (T === false) return;
+
+                            var sel = this.$prv.find(":selected").text();
+                            if (sel === "") {
+                                this.$msgerr.html('Debe seleccionar un proveedor, en caso contrario, ingrese uno.');
+                                this.$prv.focus();
+                                return false;
+                            }
+
+                            if (this.checkGasto() === 0) {
+                                this.$msgerr.text("Debe ingresar el detalle del gasto (Destino, Programa, Rubro, Importe).");
+                                return;
+                            }
+                            this.$msgerr.text('');
+
+                            $.confirm({
+                                title: 'Grabar Información',
+                                content: '¿Esta seguro de grabar la información del Formato de Egreso?',
+                                animationSpeed: 0,
+                                theme: 'bootstrap',
+                                buttons: {
+                                    ok: {
+                                        text: "Si, aceptar",
+                                        btnClass: 'btn-primary',
+                                        keys: ['enter'],
+                                        action: function () {
+                                            that.handleConfirm();
+                                        }
+                                    },
+                                    cancel: function () {
+
+                                    }
+                                }
+                            });
+
+                        },
+
+                        handleConfirm: function (e) {
+                            alert('Se guardo el registro del gasto.');
+                        },
+
+                        bindEvents: function () {
+                            this.$btn_add.on('click', this.handleadd.bind(this));
+                            this.$imp.on('keyup', this.handleEnter.bind(this));
+                            //this.$tb_body.delegate('.href-del', 'click', this.handledel.bind(this));
+                            this.$btn_sav.on('click', this.handlesav.bind(this));
+                            this.$fpg.on('change', this.handletipopag.bind(this));
+                        },
+
+                        init: function () {
+                            var that = this;
+                            this.initElements().initPlugIns().bindEvents();
+
+                            this.$tb_body.on("click", ".href-del", function (event) {
+                                $(this).closest("tr").remove();
+                                that.$errimp.html("&nbsp");
+
+                                that.INT_CANT--;
+
+                                if (that.INT_CANT <= that.MAX_ROWS) {
+                                    that.$btn_add.show();
+                                }
+                                that.calcularTotal();
+                            });
+
+                            this.$prv.select2({
+                                tags: true
+                            });
+
+
+                            $(window).keydown(function (event) {
+                                if (event.keyCode == 13) {
+                                    event.preventDefault();
+                                    return false;
+                                }
+                            });
+                        }
+                    };
+
+
+
+                    page.init();
+
+                })(jQuery);
+
+            </script>
+        }
+    }
+}
+

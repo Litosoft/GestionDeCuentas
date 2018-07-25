@@ -1,0 +1,460 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Sistema de Gestión del Servicio Exterior</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" href="favicon.ico">
+
+    <link href="@Url.Content("~/Content/css/vendor.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/css/baboon.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/css/application.min.css")" rel="stylesheet" />
+
+    <link href="@Url.Content("~/Content/vendor/splashy/splashy.min.css")" rel="stylesheet" />
+
+    @RenderSection("layoutHeader", required: false)
+    <link href="~/Scripts/plugins/jqueryconfirm/jquery-confirm.min.css" rel="stylesheet" />
+    <style type="text/css">
+        
+        .form-control, body {
+            font-size: 11px;
+        }
+
+        .form-control {
+            height: 26px;
+            padding: 4px 6px;
+        }
+
+        .input-with-icon .form-control {
+            padding-left: 30px;
+        }
+
+        .input-icon {
+            line-height: 26px !important;
+        }
+
+        .datepicker-input-icon {
+            margin-left: 110px;
+            padding-left: 110px;
+        }
+
+        .p-subtitulo {
+            font-weight: 100;
+            padding: 3px 6px;
+            border-bottom: 1px solid #ddd;
+            color: #8b0000;
+            margin-bottom: 20px;
+        }
+
+        .rowSelect {
+            background-color: #e9ebeb;
+        }
+
+        .text-error {
+            padding-top: 24px;
+            line-height: 60px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .-text-error:before {
+            content: "\f06a";
+            font-family: FontAwesome;
+            font-size: 14px;
+            line-height: 60px;
+            vertical-align: middle;
+            margin: 0 7px;
+        }
+
+        .text-log {
+            color: #AD1457;
+        }
+
+        .header-w1, .header-w2 {
+            text-align: center;
+            width: 20px;
+        }
+
+        .header-w2 {
+            width: 40px;
+        }
+
+        .header-w3, .header-w4 {
+            text-align: center;
+            width: 60px;
+        }
+
+        .header-w4 {
+            width: 80px;
+        }
+
+        .header-w5 {
+            width: 100px;
+        }
+
+        .header-w6 {
+            width: 120px;
+        }
+
+        .header-w7 {
+            width: 140px;
+        }
+
+        .header-w8 {
+            width: 160px;
+        }
+
+        .header-w9 {
+            width: 180px;
+        }
+
+        .header-w10 {
+            width: 200px;
+        }
+
+        .header-w11 {
+            width: 220px;
+        }
+
+        .header-w12 {
+            width: 240px;
+        }
+        /*
+        .table.dataTable .sorting_asc, .table.dataTable .sorting_desc {
+            border-bottom-color: #b25c5c;
+            color: #b25c5c;
+        }
+
+        .dataTables_filter > label:after, .table.dataTable .sorting:after {
+            color: #999;
+        }
+
+        .table.dataTable .sorting_asc:after, .table.dataTable .sorting_desc:after {
+            color: #b25c5c;
+        }
+
+        .table-bordered.dataTable .sorting, .table-bordered.dataTable .sorting_asc, .table-bordered.dataTable .sorting_desc {
+            border-color: #cad6e2;
+        } */
+
+        .text-disabled {
+            color: #aaa;
+            background-color: #f1f1f1;
+        }
+
+        .icon-grid {
+            font-size: 15px;
+            padding-left: 12px;
+            color: #444;
+        }
+
+        .pagination > li > a, .pagination > li > span {
+            padding: 4px 8px;
+            color: #555;
+            border-color: #d6d6d6;
+        }
+
+            .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover, .pagination > li > a:focus, .pagination > li > a:hover, .pagination > li > span:focus, .pagination > li > span:hover {
+                background-color: #a0192c;
+                border-color: #a0192c;
+                color: #fff;
+            }
+        /*
+        table-modal-form tr td:first-child {
+            color: #00f;
+        }
+
+        .table-form-page {
+            border: 0 solid #eaeaea;
+        }
+
+        .td-label {
+            width: 110px;
+            padding-left: 10px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        table#tbl_form tr td:first-child {
+            padding-right: 15px;
+            font-weight: 500;
+            text-align: right;
+            color: #555;
+        }
+
+        .table-form-page tr td {
+            padding: 5px;
+            vertical-align: middle;
+        }
+
+        .table-form-page .td-checkbox {
+            height: 44px;
+        }
+
+        .table-detail > thead > tr > td, .table-detail > thead > tr > th {
+            background-color: #ededed;
+            border-bottom: 2px solid #cdcdcd !important;
+            color: #b25c5c;
+        }*/
+
+        /*
+        .sidenav-heading {
+            color: #eac56b;
+            font-weight: 400;
+        }
+
+        .sidenav-subnav > li > a, .sidenav > li.hover > a, .sidenav > li.open > a, .sidenav > li:hover > a {
+            background-color: #474849;
+            color: #e4e5da;
+        }
+
+        .sidenav-icon {
+            font-size: 14px;
+        }
+
+        .sidenav ul > li.has-subnav > a:before {
+            content: "\f105";
+            float: right;
+            font-family: FontAwesome;
+            height: 18px;
+            line-height: 18px;
+            margin-left: 5px;
+            text-align: center;
+            -webkit-transform: none;
+            -ms-transform: none;
+            -o-transform: none;
+            transform: none;
+            -webkit-transition: -webkit-transform .3s;
+            -o-transition: -o-transform .3s;
+            transition: transform .3s;
+            transition: transform .3s,-webkit-transform .3s,-o-transform .3s;
+            width: 18px;
+        }
+
+        .sidenav ul > li.has-subnav > a, .sidenav > li > a {
+            font-weight: 400;
+        }
+
+        .sidenav ul > li.open > a:before {
+            -webkit-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            -o-transform: rotate(90deg);
+            transform: rotate(90deg);
+        }
+
+        .sidenav-subnav ul > li > a {
+            color: #fff;
+            background-color: #3f4041;
+            padding-left: 55px;
+            font-weight: 200;
+        }
+
+        .sidenav-subnav ul > li.hover > a, .sidenav-subnav ul > li:hover > a {
+            color: #fff;
+            background-color: #373839;
+        }
+
+        .sidenav > li > a {
+            color: #dedfd1;
+        }
+
+        .sidenav-subnav > li.has-subnav.open > a {
+            background-color: #3f4041;
+        }*/
+        /*
+        .nav > li > a {
+            color: #666;
+        }
+
+            .nav > li > a:focus, .nav > li > a:hover {
+                text-decoration: none;
+                background-color: #fff;
+                color: #916d50;
+                border-bottom-color: transparent;
+            }
+        */
+        /*
+
+        .table > tbody > tr > td, .table > tfoot > tr > td, .table > thead > tr > td {
+            padding: 3px;
+        }
+
+        .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > th {
+            padding: 6px;
+        }
+
+        .form-control, body {
+            font-size: 11px;
+        }
+
+        .span-control-page {
+            height: 30px;
+            padding: 4px 8px;
+            display: block;
+            line-height: 1.666667;
+            border-bottom: dotted 1px #cfcfcf;
+        }
+
+        title-bar-title {
+            display: block;
+            font-size: 22px;
+            line-height: 28px;
+            margin-bottom: 0;
+            margin-top: 10px;
+            overflow: hidden;
+            border-bottom: solid 1px #d2d7d3;
+        }
+
+        a {
+            color: #666;
+            text-decoration: underline;
+        }
+
+            a:focus, a:hover {
+                color: #666;
+                text-decoration: underline;
+            }
+            */
+        .row-danger:first-child {
+            border-left: 6px solid #ff4444 !important;
+        }
+
+        .row-warning:first-child {
+            border-left: 6px solid #ffbb33 !important;
+        }
+
+        .row-info:first-child {
+            border-left: 6px solid #33b5e5 !important;
+        }
+
+        .row-success:first-child {
+            border-left: 6px solid #00C851 !important;
+        }
+        /*
+        body {
+            background-color: #f6f7f5 !important;
+        } */
+        /*
+        .title-bar-title {
+            font-size: 19px;
+            line-height: 32px;
+        }
+        .select2-search__field, .select2-results__option, .select2-selection__rendered {
+            text-transform: uppercase !important;
+        }
+         */
+    </style>
+</head>
+<body class="layout layout-header-fixed layout-sidebar-fixed">
+    <div class="layout-header">
+        <div class="navbar navbar-default">
+            <div class="navbar-header">
+                <a class="navbar-brand navbar-brand-center" href="index.html">
+                    <img class="navbar-brand-logo" src="img/logo-inverse.svg" alt="SIRC-GSE">
+                </a>
+                <button class="navbar-toggler collapsed visible-xs-block" type="button" data-toggle="collapse" data-target="#sidenav">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="bars">
+                        <span class="bar-line bar-line-1 out"></span>
+                        <span class="bar-line bar-line-2 out"></span>
+                        <span class="bar-line bar-line-3 out"></span>
+                    </span>
+                    <span class="bars bars-x">
+                        <span class="bar-line bar-line-4"></span>
+                        <span class="bar-line bar-line-5"></span>
+                    </span>
+                </button>
+                <button class="navbar-toggler collapsed visible-xs-block" type="button" data-toggle="collapse" data-target="#navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="arrow-up"></span>
+                    <span class="ellipsis ellipsis-vertical"></span>
+                </button>
+            </div>
+            <div class="navbar-toggleable">
+                <nav id="navbar" class="navbar-collapse collapse">
+                    <button class="sidenav-toggler hidden-xs" title="Collapse sidenav ( [ )" type="button">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="bars">
+                            <span class="bar-line bar-line-1 out"></span>
+                            <span class="bar-line bar-line-2 out"></span>
+                            <span class="bar-line bar-line-3 out"></span>
+                            <span class="bar-line bar-line-4 in"></span>
+                            <span class="bar-line bar-line-5 in"></span>
+                            <span class="bar-line bar-line-6 in"></span>
+                        </span>
+                    </button>
+                    <ul class="nav navbar-nav navbar-left">
+                        @RenderSection("layoutNavbarLeft", required: false)
+
+                        @{
+                            var AreaOrgano = (User.OrganoServicio_Nombre != null) ? User.OrganoServicio_Nombre : User.Unidad_Nombre;
+                        }
+                        <li>
+                            <span class="navbar-text text-left"><strong>@AreaOrgano</strong></span>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <span class="navbar-text text-center"><strong>Bienvenido @User.Usuario</strong></span>
+                        </li>
+
+                        <li class="dropdown hidden-xs">
+                            <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true">
+                                <span class="icon-with-child">
+                                    <span class="icon icon-power-off icon-lg"></span>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    @Html.ActionLink("Cerrar sesión", "LogOut", "Account")
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="layout-main">
+        <div class="layout-sidebar">
+            <div class="layout-sidebar-backdrop"></div>
+            <div class="layout-sidebar-body">
+                @{ Html.RenderAction("GetCustomMenu", "Account", new { selectController = ViewBag.Controller, selectMethod = ViewBag.Method }); }
+
+            </div>
+        </div>
+        <div class="layout-content">
+            <div class="layout-content-body">
+                @RenderBody()
+            </div>
+        </div>
+        <div class="layout-footer">
+            <div class="layout-footer-body">
+                @RenderSection("layoutFooter", required: false)
+                <div class="row">
+                    <div class="col-md-4 hidden-xs"><small>PERFIL:  @User.Perfil_Nombre</small></div>
+                    <div class="col-md-4 text-center"><small>@DateTime.Now.ToShortDateString()</small></div>
+                    <div class="col-md-4 hidden-xs"><small><span class="pull-right">OFICINA: @User.Unidad_Nombre</span></small></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @RenderSection("layoutModals", required: false)
+
+    <script src="@Url.Content("~/Scripts/base/vendor.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/base/elephant.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/base/application.min.js")"></script>
+
+    <script src=" @Url.Content("~/Scripts/base/custom.min.js") "></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="@Url.Content("~/Scripts/plugins/jqueryconfirm/jquery-confirm.min.js")"></script>
+
+    @Html.Partial("~/Views/Shared/Partials/_Toastr.cshtml")
+    @RenderSection("layoutScripts", required: false)
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+D:\Workspace\net\SGSE\app\SGSE.Entidad\bin\Release\SGSE.Entidad.dll
+D:\Workspace\net\SGSE\app\SGSE.Entidad\bin\Release\SGSE.Entidad.pdb
+D:\Workspace\net\SGSE\app\SGSE.Entidad\obj\Release\SGSE.Entidad.dll
+D:\Workspace\net\SGSE\app\SGSE.Entidad\obj\Release\SGSE.Entidad.pdb
+D:\Workspace\net\SGSE\app\SGSE.Entidad\obj\Release\SGSE.Entidad.csprojResolveAssemblyReference.cache

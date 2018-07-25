@@ -1,0 +1,9 @@
+D:\Workspace\net\SGSE\app\SGSE.ConfigurationManager\bin\Release\SGSE.ConfigurationManager.dll
+D:\Workspace\net\SGSE\app\SGSE.ConfigurationManager\bin\Release\SGSE.ConfigurationManager.pdb
+D:\Workspace\net\SGSE\app\SGSE.ConfigurationManager\bin\Release\SGSE.Entidad.dll
+D:\Workspace\net\SGSE\app\SGSE.ConfigurationManager\bin\Release\SGSE.Security.dll
+D:\Workspace\net\SGSE\app\SGSE.ConfigurationManager\bin\Release\SGSE.Entidad.pdb
+D:\Workspace\net\SGSE\app\SGSE.ConfigurationManager\bin\Release\SGSE.Security.pdb
+D:\Workspace\net\SGSE\app\SGSE.ConfigurationManager\obj\Release\SGSE.ConfigurationManager.csprojResolveAssemblyReference.cache
+D:\Workspace\net\SGSE\app\SGSE.ConfigurationManager\obj\Release\SGSE.ConfigurationManager.dll
+D:\Workspace\net\SGSE\app\SGSE.ConfigurationManager\obj\Release\SGSE.ConfigurationManager.pdb

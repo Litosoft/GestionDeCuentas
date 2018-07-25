@@ -1,0 +1,14 @@
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Common\bin\Debug\SGSE.Common.dll
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Common\bin\Debug\SGSE.Common.pdb
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Common\obj\Debug\SGSE.Common.dll
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Common\obj\Debug\SGSE.Common.pdb
+D:\Users\vneyrat\Desktop\Proyecto SGSE\web\SGSE\SGSE.Common\obj\Debug\SGSE.Common.csprojResolveAssemblyReference.cache
+D:\Workspace\net\SGSE\SGSE\SGSE.Common\bin\Debug\SGSE.Common.dll
+D:\Workspace\net\SGSE\SGSE\SGSE.Common\bin\Debug\SGSE.Common.pdb
+D:\Workspace\net\SGSE\SGSE\SGSE.Common\obj\Debug\SGSE.Common.dll
+D:\Workspace\net\SGSE\SGSE\SGSE.Common\obj\Debug\SGSE.Common.pdb
+D:\Workspace\net\SGSE\app\SGSE.Common\bin\Debug\SGSE.Common.dll
+D:\Workspace\net\SGSE\app\SGSE.Common\bin\Debug\SGSE.Common.pdb
+D:\Workspace\net\SGSE\app\SGSE.Common\obj\Debug\SGSE.Common.dll
+D:\Workspace\net\SGSE\app\SGSE.Common\obj\Debug\SGSE.Common.pdb
+D:\Workspace\net\SGSE\app\SGSE.Common\obj\Debug\SGSE.Common.csprojResolveAssemblyReference.cache

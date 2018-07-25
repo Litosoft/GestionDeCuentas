@@ -1,0 +1,131 @@
+﻿@model SGSE.Webapp.Models.Account.SignUpViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Iniciar sesión &middot; Sistema de Gestión del Servicio Exterior</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700">
+
+    <link href="@Url.Content("~/Content/css/vendor.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/css/baboon.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/css/application.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/css/login.css")" rel="stylesheet" />
+</head>
+<body>
+    <div class="login">
+        <div class="login-body">
+            <div class="login-form">
+                <p class="text-justify">
+                    Si tiene una cuenta de correo institucional, puede solicitar el acceso a la aplicación ingresando los siguientes datos.
+                </p>
+                @using (Html.BeginForm("Signup", "Account", FormMethod.Post, new { data_toggle = "validator", id = "login_form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label for="txtape">Apellidos</label>
+                        @Html.TextBoxFor(m =>  m.Usuario.Apellidos, new { @class = "form-control text-upper", autocomplete = "off", required = "required", id = "txtape", name = "txtape", minlength = "3" })
+                    </div>
+                    <div class="form-group">
+                        <label for="txtnom">Nombres</label>
+                        @Html.TextBoxFor(m => m.Usuario.Nombres, new { @class = "form-control text-upper", autocomplete = "off", required = "required", id = "txtnom", name = "txtnom", minlength = "2" })
+                    </div>
+                    <div class="form-group">
+                        <label for="txtema">Correo Institucional ( @@RREE.GOB.PE )</label>
+                        @Html.TextBoxFor(m => m.Usuario.Email, new { @class = "form-control text-upper", autocomplete = "off", required = "required", id = "txtema", name = "txtema", minlength = "2", placeholder="NOMBRE_USUARIO@RREE.GOB:PE" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="selose">Órgano de Servicio</label>
+                        @Html.DropDownListFor(model => model.Usuario.OrganoServicio.CID, Model.OrganosDeServicio, new { @class = "form-control", tabindex = "1" })
+                    </div>
+
+                    <div class="captcha_wrap">
+                        <div class="captcha">
+                            Captcha: Arrastre y Ordene
+                        </div>
+                        <ul id="sortable">
+                            <li class="captchaItem">1</li>
+                            <li class="captchaItem">2</li>
+                            <li class="captchaItem">3</li>
+                            <li class="captchaItem">4</li>
+                        </ul>
+                    </div>
+                    <button id="btn_submit" class="btn btn-default btn-block" type="submit">Solicitar una cuenta de acceso</button>
+                }
+            </div>
+        </div>
+        <div class="login-footer">
+            Regresar al @Html.ActionLink("Login", "Login")
+        </div>
+    </div>
+    <script src="@Url.Content("~/Scripts/base/vendor.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/base/elephant.min.js")"></script>
+
+    @Html.Partial("~/Views/Shared/Partials/_Toastr.cshtml")
+
+    <script src="@Url.Content("~/Scripts/plugins/UI/jquery-1.3.2.js")"></script>
+    <script src="@Url.Content("~/Scripts/plugins/UI/ui.core.js")"></script>
+    <script src="@Url.Content("~/Scripts/plugins/UI/ui.sortable.js")"></script>
+    <script type="text/javascript">
+        (function (b) { b.fn.shuffle = function () { return this.each(function () { var a = b(this).children(); return a.length ? b(this).html(b.shuffle(a, b(this))) : this }) }; b.fn.validate = function () { var a = !1; this.each(function () { var c = b(this).children(); a = "1" == c[0].innerHTML && "2" == c[1].innerHTML && "3" == c[2].innerHTML && "4" == c[3].innerHTML }); return a }; b.shuffle = function (a, c) { for (var e, f, d = a.length; d; e = parseInt(Math.random() * d), f = a[--d], a[d] = a[e], a[e] = f); if ("1" == a[0].innerHTML) c.html(b.shuffle(a, c)); else return a } })(jQuery);
+        $(function () { $("#sortable").sortable(); $("#sortable").disableSelection(); $("ul").shuffle(); $("#login_form").submit(function (b) { $("ul").validate() || (alert("Arrastre y ordene los n\u00fameros para continuar."), b.preventDefault()) }) });
+    </script>
+    @*
+        <script type="text/javascript">
+            (function ($) {
+                $.fn.shuffle = function () {
+                    return this.each(function () {
+                        var items = $(this).children();
+
+                        return (items.length)
+                            ? $(this).html($.shuffle(items, $(this)))
+                        : this;
+                    });
+                }
+
+                $.fn.validate = function () {
+                    var res = false;
+                    this.each(function () {
+                        var arr = $(this).children();
+                        res = ((arr[0].innerHTML == "1") &&
+                            (arr[1].innerHTML == "2") &&
+                            (arr[2].innerHTML == "3") &&
+                            (arr[3].innerHTML == "4"));
+                    });
+                    return res;
+                }
+
+                $.shuffle = function (arr, obj) {
+                    for (
+                    var j, x, i = arr.length; i;
+                    j = parseInt(Math.random() * i),
+                    x = arr[--i], arr[i] = arr[j], arr[j] = x
+                );
+                    if (arr[0].innerHTML == "1") obj.html($.shuffle(arr, obj))
+                    else return arr;
+                }
+
+            })(jQuery);
+
+            $(function () {
+                $("#sortable").sortable();
+                $("#sortable").disableSelection();
+                $('ul').shuffle();
+
+                $("#login_form").submit(function (e) {
+                    if (!$('ul').validate()) {
+                        alert("Arrastre y ordene los números para continuar.")
+                        e.preventDefault();
+                    }
+                });
+            });
+        </script>
+    *@
+</body>
+</html>

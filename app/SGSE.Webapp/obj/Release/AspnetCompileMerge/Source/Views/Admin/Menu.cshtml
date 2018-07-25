@@ -1,0 +1,451 @@
+﻿@using SGSE.Webapp.Helpers
+
+@section layoutNavbarLeft{
+    <li>
+        <a href="javascript:void(0);" id="btn_add">
+            <span class="splashy-document_letter_add"></span> Nuevo
+        </a>
+    </li>
+    <li>
+        <a href="javascript:void(0);" id="btn_sav">
+            <span class="splashy-document_letter_okay"></span> Grabar
+        </a>
+    </li>
+    <li>
+        <a href="javascript:void(0);" id="btn_del">
+            <span class="splashy-document_letter_remove"></span> Eliminar
+        </a>
+    </li>
+}
+
+@section layoutHeader{
+    <link href="@Url.Content("~/Scripts/plugins/jstree/css/jstree.css")" rel="stylesheet" />
+    <style>
+        .text-uppercase, .initialism {
+            text-transform: none !important;
+        }
+    </style>
+}
+<div class="title-bar">
+    <h2 class="title-bar-title">
+        <span class="d-ib">Menu de Opciones</span>
+    </h2>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div id="jstree" style="overflow:auto;"></div>
+                    </div>
+                    <div class="col-md-8">
+                        <table id="tbl_form" class="table-form" width="100%">
+                            <tr>
+                                <td style="width:110px;">Opción superior</td>
+                                <td>
+                                    <select class='form-control' tabindex="1" id="sel_pad"><option>- Ninguno -</option></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Nombre</td>
+                                <td>@Html.TextBoxCustom("txt_nom", 150, 2)</td>
+                            </tr>
+                            <tr>
+                                <td>Descripción</td>
+                                <td>@Html.TextBoxCustom("txt_des", 150, 3)</td>
+                            </tr>
+                            <tr>
+                                <td>Controlador</td>
+                                <td>@Html.TextBoxCustom("txt_con", 80, 4)</td>
+                            </tr>
+                            <tr>
+                                <td>Método</td>
+                                <td>@Html.TextBoxCustom("txt_met", 80, 5)</td>
+                            </tr>
+                            <tr>
+                                <td>Parámetro</td>
+                                <td>@Html.TextBoxCustom("txt_par", 30, 6)</td>
+                            </tr>
+                            <tr>
+                                <td>URL</td>
+                                <td>@Html.TextBoxCustom("txt_url", 150, 7)</td>
+                            </tr>
+                            <tr>
+                                <td>Icono</td>
+                                <td>@Html.TextBoxCustom("txt_ico", 40, 8)</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <label class="custom-control custom-control-primary custom-checkbox">
+                                        <input id="chk_pop" class="custom-control-input" type="checkbox" name="mode" />
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-label">Es una ventana emergente</span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <label class="custom-control custom-control-primary custom-checkbox">
+                                        <input id="chk_grp" class="custom-control-input" type="checkbox" name="mode" />
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-label">Es un grupo (no clickleable)</span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Orden</td>
+                                <td>
+                                    @Html.TextBoxCustom("txt_ord", 2, 9)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <label class="custom-control custom-control-primary custom-checkbox">
+                                        <input id="chk_vis" class="custom-control-input" type="checkbox" checked="checked" name="mode" />
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-label">Es visible</span>
+                                    </label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <span id="msg_err" class="text-danger text-error"></span>
+                    </div>
+                </div>
+
+                <input type="hidden" id="hdn_sid" value="0" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section layoutScripts{
+    <script src="@Url.Content("~/Scripts/plugins/jstree/jstree.min.js")"></script>
+    <script type="text/javascript">
+        var ajax = {
+            gtre: "@Url.Action("YjFJRVFs", "Admin")",
+            gpdr: "@Url.Action("UVdTdmlD", "Admin")",
+            gopc: "@Url.Action("SFpocmJ3", "Admin")",
+            sopc: "@Url.Action("TW5UTjZN", "Admin")",
+            expo: "@Url.Action("Y1RyVHdU", "Admin")",
+        }
+    </script>
+    <script type="text/javascript">
+        'use strict';
+        (function ($) {
+            var oTree;
+            var page = {
+                elements: {
+                    inputs: {
+                        FRM: "input[id^='txt_'], input[id^='chk_'], input[id^='sel_']",
+                        PAD: '#sel_pad',
+                        NOM: '#txt_nom',
+                        DES: '#txt_des',
+                        CON: '#txt_con',
+                        MET: '#txt_met',
+                        PAR: '#txt_par',
+                        URL: '#txt_url',
+                        ICO: '#txt_ico',
+                        POP: '#chk_pop',
+                        ORD: '#txt_ord',
+                        VIS: '#chk_vis',
+                        GRP: '#chk_grp'
+                    },
+                    data: {
+                        SID: "#hdn_sid"
+                    },
+                    controls: {
+                        TRE: "#jstree"
+                    },
+                    buttons: {
+                        ADD: "#btn_add",
+                        SAV: "#btn_sav",
+                        DEL: "#btn_del",
+                        EXP: "#btn_exp"
+                    },
+                    labels: {
+                        ERR: "#msg_err"
+                    }
+                },
+
+                initControls: function () {
+                    this.$tree = $(this.elements.controls.TRE);
+
+                    this.$form = $(this.elements.inputs.FRM);
+                    this.$padr = $(this.elements.inputs.PAD);
+                    this.$nomb = $(this.elements.inputs.NOM);
+                    this.$desc = $(this.elements.inputs.DES);
+                    this.$ctrl = $(this.elements.inputs.CON);
+                    this.$metd = $(this.elements.inputs.MET);
+                    this.$parm = $(this.elements.inputs.PAR);
+                    this.$urls = $(this.elements.inputs.URL);
+                    this.$icon = $(this.elements.inputs.ICO);
+                    this.$popp = $(this.elements.inputs.POP);
+                    this.$ordn = $(this.elements.inputs.ORD);
+                    this.$vsbl = $(this.elements.inputs.VIS);
+                    this.$grup = $(this.elements.inputs.GRP);
+
+                    this.$msg = $(this.elements.labels.ERR);
+                    this.$sid = $(this.elements.data.SID);
+
+                    this.$btn_add = $(this.elements.buttons.ADD);
+                    this.$btn_sav = $(this.elements.buttons.SAV);
+                    this.$btn_del = $(this.elements.buttons.DEL);
+                    this.$btn_exp = $(this.elements.buttons.EXP);
+
+                    return this;
+                },
+
+                initPlugins: function () {
+                    var that = this;
+                    oTree = this.$tree.jstree({
+                        'core': {
+                            'check_callback': true,
+                            'multiple': false,
+                            'animation': 0,
+                            'data': {
+                                'url': ajax.gtre,
+                                'data': function (n) {
+                                    return { 'id': n.id };
+                                }
+                            }
+                        }
+                    });
+
+                    oTree.on('changed.jstree', function (e, data) {
+                        var e = data.instance.get_node(data.selected);
+                    }).jstree();
+
+                    oTree.on("activate_node.jstree", function (e, data) {
+                        var n = data.node;
+                        that.loadDataOpcion(n.id);
+                    });
+
+                    return this;
+                },
+
+                initUI: function () {
+                    this.$msg.empty();
+                    this.$form.val('');
+                    this.$sid.val(0);
+
+                    this.$vsbl.prop('checked', false);
+                    this.$popp.prop('checked', false);
+                    this.$grup.prop('checked', false);
+
+                    this.$nomb.focus();
+                    return this;
+                },
+
+                initData: function () {
+                    this.loadDataPadre();
+                    return this;
+                },
+
+                fillFormOpcion: function (d) {
+                    this.$nomb.val(d.Nombre);
+                    this.$desc.val(d.Descripcion);
+                    this.$ctrl.val(d.Controlador);
+                    this.$metd.val(d.Metodo);
+                    this.$parm.val(d.Parametro);
+                    this.$urls.val(d.Url);
+                    this.$icon.val(d.Icono);
+                    this.$ordn.val(d.Orden);
+
+                    this.$sid.val(d.Id);
+                    this.$vsbl.prop('checked', d.IsVisible.IntValue);
+                    this.$popp.prop('checked', d.IsPopup.IntValue);
+                    this.$grup.prop('checked', d.IsGrupo.IntValue);
+
+                    this.$padr.val(d.Padre.IntValue);
+                    this.$sid.val(d.Id);
+                },
+
+                loadDataPadre: function () {
+                    var arr = [];
+                    this.$padr.empty();
+                    $("<option> cargando ... </option>").appendTo(this.$padr);
+                    try {
+                        $.getJSON(ajax.gpdr, function (e) {
+                            var data = e.DATA;
+                            if (data != null) {
+                                $.each(e.DATA, function (id, option) {
+                                    arr.push("<option value='" + option.Value + "'>" + option.Text + "</option>");
+                                });
+                                $("#sel_pad").empty().append(arr.join(''));
+                            }
+                        });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+
+                loadDataOpcion: function (sid) {
+                    var that = this;
+                    var params = { sid: sid };
+
+                    try {
+                        var request = $.ajax({
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(params),
+                            dataType: "json",
+                            type: "POST",
+                            url: ajax.gopc,
+                            success: function (d) {
+                                var err = d.ERR;
+                                if (err == null || err == '' || err == "null") {
+                                    var dat = d.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+                                        if (dat.length === 0) {
+                                            $.alert("No se encontraron datos.");
+                                        }
+                                        else {
+                                            that.fillFormOpcion(dat);
+                                        }
+                                    }
+                                    else {
+                                        toastr.info("No se encontraron datos.");
+                                    }
+                                }
+                                else {
+                                    toastr.error(err);
+                                }
+                            }
+                        })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                toastr.error("Solicitud de servidor fallida en " + window.location.href + " (" + ajax.ldtl + ")");
+                            });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+
+                handleNew: function () {
+                    var that = this.initUI();
+                },
+
+                handleSave: function () {
+                    
+                    var that = this;
+                    this.$msg.empty();
+                    
+                    $.confirm({
+                        title: 'Grabar Información',
+                        content: '¿Esta seguro de grabar la información?',
+                        animationSpeed: 0,
+                        theme: 'bootstrap',
+                        buttons: {
+                            ok: {
+                                text: "Aceptar!",
+                                btnClass: 'btn-primary',
+                                keys: ['enter'],
+
+                                action: function () {
+                                    that.handleConfirm();
+                                }
+                            },
+                            cancel: function () {
+                                that.$form.prop("disabled", false);
+                            }
+                        }
+                    });
+                },
+
+                handleConfirm: function (e) {
+                    var that = this;
+                    var params = [];
+
+                    params.push(this.$sid.val());
+                    params.push(this.$padr.val());
+                    params.push(this.$nomb.val());
+                    params.push(this.$desc.val());
+                    params.push(this.$ctrl.val());
+                    params.push(this.$metd.val());
+                    params.push(this.$parm.val());
+                    params.push(this.$urls.val());
+                    params.push(this.$icon.val());
+                    params.push(this.$ordn.val());
+                    params.push(this.$popp.is(':checked') ? 1 : 0);
+                    params.push(this.$vsbl.is(':checked') ? 1 : 0);
+                    params.push(this.$grup.is(':checked') ? 1 : 0);
+
+                    try {
+                        var request = $.ajax({
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(params),
+                            dataType: "json",
+                            type: "POST",
+                            url: ajax.sopc,
+                            success: function (d) {
+                                var err = d.ERR;
+                                if (err == null || err == '' || err == "null") {
+                                    var dat = d.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+                                        if (dat.Estado === 1) {
+                                            $.alert(dat.Mensaje);
+                                            home.initUI();
+                                            oTree.jstree().refresh();
+                                        }
+                                        else {
+                                            toastr.error(dat.Mensaje);
+                                        }
+                                    }
+                                }
+                                else {
+                                    toastr.error(err);
+                                }
+                            }
+                        })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                toastr.error("Solicitud de servidor fallida en " + window.location.href + " (" + ajax.spar + ")");
+                            });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+
+                handleDel: function(){
+                    $.alert("No tiene los permisos necesarios.");
+                },
+
+                bindEvents: function () {
+                    this.$btn_add.on('click', this.handleNew.bind(this));
+                    this.$btn_sav.on('click', this.handleSave.bind(this));
+                    this.$btn_del.on('click', this.handleDel.bind(this));
+                },
+
+                init: function () {
+                    this.initControls().initPlugins().initUI().initData().bindEvents();
+
+                    $(window).keydown(function (event) {
+                        if (event.keyCode == 13) {
+                            event.preventDefault();
+                            return false;
+                        }
+                    });
+                }
+            }
+
+            page.init();
+
+        })(jQuery);
+
+
+    </script>
+}
+
+
+

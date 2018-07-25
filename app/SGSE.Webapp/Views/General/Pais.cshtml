@@ -1,0 +1,584 @@
+﻿@model List<SelectListItem>
+@using SGSE.Webapp.Helpers
+@section layoutNavbarLeft{
+    <li>
+        <a href="javascript:void(0);" id="btn_add">
+            <span class="splashy-document_letter_add"></span> Nuevo
+        </a>
+    </li>
+}
+<div class="title-bar">
+    <h2 class="title-bar-title">
+        <span class="d-ib">Paises</span>
+    </h2>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover table-responsive" id="dt_main" width="100%">
+            <thead>
+                <tr>
+                    <th class="header-w2">N°</th>
+                    <th>País</th>
+                    <th>Nombre Oficial</th>
+                    <th>Region</th>
+                    <th>Continente</th>
+                    <th class="header-w4">Acción</th>
+                </tr>
+            </thead>
+            <tbody id="tbody_dt">
+                <tr>
+                    <td>&nbsp;</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <input type="hidden" id="hdn_sid" value="0" />
+    </div>
+</div>
+
+@section layoutModals {
+    <div id="m_pais" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom:1px dotted #ccc !important;">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h5 class="modal-title" id="defModalHead">País</h5>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table-form" width="100%">
+                                <tr>
+                                    <td style="width: 100px;">Nombre</td>
+                                    <td>
+                                        @Html.TextBoxCustom("txt_pai", 40, 1)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 100px;">Nombre Oficial</td>
+                                    <td>
+                                        @Html.TextBoxCustom("txt_ofi", 60, 2)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 100px;">Gentilicio</td>
+                                    <td>
+                                        @Html.TextBoxCustom("txt_gen", 40, 3)
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table-form" width="100%">
+                                <tr>
+                                    <td style="width: 100px;">Código M.49</td>
+                                    <td>
+                                        @Html.TextBoxCustom("txt_m49", 3, 4)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 100px;">Continente</td>
+                                    <td>
+                                        @Html.DropDownList("sel_cnt", Model, new { @class = "form-control", tabindex = "6" })
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table-form" width="100%">
+                                <tr>
+                                    <td style="width: 100px;">Código ISO</td>
+                                    <td>
+                                        @Html.TextBoxCustom("txt_iso", 3, 5)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 100px;">Región</td>
+                                    <td>
+                                        @Html.DropDownList("sel_reg", new SelectList(string.Empty, "Value", "Text"), "Seleccione Region", new { @class = "form-control" })
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-12">
+                            <table class="table-form" width="100%">
+                                <tr>
+                                    <td style="width: 100px;">Monedas</td>
+                                    <td>
+                                        <select id="sel_mon" class="form-control" multiple="multiple"></select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <p>&nbsp;</p>
+                    <div class="row">
+                        <div class="col-md-12 spacer_15">
+                            <span id="validation_message" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="hdn_sid" value="0" />
+
+                </div>
+
+                <div class="modal-footer pie-modal-bg pie-modal-borde">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @*Acción Previa*@
+                            <div class="accion-add-pre">
+                                <div class="pull-left">
+                                    <a id="btn_add_pre" href="javascript:void(0);" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> Grabar</a>
+                                </div>
+                                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cerrar</button>
+                            </div>
+                            @*Acción Final*@
+                            <div class="accion-add-def">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <table class="pie-modal-bg" width="100%">
+                                            <tr>
+                                                <td width="1%"><span class="icon icon-question-circle icon-2x text-error"></span></td>
+                                                <td class="text-left"><span class="text-question text-error">&nbsp;¿Esta seguro que desea grabar la información?</span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button id="btn_add_si_def" class="btn btn-sm btn-primary btn-modal-defs href-dtl">Si</button>
+                                        <button id="btn_add_no_def" class="btn btn-sm btn-default btn-modal-defs">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section layoutScripts{
+    <script type="text/javascript">
+        var ajax = {
+            data: "@Url.Action("WvJRpzl5", "General")",
+            gpai: "@Url.Action("TjQxYWpE", "General")",
+            spai: "@Url.Action("bi8wZz09", "General")",
+
+            greg: "@Url.Action("Tk5obGw4", "General")",
+            gmnd: "@Url.Action("hSm2WfIC", "General")",
+
+            expo: "@Url.Action("ExportPais", "General")",
+            lang: "@Url.Content("~/Content/lang/lang.json")"
+        }
+    </script>
+
+    <script type="text/javascript">
+        'use strict';
+        (function ($) {
+            var Modal = {
+                ID: '#m_pais',
+                INPUTS: "input[id^='txt_'], select[id^='sel_']",
+                MSGERR: "#validation_message",
+
+                inputs: {
+                    PAI: '#txt_pai',
+                    OFI: '#txt_ofi',
+                    GEN: '#txt_gen',
+                    M49: '#txt_m49',
+                    ISO: '#txt_iso',
+                    CNT: '#sel_cnt',
+                    REG: '#sel_reg',
+                    MON: '#sel_mon',
+
+                    SID: '#hdn_sid'
+                },
+
+                action: {
+                    areas: {
+                        DIV_ACC_PRE: ".accion-add-pre",
+                        DIV_ACC_DEF: ".accion-add-def"
+                    },
+                    buttons: {
+                        BUTTON_SAVE: '#btn_add_pre',
+                        BUTTON_SI: "#btn_add_si_def",
+                        BUTTON_NO: "#btn_add_no_def",
+                    }
+                },
+
+                initControls: function () {
+                    this.$modal = $(this.ID);
+                    this.$error = $(this.MSGERR);
+                    this.$inputs = $(this.INPUTS);
+
+                    this.$pai = $(this.inputs.PAI);
+                    this.$ofi = $(this.inputs.OFI);
+                    this.$gen = $(this.inputs.GEN);
+                    this.$m49 = $(this.inputs.M49);
+                    this.$iso = $(this.inputs.ISO);
+                    this.$cnt = $(this.inputs.CNT);
+                    this.$reg = $(this.inputs.REG);
+                    this.$mon = $(this.inputs.MON);
+
+                    this.$sid = $(this.inputs.SID);
+
+                    // Areas
+                    this.$acc_pre = $(this.action.areas.DIV_ACC_PRE);
+                    this.$acc_def = $(this.action.areas.DIV_ACC_DEF);
+
+                    // Buttons
+                    this.$btn_save = $(this.action.buttons.BUTTON_SAVE);
+                    this.$btn_si = $(this.action.buttons.BUTTON_SI);
+                    this.$btn_no = $(this.action.buttons.BUTTON_NO);
+
+                    return this;
+                },
+
+                initUI: function () {
+                    this.$inputs.val('');
+                    this.$inputs.prop("disabled", false);
+
+                    this.$acc_pre.show();
+                    this.$acc_def.hide();
+                    this.$error.empty();
+                    return this;
+                },
+
+                initPlugins: function () {
+                    $('.modal-dialog').draggable({
+                        handle: ".modal-header"
+                    });
+                    this.$modal.on('hidden.bs.modal', function (e) {
+                        $('#tbody_dt tr').siblings().removeClass('rowSelect');
+                    });
+                    return this;
+                },
+
+                fill: function (d) {
+                    this.$pai.val(d.Nombre);
+                    this.$ofi.val(d.Oficial);
+                    this.$gen.val(d.Gentilicio);
+                    this.$m49.val(d.M49);
+                    this.$iso.val(d.ISOA3);
+                    this.$cnt.val(d.Region.Continente.CID);
+
+                    var arr = [];
+                    $.each(d.Monedas, function (id, option) {
+                        arr.push(option.CID);
+                    });
+                    this.$mon.val(arr).trigger("change");
+                    this.$sid.val(d.CID);
+                },
+
+                fillmnd: function (data) {
+                    var arr = [];
+                    $.each(data, function (id, option) {
+                        arr.push("<option value='" + option.Value + "'>" + option.Text + "</option>");
+                    });
+                    this.$mon.empty().append(arr.join(''));
+                    this.$mon.select2();
+                },
+
+                show: function (i) {
+                    this.$sid.val(i);
+                    if (typeof (i) !== "number") {
+                        this.getPais(i);
+                    }
+                    this.initUI().$modal.modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    this.$pai.focus();
+                },
+
+                // Ajax
+                getPais: function (i) {
+                    var that = this;
+                    var param = { sid: i };
+
+                    try {
+                        $.getJSON(ajax.gpai, param, function (d) {
+                            var err = d.ERR;
+                            if (err == null || err == '' || err == "null") {
+                                var dat = d.DATA;
+                                if (dat != null && dat != "" && dat != "null") {
+                                    that.getRegion(dat.Region.Continente.CID, dat.Region.CID);
+                                    that.fill(dat);
+                                }
+                                else {
+                                    toastr.info("No se encontraron datos.");
+                                }
+                            }
+                            else {
+                                toastr.error(err);
+                            }
+                        })
+                        .error(function (jqXHR, textStatus, errorThrown) {
+                            toastr.error("Solicitud de servidor fallida. Error:" + textStatus + ". " + jqXHR.responseText);
+                        });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+
+                getRegion: function (i, s) {
+                    var that = this;
+                    var arr = [];
+                    var param = { sid: i };
+
+                    this.$reg.empty();
+                    try {
+                        $.getJSON(ajax.greg, param, function (e) {
+                            var data = e.DATA;
+                            if (data != null) {
+                                $.each(e.DATA, function (id, option) {
+                                    arr.push("<option value='" + option.Value + "'>" + option.Text + "</option>");
+                                });
+                                that.$reg.empty().append(arr.join(''));
+                                if (typeof (s) !== 'undefined') {
+                                    that.$reg.val(s);
+                                }
+                            }
+                        });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+
+                getMonedas: function (i) {
+                    var that = this;
+
+                    try {
+                        $.getJSON(ajax.gmnd, null, function (d) {
+                            var err = d.ERR;
+                            if (err == null || err == '' || err == "null") {
+                                var dat = d.DATA;
+                                if (dat != null && dat != "" && dat != "null") {
+                                    that.fillmnd(dat);
+                                }
+                                else {
+                                    toastr.info("No se encontraron datos.");
+                                }
+                            }
+                            else {
+                                toastr.error(err);
+                            }
+                        })
+                        .error(function (jqXHR, textStatus, errorThrown) {
+                            toastr.error("Solicitud de servidor fallida. Error:" + textStatus + ". " + jqXHR.responseText);
+                        });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+
+
+                // Handlers
+                handleSave: function (e) {
+                    var that = this;
+                    var rules = {
+                        pai: {
+                            id: that.inputs.PAI, label: 'País', minsize: 3, maxsize: 40
+                        }
+                    };
+                    var T = validaSimple.inputTexts(this.MSGERR, rules);
+                    if (!T) return;
+
+                    this.$acc_pre.toggle();
+                    this.$acc_def.toggle();
+                    this.$error.empty();
+                    this.$inputs.prop("disabled", true);
+                },
+
+                handleSi: function (e) {
+                    var that = this;
+
+                    var data = [];
+                    data.push(this.$pai.val());
+                    data.push(this.$ofi.val());
+                    data.push(this.$gen.val());
+                    data.push(this.$m49.val());
+                    data.push(this.$iso.val());
+                    data.push(this.$reg.val());
+                    data.push(this.$sid.val());
+
+                    var params = {
+                        dat: data,
+                        mnd: this.$mon.val()
+                    };
+
+                    try {
+                        var request = $.ajax({
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(params),
+                            dataType: "json",
+                            type: "POST",
+                            url: ajax.spai,
+                            success: function (d) {
+
+                                var err = d.ERR;
+                                if (err == null || err == '' || err == "null") {
+                                    var dat = d.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+                                        if (dat.Estado === 1) {
+                                            that.$modal.modal('hide');
+                                            toastr.success(dat.Mensaje);
+                                            that.initUI();
+                                            Paises.reloadTable();
+                                        }
+                                        else {
+                                            toastr.error(dat.Mensaje);
+                                        }
+                                    }
+                                }
+                                else {
+                                    toastr.error(err);
+                                }
+                            }
+                        })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                toastr.error("Solicitud de servidor fallida. Error:" + textStatus + ". " + this.url);
+                            });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+
+                },
+
+                handleNo: function (e) {
+                    this.$inputs.prop("disabled", false);
+                    this.$acc_pre.toggle();
+                    this.$acc_def.toggle();
+                },
+
+                handleContinente: function (e) {
+                    var sid = this.$cnt.val();
+                    this.getRegion(sid);
+                    this.$reg.focus();
+                },
+
+                bindEvents: function () {
+                    this.$cnt.on('change', this.handleContinente.bind(this));
+
+                    this.$btn_save.on('click', this.handleSave.bind(this));
+                    this.$btn_no.on('click', this.handleNo.bind(this));
+                    this.$btn_si.on('click', this.handleSi.bind(this));
+                },
+
+                init: function () {
+                    this.initControls().initUI().initPlugins().bindEvents();
+                    this.getMonedas();
+                }
+
+            } // modal
+
+
+            var Paises = {
+                TABLE: "#dt_main",
+                action: {
+                    buttons: {
+                        BUTTON_ADD: '#btn_add',
+                        BUTTON_EXP: '#btn_exportar',
+                        BUTTON_HLP: '#btn_ayuda'
+                    }
+                },
+                initControls: function () {
+                    this.$dt = $(this.TABLE);
+                    this.$btn_add = $(this.action.buttons.BUTTON_ADD);
+                    this.$btn_exp = $(this.action.buttons.BUTTON_EXP);
+                    this.$btn_hlp = $(this.action.buttons.BUTTON_HLP);
+
+                    return this;
+                },
+                reloadTable: function () {
+                    this.$dt.DataTable().ajax.reload();
+                },
+                initTable: function () {
+                    var that = this;
+                    var T = this.$dt.DataTable({
+                        pageLength: 18,
+                        colReorder: {
+                            fixedColumnsLeft: 1,
+                            fixedColumnsRight: 1
+                        },
+                        processing: true,
+                        serverSide: true,
+                        ajax: ajax.data,
+                        columnDefs: [{
+                            className: "text-center", targets: [0, 5]
+                        }],
+                        columns: [
+                            { "data": "Row" },
+                            { "data": "Nombre" },
+                            { "data": "Oficial", "orderable": false },
+                            { "data": "Region.Nombre" },
+                            { "data": "Region.Continente.Nombre" },
+                            {
+                                "data": "CID",
+                                "orderable": false,
+                                "render": function (data, type, full, meta) {
+                                    return '<a href="javascript:void(0);" class="href-edt" data-sid="' + data + '"><span class="icon icon-edit icon-lg icon-grid"></span></a></a>';
+                                }
+                            }
+                        ],
+                        "language": {
+                            "url": ajax.lang
+                        }
+                    });
+                    return this;
+                },
+
+                handleEdit: function (e) {
+                    var sid = e.currentTarget.getAttribute('data-sid');
+                    var row = e.currentTarget.parentElement.parentElement;
+                    $(row).addClass('rowSelect');
+                    Modal.show(sid);
+                },
+
+                handleAdd: function (e) {
+                    Modal.show(0);
+                },
+
+                handleExp: function (e) {
+                    window.location.href = ajax.expo;
+                },
+
+                bindEvents: function () {
+                    this.$dt.delegate('.href-edt', 'click', this.handleEdit.bind(this));
+                    this.$btn_add.on('click', this.handleAdd.bind(this));
+                    this.$btn_exp.on('click', this.handleExp.bind(this));
+                },
+
+                init: function () {
+                    this.initControls().initTable().bindEvents();
+
+                    $(window).keydown(function (event) {
+                        if (event.keyCode == 13) {
+                            event.preventDefault();
+                            return false;
+                        }
+                    });
+                }
+            }
+
+            Modal.init();
+            Paises.init();
+
+        })(jQuery);
+    </script>
+}
+
+

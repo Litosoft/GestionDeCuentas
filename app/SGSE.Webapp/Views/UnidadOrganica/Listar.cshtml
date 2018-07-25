@@ -1,0 +1,121 @@
+﻿@using SGSE.Webapp.Helpers
+
+<div class="row">
+    <div class="col-md-12">
+       <div class="panel panel-default">
+           <div class="panel-heading">Unidades Orgánicas</div>
+           <div class="panel-body panel-collapse">
+               <table class="table table-striped table-nowrap table-bordered table-hover dataTable" id="dt_main" width="100%">
+                   <thead>
+                       <tr>
+                           <th class="header-w2">N°</th>
+                           <th>Unidad Orgánica</th>
+                           <th class="header-w4">Abreviatura</th>
+                           <th>Unidad Superior</th>
+                           <th class="header-w4">Acción</th>
+                       </tr>
+                   </thead>
+                   <tbody id="tbody_dt">
+                       <tr>
+                           <td>&nbsp;</td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                       </tr>
+                   </tbody>
+               </table>
+           </div>
+       </div>
+     @*<table class="table table-bordered table-hover table-responsive" id="dt_main" width="100%">*@
+        <input type="hidden" id="hdn_sid" value="0" />
+    </div>
+</div>
+
+@section layoutScripts{
+    <script type="text/javascript">
+        var ajax = {
+            data: "@Url.Action("WvJRpzl5", "UnidadOrganica")",
+            lang: "@Url.Content("~/Content/lang/lang.json")",
+        }
+    </script>
+    <script type="text/javascript">
+        'use strict';
+        (function ($) {
+
+            var page = {
+                elements: {
+                    tables: {
+                        dt: "#dt_main"
+                    },
+                },
+                initControls: function () {
+                    this.$dt = $(this.elements.tables.dt);
+                    return this;
+                },
+                initTable: function () {
+                    var that = this;
+                    var T = this.$dt.DataTable({
+                        pageLength: 18,
+                        processing: true,
+                        serverSide: true,
+                        ajax: ajax.data,
+                        columnDefs: [{
+                            className: "text-center", targets: [0, 2, 4]
+                        }],
+                        columns: [
+                            { "data": "Row" },
+                            { "data": "Nombre" },
+                            {
+                                "data": "Abreviatura",
+                                "orderable": false
+                            },
+                            { "data": "UnidadSuperior.StrValue" },
+                            {
+                                "data": "CID",
+                                "orderable": false,
+                                "render": function (data, type, full, meta) {
+                                    var href_edt = '<a href="javascript:void(0);" class="href-edt" data-sid="' + data + '"><span class="icon icon-edit icon-grid"></span></a>';
+                                    var href_del = '<a href="javascript:void(0);" class="href-del" data-sid="' + data + '"><span class="icon icon-trash-o icon-grid"></span></a>';
+                                    return href_edt + href_del
+                                }
+                            }
+                        ],
+                        "language": {
+                            "url": ajax.lang
+                        }
+                    });
+                    return this;
+                },
+
+                handleEdit: function (e) {
+                    $.alert("No tiene los privilegios necesarios.");
+                },
+
+                handleDel: function (e) {
+                    $.alert("No tiene los privilegios necesarios.");
+                },
+
+                bindEvents: function () {
+                    this.$dt.delegate('.href-edt', 'click', this.handleEdit.bind(this));
+                    this.$dt.delegate('.href-del', 'click', this.handleDel.bind(this));
+                },
+
+                init: function () {
+                    this.initControls().initTable().bindEvents();
+
+                    $(window).keydown(function (event) {
+                        if (event.keyCode == 13) {
+                            event.preventDefault();
+                            return false;
+                        }
+                    });
+                }
+            };
+
+            page.init();
+
+        })(jQuery);
+
+    </script>
+}

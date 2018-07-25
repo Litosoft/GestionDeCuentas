@@ -1,0 +1,1389 @@
+﻿@using SGSE.Webapp.Helpers
+
+@section layoutNavbarLeft{
+    <li>
+        <a href="javascript:void(0);" id="btn_add_param">
+            <span class="splashy-document_letter_add"></span> Nuevo
+        </a>
+    </li>
+}
+<div class="title-bar">
+    <h2 class="title-bar-title">
+        <span class="d-ib">Parametros</span>
+    </h2>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <p>&nbsp;</p>
+        <table class="table table-bordered table-hover" id="tbl_params">
+            <thead>
+                <tr>
+                    <th class="header-w2">N°</th>
+                    <th class="header-w4">Grupo</th>
+                    <th>Parámetro</th>
+                    <th class="header-w4">Acción</th>
+                </tr>
+            </thead>
+            <tbody id="tbody_params">
+                <tr>
+                    <td colspan="4" valign="middle" align="center">
+                        <img src="@Url.Content("~/Content/img/ajax-loader.gif")" height="20px;" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    @* Detalle *@
+    <div class="col-md-8">
+        <div id="region_dtll" style="display:none;">
+            <p>
+                <a href="javascript:void(0);" id="btn_add_detalle">
+                    <span class="splashy-document_letter_add"></span> Nuevo Item
+                </a>
+            </p>
+
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="header-w2">N°</th>
+                        <th>Texto</th>
+                        <th class="header-w3">Valor</th>
+                        <th>Ayuda</th>
+                        <th class="header-w2">Grupo</th>
+                        <th class="header-w2">Orden</th>
+                        <th class="header-w4">Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody_detalle">
+                    <tr>
+                        <td colspan="7" valign="middle" align="center">
+                            Sin datos
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="hidden" id="hdn_sid" value="0" />
+            <input type="hidden" id="hdn_ttl" value="" />
+        </div>
+    </div>
+</div>
+
+@section layoutModals {
+    @* modal parametro*@
+    <div id="m_param" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h5 class="modal-title" id="defModalHead">Parámetro</h5>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table-form" width="100%">
+                                <tr>
+                                    <td>Parametro</td>
+                                    <td>@Html.TextBoxCustom("txt_nom_pm", 35, 1)</td>
+                                </tr>
+                                <tr>
+                                    <td>Grupo</td>
+                                    <td>
+                                        @Html.DropDownList("sel_grp_pm", new SelectList(ViewBag.Grupos, "CID", "Nombre"), new { @class = "form-control", tabindex = "2" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Descripción</td>
+                                    <td>
+                                        @Html.TextAreaCustom("txt_des_pm", 3, new { @onkeyup = "TextAreaObject.countChar(this, '#count_des_pm')" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><small id="count_des_pm" class="pull-right text-gray">max. 255 caracteres</small></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 spacer_15">
+                            <span id="validation_message_pm" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="hdn_sid_pm" value="0" />
+                </div>
+
+                <div class="modal-footer pie-modal-bg pie-modal-borde">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @*Acción Previa*@
+                            <div class="accion-add-pre">
+                                <div class="pull-left">
+                                    <a id="btn_add_pre" href="javascript:void(0);" class="btn btn-primary btn-sm btn-primary-modal">Grabar</a>
+                                </div>
+                                <button type="button" class="btn btn-default btn-sm btn-default-modal" data-dismiss="modal">Cerrar</button>
+                            </div>
+                            @*Acción Final*@
+                            <div class="accion-add-def">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <table class="pie-modal-bg" width="100%">
+                                            <tr>
+                                                <td width="1%"><span class="icon icon-question-circle icon-2x"></span></td>
+                                                <td class="text-left"><span class="text-waiting">&nbsp;¿Esta seguro que desea grabar la información?</span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button id="btn_add_si_def" class="btn btn-sm btn-primary btn-primary-modal">Si</button>
+                                        <button id="btn_add_no_def" class="btn btn-sm btn-default btn-default-modal">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* modal detalle *@
+    <div id="m_dtall" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h5 class="modal-title" id="defModalHead">Elemento para <span id="span_detalle_param"></span></h5>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table-form" width="100%">
+                                <tr>
+                                    <td style="width:110px;">Texto</td>
+                                    <td>@Html.TextBoxCustom("txt_tex_dt", 50, 1)</td>
+                                </tr>
+                                <tr>
+                                    <td>Valor</td>
+                                    <td>@Html.TextBoxCustom("txt_val_dt", 50, 2)</td>
+                                </tr>
+                                <tr>
+                                    <td>N° de Orden</td>
+                                    <td>@Html.TextBoxCustom("txt_ord_dt", 2, 3)</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <label class="custom-control custom-control-primary custom-checkbox" style="margin-top:10px;">
+                                            <input class="custom-control-input" type="checkbox" name="chk_grp_dt" id="chk_grp_dt">
+                                            <span class="custom-control-indicator"></span>
+                                            <span class="custom-control-label">Es un indicador de grupo</span>
+                                        </label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table-form" width="100%">
+                                <tr>
+                                    <td style="width:110px;">Ayuda</td>
+                                    <td>
+                                        @Html.TextAreaCustom("txt_ayu_dt", 3, new { @onkeyup = "TextAreaObject.countChar(this, '#count_ayu_dt')" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><small id="count_ayu_dt" class="pull-right text-gray">max. 255 caracteres</small></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12 spacer_15">
+                            <span id="validation_message_dt" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="hdn_sid_dt" value="0" />
+                </div>
+                <div class="modal-footer pie-modal-bg pie-modal-borde">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @*Acción Previa*@
+                            <div class="accion-add-pre-dt">
+                                <div class="pull-left">
+                                    <a id="btn_add_pre_dt" href="javascript:void(0);" class="btn btn-primary btn-sm btn-primary-modal">Grabar</a>
+                                </div>
+                                <button type="button" class="btn btn-default btn-sm btn-default-modal" data-dismiss="modal">Cerrar</button>
+                            </div>
+                            @*Acción Final*@
+                            <div class="accion-add-def-dt">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <table class="pie-modal-bg" width="100%">
+                                            <tr>
+                                                <td width="1%"><span class="icon icon-question-circle icon-2x"></span></td>
+                                                <td class="text-left"><span class="text-waiting">&nbsp;¿Esta seguro que desea grabar la información?</span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button id="btn_add_si_def_dt" class="btn btn-sm btn-primary btn-primary-modal">Si</button>
+                                        <button id="btn_add_no_def_dt" class="btn btn-sm btn-default btn-default-modal">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* modal delete *@
+    <div id="m_delet" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h5 class="modal-title" id="defModalHead">Eliminar</h5>
+                </div>
+                <div class="modal-body">
+                    <p id="p_del_param"></p>
+                    <input type="hidden" id="hdn_sid_el" value="0" />
+                </div>
+                <div class="modal-footer pie-modal-bg pie-modal-borde">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @*Acción Previa*@
+                            <div class="accion-add-pre-el">
+                                <div class="pull-left">
+                                    <a id="btn_add_pre_el" href="javascript:void(0);" class="btn btn-primary btn-sm btn-primary-modal">Eliminar</a>
+                                </div>
+                                <button type="button" class="btn btn-default btn-sm btn-default-modal" data-dismiss="modal">Cerrar</button>
+                            </div>
+                            @*Acción Final*@
+                            <div class="accion-add-def-el">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <table class="pie-modal-bg" width="100%">
+                                            <tr>
+                                                <td width="1%"><span class="icon icon-question-circle icon-2x"></span></td>
+                                                <td class="text-left"><span class="text-waiting">&nbsp;¿Esta seguro que desea eliminar?</span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button id="btn_add_si_def_el" class="btn btn-sm btn-primary btn-primary-modal">Si</button>
+                                        <button id="btn_add_no_def_el" class="btn btn-sm btn-default btn-default-modal">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    @* modal delete_dtll *@
+    <div id="m_del_dtl" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h5 class="modal-title" id="defModalHead">Eliminar</h5>
+                </div>
+                <div class="modal-body">
+                    <p id="p_del_dtl"></p>
+                    <input type="hidden" id="hdn_sid_del_dtl" value="0" />
+                </div>
+                <div class="modal-footer pie-modal-bg pie-modal-borde">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @*Acción Previa*@
+                            <div class="accion-add-pre-el-dt">
+                                <div class="pull-left">
+                                    <a id="btn_add_pre_el_dt" href="javascript:void(0);" class="btn btn-primary btn-sm btn-primary-modal">Eliminar</a>
+                                </div>
+                                <button type="button" class="btn btn-default btn-sm btn-default-modal" data-dismiss="modal">Cerrar</button>
+                            </div>
+                            @*Acción Final*@
+                            <div class="accion-add-def-el-dt">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <table class="pie-modal-bg" width="100%">
+                                            <tr>
+                                                <td width="1%"><span class="icon icon-question-circle icon-2x"></span></td>
+                                                <td class="text-left"><span class="text-question text-error">&nbsp;¿Esta seguro que desea eliminar?</span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button id="btn_add_si_el_dt" class="btn btn-sm btn-primary btn-primary-modal">Si</button>
+                                        <button id="btn_add_no_el_dt" class="btn btn-sm btn-default btn-default-modal">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@section layoutScripts{
+    <script src="@Url.Content("~/Scripts/plugins/jquery.tmpl.min.js")"></script>
+    @* Plantillas *@
+    <script id="tmpl_params" type="text/x-jquery-tmpl">
+        <tr>
+            <td class="text-center">${Row}</td>
+            <td class="text-left">${Grupo.Nombre}</td>
+            <td><a href="javascript:void(0);" class="href-dtl" data-sid='${CID}'>${Nombre}</a></td>
+            <td class="text-center">
+                <a href="javascript:void(0);" class="href-edt" data-sid='${CID}'><span class="icon icon-edit icon-lg icon-grid"></span></a>
+                <a href="javascript:void(0);" class="href-del" data-sid='${CID}'><span class="icon icon-trash-o icon-lg icon-grid"></span></a>
+            </td>
+        </tr>
+    </script>
+
+    <script id="tmpl_params_empty" type="text/x-jquery-tmpl">
+        <tr>
+            <td colspan="4" valign="middle" align="center">
+                Sin datos
+            </td>
+        </tr>
+    </script>
+
+    <script id="tmpl_params_det" type="text/x-jquery-tmpl">
+        <tr>
+            <td class="text-center">${Row}</td>
+            <td>${Texto}</td>
+            <td class="text-center">${Valor}</td>
+            <td>${Ayuda}</td>
+            <td class="text-center">${IsGrupo.Nombre}</td>
+            <td class="text-center">${Orden}</td>
+            <td class="text-center">
+                <a href="javascript:void(1);" class="href-edt-dtl" data-sid="${CID}"><span class="icon icon-edit icon-lg icon-grid"></span></a>
+                <a href="javascript:void(1);" class="href-del-dtl" data-sid="${CID}"><span class="icon icon-trash icon-lg icon-grid"></span></a>
+            </td>
+        </tr>
+    </script>
+
+    <script id="tmpl_params_det_empty" type="text/x-jquery-tmpl">
+        <tr>
+            <td colspan="7" valign="middle" align="center">
+                Sin datos
+            </td>
+        </tr>
+    </script>
+
+    <script type="text/javascript">
+        var ajax = {
+            lpar: "@Url.Action("S2lFNm44", "Admin")",
+            spar: "@Url.Action("Y2ZTaUlU", "Admin")",
+            gpar: "@Url.Action("OSthOFJz", "Admin")",
+            dpar: "@Url.Action("Vy9WaHkz", "Admin")",
+
+            sdtl: "@Url.Action("RUJJa3Np", "Admin")",
+            ldtl: "@Url.Action("Tk1hVEVk", "Admin")",
+            gdtl: "@Url.Action("OUlSU3Ez", "Admin")",
+            ddtl: "@Url.Action("SVkwTXVC", "Admin")",
+
+            expo: "@Url.Action("aKzJ2UHV", "Admin")",
+        }
+    </script>
+    <script type="text/javascript">
+        'use strict';
+        (function ($) {
+            /* main */
+            var app = {
+                elements: {
+                    TBL_PARAMS: '#tbl_params',
+                    TEMPL_PARAM: '#tmpl_params',
+                    TEMPL_PARAM_EMPTY: '#tmpl_params_empty',
+                    TBODY_PARAM: '#tbody_params',
+                    SID: '#hdn_sid',
+                    TTL: '#hdn_ttl'
+                },
+                regions: {
+                    DETALLE: '#region_dtll'
+                },
+                hrefs: {
+                    EDIT: ".href-edt",
+                    DEL: ".href-del",
+                    DTLL: ".href-dtl"
+                },
+                buttons: {
+                    BUTTON_ADD_PARAM: '#btn_add_param',
+                    BUTTON_EXP: '#btn_exportar',
+                    BUTTON_ADD_DTALL: '#btn_add_detalle',
+                },
+
+                initControls: function () {
+                    // elements
+                    this.$tbl_params = $(this.elements.TBL_PARAMS);
+                    this.$tmpl_param = $(this.elements.TEMPL_PARAM);
+                    this.$tmpl_param_empty = $(this.elements.TEMPL_PARAM_EMPTY);
+                    this.$tbody_param = $(this.elements.TBODY_PARAM);
+                    this.$sid = $(this.elements.SID);
+                    this.$ttl = $(this.elements.TTL);
+
+                    // regions
+                    this.$rgn_detalle = $(this.regions.DETALLE);
+
+                    // refs
+                    this.$href_edit = $(this.hrefs.EDIT);
+                    this.$href_delet = $(this.hrefs.DEL);
+                    this.$href_dtll = $(this.hrefs.DTLL);
+
+                    // buttons
+                    this.$btn_add_param = $(this.buttons.BUTTON_ADD_PARAM);
+                    this.$btn_exportar = $(this.buttons.BUTTON_EXP);
+
+                    return this;
+                },
+
+
+                initUI: function () {
+                    this.$acc_pre.show();
+                    this.$acc_def.hide();
+
+                    return this;
+                },
+
+                initPlugins: function () {
+                    $('.modal-dialog').draggable({
+                        handle: ".modal-header"
+                    });
+
+                    return this;
+                },
+
+                cargarGrillaParams: function (d) {
+                    this.$tbody_param.empty();
+                    this.$tmpl_param.tmpl(d).appendTo(this.$tbody_param);
+                },
+
+                cargarGrillaEmpty: function () {
+                    this.$tbody_param.empty();
+                    this.$tmpl_param_empty.tmpl().appendTo(this.$tbody_param);
+                },
+
+                loadParametros: function () {
+                    var that = this;
+                    try {
+                        var request = $.ajax({
+                            contentType: "application/json; charset=utf-8",
+                            data: null,
+                            dataType: "json",
+                            type: "POST",
+                            url: ajax.lpar,
+                            success: function (d) {
+                                var err = d.ERR;
+                                if (err == null || err == '' || err == "null") {
+                                    var dat = d.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+                                        if (dat.length === 0) {
+                                            that.cargarGrillaEmpty();
+                                        }
+                                        else {
+                                            that.cargarGrillaParams(dat);
+                                        }
+                                    }
+                                    else {
+                                        that.cargarGrillaEmpty();
+                                    }
+                                }
+                                else {
+                                    toastr.error(err);
+                                }
+                            }
+                        })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                toastr.error("Solicitud de servidor fallida. Error:" + textStatus);
+                            });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+
+                // Handlers
+                handleAddParametro: function (e) {
+                    modal_param.show(0);
+                },
+
+                handleDelParametro: function (e) {
+                    var sid = e.currentTarget.getAttribute('data-sid');
+                    var row = e.currentTarget.parentElement.parentElement;
+                    $(row).addClass('rowSelect');
+
+                    var g = (e.currentTarget.parentElement.parentElement.cells[1].childNodes[0].textContent);
+                    var t = g + "." + (e.currentTarget.parentElement.parentElement.cells[2].childNodes[0].textContent);
+
+                    modal_delet.show(sid, t);
+                },
+
+                handleEditParam: function (e) {
+                    var sid = e.currentTarget.getAttribute('data-sid');
+                    var row = e.currentTarget.parentElement.parentElement;
+                    $(row).addClass('rowSelect');
+                    modal_param.show(sid);
+                },
+
+                handleShowDtll: function (e) {
+                    var sid = e.currentTarget.getAttribute('data-sid');
+                    var txt = (e.currentTarget.childNodes[0].data);
+                    this.$sid.val(sid);
+                    this.$ttl.val(txt);
+
+                    $('#tbody_params tr').siblings().removeClass('rowSelect');
+
+                    var row = e.currentTarget.parentElement.parentElement;
+                    $(row).addClass('rowSelect');
+
+                    // Todo: fill rows and show
+                    dtl.detalleLoadAjax();
+                    this.$rgn_detalle.show();
+                },
+
+                handleExp: function (e) {
+                    window.location.href = ajax.expo;
+                },
+
+                //  Binders
+                bindEvents: function () {
+                    this.$tbl_params.delegate('.href-edt', 'click', this.handleEditParam.bind(this));
+                    this.$tbl_params.delegate('.href-del', 'click', this.handleDelParametro.bind(this));
+                    this.$tbl_params.delegate('.href-dtl', 'click', this.handleShowDtll.bind(this));
+
+                    this.$btn_add_param.on('click', this.handleAddParametro.bind(this));
+                    this.$btn_exportar.on('click', this.handleExp.bind(this));
+                },
+
+                init: function () {
+                    this.initControls().initPlugins().bindEvents();
+                    this.loadParametros();
+
+                    $(window).keydown(function (event) {
+                        if (event.keyCode == 13) {
+                            event.preventDefault();
+                            return false;
+                        }
+                    });
+                }
+            };
+
+            var dtl = {
+                elements: {
+                    TBODY: '#tbody_detalle',
+                    T_DATA: '#tmpl_params_det',
+                    T_EMPTY: '#tmpl_params_det_empty'
+                },
+                hrefs: {
+                    EDIT: '.href-edt-dtl',
+                    DEL: '.href-del-dtl',
+                },
+                buttons: {
+                    BUTTON_ADD_DTALL: '#btn_add_detalle',
+                }
+                ,
+                initControls: function () {
+                    this.$tbody = $(this.elements.TBODY);
+                    this.$tmpl_data = $(this.elements.T_DATA);
+                    this.$tmpl_empty = $(this.elements.T_EMPTY);
+
+                    this.$href_edit = $(this.hrefs.EDIT);
+                    this.$href_del = $(this.hrefs.DEL);
+
+                    this.$btn_add_dtall = $(this.buttons.BUTTON_ADD_DTALL);
+
+                    return this;
+                },
+
+                detalleLoadTmpl: function (d) {
+                    this.$tbody.empty();
+                    this.$tmpl_data.tmpl(d).appendTo(this.$tbody);
+                },
+
+                detalleEmptyTmpl: function () {
+                    this.$tbody.empty();
+                    this.$tmpl_empty.tmpl().appendTo(this.$tbody)
+                },
+
+                detalleLoadAjax: function () {
+                    var that = this;
+                    var params = { sid: app.$sid.val() };
+
+                    try {
+                        var request = $.ajax({
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(params),
+                            dataType: "json",
+                            type: "POST",
+                            url: ajax.ldtl,
+                            success: function (d) {
+                                var err = d.ERR;
+                                if (err == null || err == '' || err == "null") {
+                                    var dat = d.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+                                        if (dat.length === 0) {
+                                            that.detalleEmptyTmpl();
+                                        }
+                                        else {
+                                            that.detalleLoadTmpl(dat);
+                                        }
+                                    }
+                                    else {
+                                        that.detalleEmptyTmpl();
+                                    }
+                                }
+                                else {
+                                    toastr.error(err);
+                                }
+                            }
+                        })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                toastr.error("Solicitud de servidor fallida. Error:" + textStatus);
+                            });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+
+                /* handlers */
+                handleListDetalle: function (e) {
+                    this.detalleLoadAjax();
+                },
+
+                handleAddDetalle: function (e) {
+                    modal_dtall.show(0);
+                },
+
+                handleEdit: function (e) {
+                    var sid = e.currentTarget.getAttribute('data-sid');
+                    var row = e.currentTarget.parentElement.parentElement;
+                    $(row).addClass('rowSelect');
+
+                    modal_dtall.show(sid);
+                },
+
+                handleDel: function (e) {
+                    var sid = e.currentTarget.getAttribute('data-sid');
+                    var txt = (e.currentTarget.parentElement.parentElement.cells[1].innerHTML);
+
+                    var row = e.currentTarget.parentElement.parentElement;
+                    $(row).addClass('rowSelect');
+
+                    modal_del_dtl.show(sid, txt);
+                },
+
+                /* Binders */
+                bindEvents: function () {
+                    this.$tbody.delegate('.href-edt-dtl', 'click', this.handleEdit.bind(this));
+                    this.$tbody.delegate('.href-del-dtl', 'click', this.handleDel.bind(this));
+
+                    this.$btn_add_dtall.on('click', this.handleAddDetalle.bind(this));
+                },
+
+                init: function () {
+                    this.initControls().bindEvents();
+                }
+            }
+
+            /* Modals */
+            var modal_param = {
+
+                /* Definiciones */
+                ID: '#m_param',
+                INPUTS: "input[id$='_pm'], textarea[id$='_pm'], #sel_grp_pm",
+                MSGERR: "#validation_message_pm",
+
+                inputs: {
+                    NOM: '#txt_nom_pm',
+                    GRP: '#sel_grp_pm',
+                    DES: '#txt_des_pm',
+                    SID: '#hdn_sid_pm'
+                },
+                action: {
+                    areas: {
+                        DIV_ACC_PRE: ".accion-add-pre",
+                        DIV_ACC_DEF: ".accion-add-def",
+                    },
+                    buttons: {
+                        BUTTON_SAVE: '#btn_add_pre',
+                        BUTTON_SI: "#btn_add_si_def",
+                        BUTTON_NO: "#btn_add_no_def",
+                    }
+                },
+
+                /* Inicializadores */
+                initControls: function () {
+                    this.$modal = $(this.ID);
+                    this.$inputs = $(this.INPUTS);
+                    this.$error = $(this.MSGERR);
+
+                    // Inputs - Parametro
+                    this.$nom = $(this.inputs.NOM);
+                    this.$grp = $(this.inputs.GRP);
+                    this.$des = $(this.inputs.DES);
+                    this.$sid = $(this.inputs.SID);
+
+                    // Areas
+                    this.$acc_pre = $(this.action.areas.DIV_ACC_PRE);
+                    this.$acc_def = $(this.action.areas.DIV_ACC_DEF);
+
+                    // Buttons
+                    this.$btn_save = $(this.action.buttons.BUTTON_SAVE);
+                    this.$btn_si = $(this.action.buttons.BUTTON_SI);
+                    this.$btn_no = $(this.action.buttons.BUTTON_NO);
+
+                    return this;
+                },
+                initUI: function () {
+                    this.$inputs.val('');
+                    this.$inputs.prop("disabled", false);
+
+                    this.$acc_pre.show();
+                    this.$acc_def.hide();
+                    this.$error.empty();
+
+                    return this;
+                },
+                initPlugins: function () {
+                    this.$modal.on('hidden.bs.modal', function (e) {
+                        $('#tbody_params tr').siblings().removeClass('rowSelect');
+                    });
+                    return this;
+                },
+
+                /* Funciones */
+                fill: function (d) {
+                    this.$nom.val(d.Nombre);
+                    this.$grp.val(d.Grupo.CID);
+                    this.$des.val(d.Descripcion);
+                    this.$sid.val(d.CID);
+                },
+                getParamData: function (e) {
+                    // Devuelve los datos de un parámetro
+                    var that = this;
+                    try {
+                        var params = { sid: e };
+
+                        var request = $.ajax({
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(params),
+                            dataType: "json",
+                            type: "POST",
+                            url: ajax.gpar,
+                            success: function (d) {
+                                var err = d.ERR;
+                                if (err == null || err == '' || err == "null") {
+                                    var dat = d.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+                                        that.fill(dat);
+                                    }
+                                    else {
+                                        toastr.info("No se encontraron datos.");
+                                    }
+                                }
+                                else {
+                                    toastr.error(err);
+                                }
+                            }
+                        })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                toastr.error("Solicitud de servidor fallida. Error:" + textStatus);
+                            });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+
+                show: function (i) {
+                    this.$sid.val(i);
+                    if (typeof (i) !== "number") {
+                        this.getParamData(i);
+                    }
+
+                    this.initUI().$modal.modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                },
+
+                /* Handlers */
+                handleSave: function (e) {
+                    var that = this;
+                    var rules = {
+                        nom: {
+                            id: that.inputs.NOM, label: 'Parámetro', minsize: 3, maxsize: 35
+                        }
+                    };
+                    var T = validaSimple.inputTexts(this.MSGERR, rules);
+                    if (T == false) return;
+
+                    var rules_sel = {
+                        grp: {
+                            id: that.inputs.GRP, label: 'Grupo'
+                        }
+                    }
+                    var S = validaSimple.inputSelect(this.MSGERR, rules_sel);
+                    if (S == false) return;
+
+                    this.$acc_pre.toggle();
+                    this.$acc_def.toggle();
+                    this.$error.empty();
+                    this.$inputs.prop("disabled", true);
+                },
+
+                handleSi: function (e) {
+                    var that = this;
+                    var params = [];
+                    params.push(this.$nom.val());
+                    params.push(this.$grp.val());
+                    params.push(this.$des.val());
+                    params.push(this.$sid.val());
+
+                    try {
+                        var request = $.ajax({
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(params),
+                            dataType: "json",
+                            type: "POST",
+                            url: ajax.spar,
+                            success: function (d) {
+                                var err = d.ERR;
+                                if (err == null || err == '' || err == "null") {
+                                    var dat = d.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+                                        if (dat.Estado === 1) {
+                                            app.loadParametros();
+                                            that.$modal.modal('hide');
+                                            toastr.success(dat.Mensaje);
+                                        }
+                                        else {
+                                            toastr.error(dat.Mensaje);
+                                        }
+                                    }
+                                }
+                                else {
+                                    toastr.error(err);
+                                }
+                            }
+                        })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                toastr.error("Solicitud de servidor fallida. Error:" + textStatus);
+                            });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+                handleNo: function (e) {
+                    this.$inputs.prop("disabled", false);
+                    this.$acc_pre.toggle();
+                    this.$acc_def.toggle();
+                },
+
+                /* Binders */
+                bindEvents: function () {
+                    this.$btn_save.on('click', this.handleSave.bind(this));
+                    this.$btn_si.on('click', this.handleSi.bind(this));
+                    this.$btn_no.on('click', this.handleNo.bind(this));
+                },
+
+                /* Constructor */
+                init: function () {
+                    this.initControls().initUI().initPlugins().bindEvents();
+                }
+            };
+
+            var modal_dtall = {
+
+                /* Definiciones */
+                ID: '#m_dtall',
+                INPUTS: "input[id$='_dt'], textarea[id$='_dt']",
+                MSGERR: "#validation_message_dt",
+                TITLE: '#span_detalle_param',
+
+                inputs: {
+                    TEX: '#txt_tex_dt',
+                    VAL: '#txt_val_dt',
+                    AYU: '#txt_ayu_dt',
+                    ORD: '#txt_ord_dt',
+                    GRP: '#chk_grp_dt',
+
+                    SID: '#hdn_sid_dt'
+                },
+                action: {
+                    areas: {
+                        DIV_ACC_PRE: ".accion-add-pre-dt",
+                        DIV_ACC_DEF: ".accion-add-def-dt",
+                    },
+                    buttons: {
+                        BUTTON_SAVE: '#btn_add_pre_dt',
+                        BUTTON_SI: "#btn_add_si_def_dt",
+                        BUTTON_NO: "#btn_add_no_def_dt",
+                    }
+                },
+
+                /* Inicializadores */
+                initControls: function () {
+                    this.$modal = $(this.ID);
+                    this.$inputs = $(this.INPUTS);
+                    this.$error = $(this.MSGERR);
+                    this.$title = $(this.TITLE);
+
+                    // Inputs - Parametro
+                    this.$tex = $(this.inputs.TEX);
+                    this.$val = $(this.inputs.VAL);
+                    this.$ayu = $(this.inputs.AYU);
+                    this.$ord = $(this.inputs.ORD);
+                    this.$grp = $(this.inputs.GRP);
+
+                    this.$sid = $(this.inputs.SID);
+
+                    // Areas
+                    this.$acc_pre = $(this.action.areas.DIV_ACC_PRE);
+                    this.$acc_def = $(this.action.areas.DIV_ACC_DEF);
+
+                    // Buttons
+                    this.$btn_save = $(this.action.buttons.BUTTON_SAVE);
+                    this.$btn_si = $(this.action.buttons.BUTTON_SI);
+                    this.$btn_no = $(this.action.buttons.BUTTON_NO);
+
+                    return this;
+                },
+                initUI: function () {
+                    this.$inputs.val('');
+                    this.$inputs.prop("disabled", false);
+
+                    this.$acc_pre.show();
+                    this.$acc_def.hide();
+                    this.$error.empty();
+
+                    return this;
+                },
+                initPlugins: function () {
+                    this.$modal.on('hidden.bs.modal', function (e) {
+                        $('#tbody_detalle tr').siblings().removeClass('rowSelect');
+                    });
+                    return this;
+                },
+
+                fillFormData: function (d) {
+                    this.$tex.val(d.Texto);
+                    this.$val.val(d.Valor);
+                    this.$ayu.val(d.Ayuda);
+                    this.$ord.val(d.Orden);
+                    this.$sid.val(d.CID);
+                },
+
+                getFormData: function (e) {
+                    // Devuelve los datos de un parámetro
+                    var that = this;
+                    try {
+                        var params = { sid: e };
+                        var request = $.ajax({
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(params),
+                            dataType: "json",
+                            type: "POST",
+                            url: ajax.gdtl,
+                            success: function (d) {
+                                var err = d.ERR;
+                                if (err == null || err == '' || err == "null") {
+                                    var dat = d.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+                                        that.fillFormData(dat);
+                                    }
+                                    else {
+                                        toastr.info("No se encontraron datos.");
+                                    }
+                                }
+                                else {
+                                    toastr.error(err);
+                                }
+                            }
+                        })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                toastr.error("Solicitud de servidor fallida. Error:" + textStatus);
+                            });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+
+                /* Funciones */
+                show: function (i) {
+                    this.$sid.val(i);
+                    if (typeof (i) !== "number") {
+                        this.getFormData(i);
+                    }
+
+                    this.$title.text(app.$ttl.val());
+                    this.initUI().$modal.modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                },
+
+                /* Handlers */
+                handleSave: function (e) {
+                    var that = this;
+                    var rules = {
+                        tex: {
+                            id: that.inputs.TEX, label: 'Texto', minsize: 2, maxsize: 50
+                        },
+                        val: {
+                            id: that.inputs.VAL, label: 'Valor', minsize: 1, maxsize: 50
+                        }
+                    };
+                    var T = validaSimple.inputTexts(this.MSGERR, rules);
+                    if (!T) return;
+
+                    this.$acc_pre.toggle();
+                    this.$acc_def.toggle();
+                    this.$error.empty();
+                    this.$inputs.prop("disabled", true);
+                },
+                handleSi: function (e) {
+                    var that = this;
+                    var p = []
+                    p.push(app.$sid.val()),
+                    p.push(this.$tex.val()),
+                    p.push(this.$val.val()),
+                    p.push(this.$ayu.val()),
+                    p.push(this.$ord.val()),
+                    p.push(this.$grp.is(':checked')),
+                    p.push(this.$sid.val())
+
+                    try {
+                        var request = $.ajax({
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(p),
+                            dataType: "json",
+                            type: "POST",
+                            url: ajax.sdtl,
+                            success: function (d) {
+
+                                var err = d.ERR;
+                                if (err == null || err == '' || err == "null") {
+                                    var dat = d.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+
+                                        if (dat.Estado === 1) {
+                                            dtl.detalleLoadAjax();
+                                            that.$modal.modal('hide');
+                                            toastr.success(dat.Mensaje)
+                                        }
+                                        else {
+                                            toastr.error(dat.Mensaje);
+                                        }
+                                    }
+                                }
+                                else {
+                                    toastr.error(err);
+                                }
+                            }
+                        })
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            toastr.error("Solicitud de servidor fallida. Error:" + textStatus);
+                        });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+                handleNo: function (e) {
+                    this.$inputs.prop("disabled", false);
+                    this.$acc_pre.toggle();
+                    this.$acc_def.toggle();
+                },
+
+                /* Binders */
+                bindEvents: function () {
+                    this.$btn_save.on('click', this.handleSave.bind(this));
+                    this.$btn_si.on('click', this.handleSi.bind(this));
+                    this.$btn_no.on('click', this.handleNo.bind(this));
+                },
+
+                /* Constructor */
+                init: function () {
+                    this.initControls().initUI().initPlugins().bindEvents();
+                }
+            }
+
+            var modal_delet = {
+                /* Definiciones */
+                ID: '#m_delet',
+                TEXT: '#p_del_param',
+                inputs: {
+                    SID: '#hdn_sid_el'
+                },
+
+                action: {
+                    areas: {
+                        DIV_ACC_PRE: ".accion-add-pre-el",
+                        DIV_ACC_DEF: ".accion-add-def-el",
+                    },
+                    buttons: {
+                        BUTTON_SAVE: '#btn_add_pre_el',
+                        BUTTON_SI: "#btn_add_si_def_el",
+                        BUTTON_NO: "#btn_add_no_def_el",
+                    }
+                },
+
+                /* Inicializadores */
+                initControls: function () {
+                    this.$modal = $(this.ID);
+                    this.$text = $(this.TEXT);
+                    this.$sid = $(this.inputs.SID);
+
+                    // Areas
+                    this.$acc_pre = $(this.action.areas.DIV_ACC_PRE);
+                    this.$acc_def = $(this.action.areas.DIV_ACC_DEF);
+
+                    // Buttons
+                    this.$btn_save = $(this.action.buttons.BUTTON_SAVE);
+                    this.$btn_si = $(this.action.buttons.BUTTON_SI);
+                    this.$btn_no = $(this.action.buttons.BUTTON_NO);
+
+                    return this;
+                },
+                initUI: function () {
+                    this.$acc_pre.show();
+                    this.$acc_def.hide();
+                    return this;
+
+                },
+                initPlugins: function () {
+                    this.$modal.on('hidden.bs.modal', function (e) {
+                        $('#tbody_params tr').siblings().removeClass('rowSelect');
+                    });
+                    return this;
+                },
+
+                /* Funciones */
+                show: function (i, t) {
+                    this.$sid.val(i);
+                    this.$text.html("Se procederá a eliminar el elemento <strong>" + t + "</strong>. Este cambio es irreversible.");
+                    this.initUI().$modal.modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                },
+
+                /* Handlers */
+                handleSave: function (e) {
+                    this.$acc_pre.toggle();
+                    this.$acc_def.toggle();
+                },
+                handleSi: function (e) {
+                    var that = this;
+                    var params = { sid: this.$sid.val() }
+                    try {
+                        var request = $.ajax({
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(params),
+                            dataType: "json",
+                            type: "POST",
+                            url: ajax.dpar,
+                            success: function (d) {
+                                var err = d.ERR;
+                                if (err == null || err == '' || err == "null") {
+                                    var dat = d.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+                                        if (dat.Estado === 1) {
+                                            that.$modal.modal('hide');
+                                            toastr.error(dat.Mensaje);
+                                            app.loadParametros();
+                                        }
+                                        else {
+                                            toastr.error(dat.Mensaje);
+                                        }
+                                    }
+                                }
+                                else {
+                                    toastr.error(err);
+                                }
+                            }
+                        })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                toastr.error("Solicitud de servidor fallida. Error:" + textStatus);
+                            });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+                handleNo: function (e) {
+                    this.$acc_pre.toggle();
+                    this.$acc_def.toggle();
+                },
+
+                /* Binders */
+                bindEvents: function () {
+                    this.$btn_save.on('click', this.handleSave.bind(this));
+                    this.$btn_si.on('click', this.handleSi.bind(this));
+                    this.$btn_no.on('click', this.handleNo.bind(this));
+                },
+
+                /* Constructor */
+                init: function () {
+                    this.initControls().initUI().initPlugins().bindEvents();
+                }
+            }
+
+            var modal_del_dtl = {
+                ID: '#m_del_dtl',
+                TEXT: '#p_del_dtl',
+                inputs: {
+                    SID: '#hdn_sid_del_dtl'
+                },
+
+                action: {
+                    areas: {
+                        DIV_ACC_PRE: ".accion-add-pre-el-dt",
+                        DIV_ACC_DEF: ".accion-add-def-el-dt",
+                    },
+                    buttons: {
+                        BUTTON_SAVE: '#btn_add_pre_el_dt',
+                        BUTTON_SI: "#btn_add_si_el_dt",
+                        BUTTON_NO: "#btn_add_no_el_dt",
+                    },
+                },
+
+                /* Inicializadores */
+                initControls: function () {
+                    this.$modal = $(this.ID);
+                    this.$text = $(this.TEXT);
+                    this.$sid = $(this.inputs.SID);
+
+                    // Areas
+                    this.$acc_pre = $(this.action.areas.DIV_ACC_PRE);
+                    this.$acc_def = $(this.action.areas.DIV_ACC_DEF);
+
+                    // Buttons
+                    this.$btn_save = $(this.action.buttons.BUTTON_SAVE);
+                    this.$btn_si = $(this.action.buttons.BUTTON_SI);
+                    this.$btn_no = $(this.action.buttons.BUTTON_NO);
+
+                    return this;
+                },
+                initUI: function () {
+                    this.$acc_pre.show();
+                    this.$acc_def.hide();
+                    return this;
+
+                },
+                initPlugins: function () {
+                    this.$modal.on('hidden.bs.modal', function (e) {
+                        $('#tbody_detalle tr').siblings().removeClass('rowSelect');
+                    });
+                    return this;
+                },
+                /* Funciones */
+
+                show: function (i, t) {
+                    this.$text.html("Se procederá a eliminar el elemento <strong>" + t + "</strong>. Este cambio es irreversible.");
+                    this.$sid.val(i);
+                    this.initUI().$modal.modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                },
+
+                /* Handlers */
+                handleSave: function (e) {
+                    this.$acc_pre.toggle();
+                    this.$acc_def.toggle();
+                },
+                handleSi: function (e) {
+                    var that = this;
+                    var params = { sid: this.$sid.val() }
+                    try {
+                        var request = $.ajax({
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(params),
+                            dataType: "json",
+                            type: "POST",
+                            url: ajax.ddtl,
+                            success: function (d) {
+                                var err = d.ERR;
+                                if (err == null || err == '' || err == "null") {
+                                    var dat = d.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+                                        if (dat.Estado === 1) {
+                                            that.$modal.modal('hide');
+                                            toastr.success(dat.Mensaje);
+                                            dtl.detalleLoadAjax();
+                                        }
+                                        else {
+                                            toastr.error(dat.Mensaje);
+                                        }
+                                    }
+                                }
+                                else {
+                                    toastr.error(err);
+                                }
+                            }
+                        })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                toastr.error("Solicitud de servidor fallida. Error:" + textStatus);
+                            });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+                handleNo: function (e) {
+                    this.$acc_pre.toggle();
+                    this.$acc_def.toggle();
+                },
+
+                /* Binders */
+                bindEvents: function () {
+                    this.$btn_save.on('click', this.handleSave.bind(this));
+                    this.$btn_si.on('click', this.handleSi.bind(this));
+                    this.$btn_no.on('click', this.handleNo.bind(this));
+                },
+
+                /* Constructor */
+                init: function () {
+                    this.initControls().initUI().initPlugins().bindEvents();
+                }
+
+            }
+
+            /* App */
+
+            modal_param.init();
+            modal_dtall.init();
+            modal_delet.init();
+            modal_del_dtl.init();
+
+            app.init();
+            dtl.init();
+        })(jQuery);
+    </script>
+}
+

@@ -1,0 +1,512 @@
+﻿@using SGSE.Webapp.Helpers
+@section layoutNavbarLeft{
+    <li>
+        <a href="javascript:void(0);" id="btn_add">
+            <span class="splashy-document_letter_add"></span> Nuevo
+        </a>
+    </li>
+}
+<div class="title-bar">
+    <h2 class="title-bar-title">
+        <span class="d-ib">Monedas</span>
+    </h2>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover table-responsive" id="dt_main" width="100%">
+            <thead>
+                <tr>
+                    <th class="header-w2">N°</th>
+                    <th>Nombre</th>
+                    <th class="header-w3">S&iacute;mbolo</th>
+                    <th class="header-w3">ISO</th>
+                    <th class="header-w3">Asignable</th>
+                    <th class="header-w4">Acción</th>
+                </tr>
+            </thead>
+            <tbody id="tbody_dt">
+                <tr>
+                    <td>&nbsp;</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <input type="hidden" id="hdn_sid" value="0" />
+    </div>
+</div>
+
+@section layoutModals {
+    <div id="m_moneda" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom:1px dotted #ccc !important;">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h5 class="modal-title" id="defModalHead">Moneda</h5>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table-form" width="100%">
+                                <tr>
+                                    <td style="width: 100px;">Nombre</td>
+                                    <td>
+                                        @Html.TextBoxCustom("txt_nom", 40, 1)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 100px;">Abreviatura</td>
+                                    <td>
+                                        @Html.TextBoxCustom("txt_abr", 20, 2)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 100px;">Sufijo contable</td>
+                                    <td>
+                                        @Html.TextBoxCustom("txt_suf", 15, 3)
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table-form" width="100%">
+                                <tr>
+                                    <td style="width: 100px;">S&iacute;mbolo</td>
+                                    <td>
+                                        @Html.TextBoxCustom("txt_sim", 5, 4)
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table-form" width="100%">
+                                <tr>
+                                    <td style="width: 100px;">ISO 4217</td>
+                                    <td>
+                                        @Html.TextBoxCustom("txt_iso", 3, 5)
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-12">
+                            <table class="table-form" width="100%">
+                                <tr>
+                                    <td style="width: 100px;">Asignable</td>
+                                    <td>
+                                        <label class="custom-control custom-control-primary custom-checkbox">
+                                            <input id="chk_mnd" class="custom-control-input" type="checkbox" name="mode" tabindex="6">
+                                            <span class="custom-control-indicator"></span>
+                                            <span class="custom-control-label">Es moneda de asignación</span>
+                                        </label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <p>&nbsp;</p>
+                    <div class="row">
+                        <div class="col-md-12 spacer_15">
+                            <span id="validation_message" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="hdn_sid" value="0" />
+
+                </div>
+
+                <div class="modal-footer pie-modal-bg pie-modal-borde">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-left">
+                                <button id="btn_sav" class="btn btn-primary btn-sm">Grabar</button>
+                            </div>
+
+                            <button class="btn btn-default btn-sm" style="margin-right:10px;" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+@section layoutScripts{
+    <script type="text/javascript">
+        var ajax = {
+            data: "@Url.Action("TXpDQ0V1", "General")",
+            gmnd: "@Url.Action("MmhHNEhy", "General")",
+            smnd: "@Url.Action("enNBUT09", "General")",
+
+            expo: "@Url.Action("aKzJ2UHV", "General")",
+            lang: "@Url.Content("~/Content/lang/lang.json")"
+        }
+    </script>
+    <script type="text/javascript">
+        (function (b) {
+            var e = {
+                ID: "#m_moneda", INPUTS: "input[id^='txt_'], input[id^='chk_']", MSGERR: "#validation_message", inputs: { NOM: "#txt_nom", ABR: "#txt_abr", SUF: "#txt_suf", SIM: "#txt_sim", ISO: "#txt_iso", ASG: "#chk_mnd", SID: "#hdn_sid" }, action: { buttons: { BUTTON_SAVE: "#btn_sav" } }, initControls: function () {
+                    this.$modal = b(this.ID); this.$error = b(this.MSGERR); this.$inputs = b(this.INPUTS); this.$nom = b(this.inputs.NOM); this.$abr = b(this.inputs.ABR); this.$suf = b(this.inputs.SUF); this.$sim = b(this.inputs.SIM); this.$iso = b(this.inputs.ISO);
+                    this.$asg = b(this.inputs.ASG); this.$sid = b(this.inputs.SID); this.$btn_save = b(this.action.buttons.BUTTON_SAVE); return this
+                }, initUI: function () { this.$inputs.val(""); this.$inputs.prop("disabled", !1); this.$error.empty(); return this }, initPlugins: function () { b(".modal-dialog").draggable({ handle: ".modal-header" }); this.$modal.on("hidden.bs.modal", function (a) { b("#tbody_dt tr").siblings().removeClass("rowSelect") }); return this }, fill: function (a) {
+                    this.$nom.val(a.Nombre); this.$abr.val(a.Abreviatura); this.$suf.val(a.SufijoContable);
+                    this.$sim.val(a.Simbolo); this.$iso.val(a.ISO4217); this.$asg.prop("checked", a.Asignable.Valor); this.$sid.val(a.CID)
+                }, show: function (a) { this.$sid.val(a); "number" !== typeof a && this.getMoneda(a); this.initUI().$modal.modal({ backdrop: "static", keyboard: !1 }); this.$nom.focus() }, getMoneda: function (a) {
+                    var c = this; a = { sid: a }; try {
+                        b.getJSON(ajax.gmnd, a, function (a) { var b = a.ERR; null == b || "" == b || "null" == b ? (a = a.DATA, null != a && "" != a && "null" != a ? c.fill(a) : toastr.info("No se encontraron datos.")) : toastr.error(b) }).error(function (a,
+                        b, c) { toastr.error("Solicitud de servidor fallida. Error:" + b) })
+                    } catch (d) { toastr.error("Error en solicitud: " + d.message) }
+                }, handleSave: function (a) {
+                    var c = this; validaSimple.inputTexts(this.MSGERR, { pai: { id: c.inputs.NOM, label: "Nombre", minsize: 3, maxsize: 40 }, iso: { id: c.inputs.ISO, label: "ISO 4217", minsize: 3, maxsize: 3 } }) && (this.$error.empty(), this.$inputs.prop("disabled", !0), b.confirm({
+                        title: "Grabar Informaci\u00f3n", content: "\u00bfEsta seguro de grabar la informaci\u00f3n?", animationSpeed: 0, theme: "bootstrap",
+                        buttons: { ok: { text: "Aceptar!", btnClass: "btn-primary", keys: ["enter"], action: function () { c.handleConfirm() } }, cancel: function () { c.$inputs.prop("disabled", !1) } }
+                    }))
+                }, handleConfirm: function (a) {
+                    var c = this; a = []; a.push(this.$nom.val()); a.push(this.$abr.val()); a.push(this.$suf.val()); a.push(this.$sim.val()); a.push(this.$iso.val()); a.push(this.$asg.prop("checked") ? 1 : 0); a.push(this.$sid.val()); a = { dat: a }; try {
+                        b.ajax({
+                            contentType: "application/json; charset=utf-8", data: JSON.stringify(a), dataType: "json", type: "POST",
+                            url: ajax.smnd, success: function (a) { var b = a.ERR; null == b || "" == b || "null" == b ? (a = a.DATA, null != a && "" != a && "null" != a && (1 === a.Estado ? (c.$modal.modal("hide"), toastr.success(a.Mensaje), c.initUI(), f.reloadTable()) : toastr.error(a.Mensaje))) : toastr.error(b) }
+                        }).fail(function (a, b, c) { toastr.error("Solicitud de servidor fallida. Error:" + b + ". " + this.url) })
+                    } catch (d) { toastr.error("Error en solicitud: " + d.message) }
+                }, bindEvents: function () { this.$btn_save.on("click", this.handleSave.bind(this)) }, init: function () { this.initControls().initUI().initPlugins().bindEvents() }
+            },
+    f = {
+        TABLE: "#dt_main", action: { buttons: { BUTTON_ADD: "#btn_add", BUTTON_EXP: "#btn_exportar", BUTTON_HLP: "#btn_ayuda" } }, initControls: function () { this.$dt = b(this.TABLE); this.$btn_add = b(this.action.buttons.BUTTON_ADD); this.$btn_exp = b(this.action.buttons.BUTTON_EXP); this.$btn_hlp = b(this.action.buttons.BUTTON_HLP); return this }, reloadTable: function () { this.$dt.DataTable().ajax.reload() }, initTable: function () {
+            this.$dt.DataTable({
+                pageLength: 18, colReorder: { fixedColumnsLeft: 1, fixedColumnsRight: 1 }, processing: !0, serverSide: !0,
+                ajax: ajax.data, columnDefs: [{ className: "text-center", targets: [0, 2, 3, 4, 5] }], columns: [{ data: "Row" }, { data: "Nombre" }, { data: "Simbolo", orderable: !1 }, { data: "ISO4217" }, { data: "Asignable.Texto" }, { data: "CID", orderable: !1, render: function (a, b, d, e) { return '<a href="javascript:void(0);" class="href-edt" data-sid="' + a + '"><span class="icon icon-edit icon-lg icon-grid"></span></a></a>' } }], language: { url: ajax.lang }
+            }); return this
+        }, handleEdit: function (a) {
+            var c = a.currentTarget.getAttribute("data-sid"); b(a.currentTarget.parentElement.parentElement).addClass("rowSelect");
+            e.show(c)
+        }, handleAdd: function (a) { e.show(0) }, handleExp: function (a) { window.location.href = ajax.expo }, bindEvents: function () { this.$dt.delegate(".href-edt", "click", this.handleEdit.bind(this)); this.$btn_add.on("click", this.handleAdd.bind(this)); this.$btn_exp.on("click", this.handleExp.bind(this)) }, init: function () { this.initControls().initTable().bindEvents(); b(window).keydown(function (a) { if (13 == a.keyCode) return a.preventDefault(), !1 }) }
+    }; e.init(); f.init()
+        })(jQuery);
+    </script>
+@*
+    <script type="text/javascript">
+        'use strict';
+        (function ($) {
+
+            var Modal = {
+                ID: '#m_moneda',
+                INPUTS: "input[id^='txt_'], input[id^='chk_']",
+                MSGERR: "#validation_message",
+
+                inputs: {
+                    NOM: '#txt_nom',
+                    ABR: '#txt_abr',
+                    SUF: '#txt_suf',
+                    SIM: '#txt_sim',
+                    ISO: '#txt_iso',
+                    ASG: '#chk_mnd',
+
+                    SID: '#hdn_sid'
+                },
+
+                action: {
+                    buttons: {
+                        BUTTON_SAVE: '#btn_sav'
+                    }
+                },
+
+                initControls: function () {
+                    this.$modal = $(this.ID);
+                    this.$error = $(this.MSGERR);
+                    this.$inputs = $(this.INPUTS);
+
+                    this.$nom = $(this.inputs.NOM);
+                    this.$abr = $(this.inputs.ABR);
+                    this.$suf = $(this.inputs.SUF);
+                    this.$sim = $(this.inputs.SIM);
+                    this.$iso = $(this.inputs.ISO);
+                    this.$asg = $(this.inputs.ASG);
+
+                    this.$sid = $(this.inputs.SID);
+
+                    // Buttons
+                    this.$btn_save = $(this.action.buttons.BUTTON_SAVE);
+                    return this;
+                },
+
+                initUI: function () {
+                    this.$inputs.val('');
+                    this.$inputs.prop("disabled", false);
+
+                    this.$error.empty();
+                    return this;
+                },
+
+                initPlugins: function () {
+                    $('.modal-dialog').draggable({
+                        handle: ".modal-header"
+                    });
+                    this.$modal.on('hidden.bs.modal', function (e) {
+                        $('#tbody_dt tr').siblings().removeClass('rowSelect');
+                    });
+                    return this;
+                },
+
+                fill: function (d) {
+                    this.$nom.val(d.Nombre);
+                    this.$abr.val(d.Abreviatura);
+                    this.$suf.val(d.SufijoContable);
+                    this.$sim.val(d.Simbolo);
+                    this.$iso.val(d.ISO4217);
+                    this.$asg.prop('checked', d.Asignable.Valor);
+
+                    this.$sid.val(d.CID);
+                },
+
+                show: function (i) {
+                    this.$sid.val(i);
+                    if (typeof (i) !== "number") {
+                        this.getMoneda(i);
+                    }
+                    this.initUI().$modal.modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    this.$nom.focus();
+                },
+
+                // Ajax
+                getMoneda: function (i) {
+                    var that = this;
+                    var param = { sid: i };
+
+                    try {
+                        $.getJSON(ajax.gmnd, param, function (d) {
+                            var err = d.ERR;
+                            if (err == null || err == '' || err == "null") {
+                                var dat = d.DATA;
+                                if (dat != null && dat != "" && dat != "null") {
+                                    that.fill(dat);
+                                }
+                                else {
+                                    toastr.info("No se encontraron datos.");
+                                }
+                            }
+                            else {
+                                toastr.error(err);
+                            }
+                        })
+                        .error(function (jqXHR, textStatus, errorThrown) {
+                            toastr.error("Solicitud de servidor fallida. Error:" + textStatus);
+                        });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+
+                // Handlers
+                handleSave: function (e) {
+                    var that = this;
+                    var rules = {
+                        pai: {
+                            id: that.inputs.NOM, label: 'Nombre', minsize: 3, maxsize: 40
+                        },
+                        iso: {
+                            id: that.inputs.ISO, label: 'ISO 4217', minsize: 3, maxsize: 3
+                        }
+                    };
+                    var T = validaSimple.inputTexts(this.MSGERR, rules);
+                    if (!T) return;
+
+                    this.$error.empty();
+                    this.$inputs.prop("disabled", true);
+
+                    $.confirm({
+                        title: 'Grabar Información',
+                        content: '¿Esta seguro de grabar la información?',
+                        animationSpeed: 0,
+                        theme: 'bootstrap',
+                        buttons: {
+                            ok: {
+                                text: "Aceptar!",
+                                btnClass: 'btn-primary',
+                                keys: ['enter'],
+
+                                action: function () {
+                                    that.handleConfirm();
+                                }
+                            },
+                            cancel: function () {
+                                that.$inputs.prop("disabled", false);
+                            }
+                        }
+                    });
+
+                },
+
+                handleConfirm: function (e) {
+                    var that = this;
+
+                    var data = [];
+                    data.push(this.$nom.val());
+                    data.push(this.$abr.val());
+                    data.push(this.$suf.val());
+                    data.push(this.$sim.val());
+                    data.push(this.$iso.val());
+                    data.push(this.$asg.prop('checked') ? 1 : 0);
+                    data.push(this.$sid.val());
+
+                    var params = {
+                        dat: data
+                    };
+
+                    try {
+                        var request = $.ajax({
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(params),
+                            dataType: "json",
+                            type: "POST",
+                            url: ajax.smnd,
+                            success: function (d) {
+
+                                var err = d.ERR;
+                                if (err == null || err == '' || err == "null") {
+                                    var dat = d.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+                                        if (dat.Estado === 1) {
+                                            that.$modal.modal('hide');
+                                            toastr.success(dat.Mensaje);
+                                            that.initUI();
+                                            Monedas.reloadTable();
+                                        }
+                                        else {
+                                            toastr.error(dat.Mensaje);
+                                        }
+                                    }
+                                }
+                                else {
+                                    toastr.error(err);
+                                }
+                            }
+                        })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                toastr.error("Solicitud de servidor fallida. Error:" + textStatus + ". " + this.url);
+                            });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+
+                bindEvents: function () {
+                    this.$btn_save.on('click', this.handleSave.bind(this));
+                },
+
+                init: function () {
+                    this.initControls().initUI().initPlugins().bindEvents();
+                }
+            } // modal
+
+            var Monedas = {
+                TABLE: "#dt_main",
+                action: {
+                    buttons: {
+                        BUTTON_ADD: '#btn_add',
+                        BUTTON_EXP: '#btn_exportar',
+                        BUTTON_HLP: '#btn_ayuda'
+                    }
+                },
+                initControls: function () {
+                    this.$dt = $(this.TABLE);
+                    this.$btn_add = $(this.action.buttons.BUTTON_ADD);
+                    this.$btn_exp = $(this.action.buttons.BUTTON_EXP);
+                    this.$btn_hlp = $(this.action.buttons.BUTTON_HLP);
+
+                    return this;
+                },
+                reloadTable: function () {
+                    this.$dt.DataTable().ajax.reload();
+                },
+
+                initTable: function () {
+                    var that = this;
+                    var T = this.$dt.DataTable({
+                        pageLength: 18,
+                        colReorder: {
+                            fixedColumnsLeft: 1,
+                            fixedColumnsRight: 1
+                        },
+                        processing: true,
+                        serverSide: true,
+                        ajax: ajax.data,
+                        columnDefs: [{
+                            className: "text-center", targets: [0, 2, 3, 4, 5]
+                        }],
+                        columns: [
+                            { "data": "Row" },
+                            { "data": "Nombre" },
+                            { "data": "Simbolo", "orderable": false },
+                            { "data": "ISO4217" },
+                            { "data": "Asignable.Texto" },
+                            {
+                                "data": "CID",
+                                "orderable": false,
+                                "render": function (data, type, full, meta) {
+                                    return '<a href="javascript:void(0);" class="href-edt" data-sid="' + data + '"><span class="icon icon-edit icon-lg icon-grid"></span></a></a>';
+                                }
+                            }
+                        ],
+                        "language": {
+                            "url": ajax.lang
+                        }
+                    });
+                    return this;
+                },
+
+                handleEdit: function (e) {
+                    var sid = e.currentTarget.getAttribute('data-sid');
+                    var row = e.currentTarget.parentElement.parentElement;
+                    $(row).addClass('rowSelect');
+                    Modal.show(sid);
+                },
+
+                handleAdd: function (e) {
+                    Modal.show(0);
+                },
+
+                handleExp: function (e) {
+                    window.location.href = ajax.expo;
+                },
+
+                bindEvents: function () {
+                    this.$dt.delegate('.href-edt', 'click', this.handleEdit.bind(this));
+                    this.$btn_add.on('click', this.handleAdd.bind(this));
+                    this.$btn_exp.on('click', this.handleExp.bind(this));
+                },
+
+                init: function () {
+                    this.initControls().initTable().bindEvents();
+
+                    $(window).keydown(function (event) {
+                        if (event.keyCode == 13) {
+                            event.preventDefault();
+                            return false;
+                        }
+                    });
+                }
+            }
+
+            Modal.init();
+            Monedas.init();
+
+        })(jQuery);
+    </script>
+*@
+}

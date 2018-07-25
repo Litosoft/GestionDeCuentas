@@ -1,0 +1,578 @@
+﻿@using SGSE.Webapp.Helpers
+@model SGSE.Webapp.Models.CuentaCte.CuentaCteDetalleViewModel
+
+@* Titulo *@
+<div class="title-bar">
+    <h2 class="title-bar-title">
+        <span class="d-ib">Cuentas Corrientes de Órganos de Servicio</span>
+    </h2>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel with-nav-tabs">
+            <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#tab_gen" data-toggle="tab"><span class="badge badge-primary">1</span> Datos Generales</a>
+                    </li>
+                    <li>
+                        <a href="#tab_ben" data-toggle="tab"><span class="badge badge-primary">2</span> Beneficiario Cuenta</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="panel-body">
+                <div class="tab-content">
+                    @* Datos Generales *@
+                    <div class="tab-pane active" id="tab_gen">
+                        <div class="row">
+                            @* Columna 1*@
+                            <div class="col-md-4">
+                                <table class="table-form" width="100%">
+                                    <tr>
+                                        <th style="width: 100px;">Órgano de Servicio</th>
+                                        <td>
+                                            <span id="gen_txt_ose" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Moneda</th>
+                                        <td>
+                                            <span id="gen_txt_mnd" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Swift / B.I.C.</th>
+                                        <td>
+                                            <span id="gen_txt_bic" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>RIB</th>
+                                        <td>
+                                            <span id="gen_txt_rib" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>ABI</th>
+                                        <td>
+                                            <span id="gen_txt_abi" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Fecha Apertura</th>
+                                        <td>
+                                            <span id="gen_txt_ini" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Documento Aut.</th>
+                                        <td>
+                                            <span id="gen_txt_doc" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            @* Columna 2*@
+                            <div class="col-md-4">
+                                <table class="table-form" width="100%">
+                                    <tr>
+                                        <th style="width: 100px;">Número de Cuenta</th>
+                                        <td>
+                                            <span id="gen_txt_cta" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Destino Cuenta</th>
+                                        <td>
+                                            <span id="gen_txt_des" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>IBAN</th>
+                                        <td>
+                                            <span id="gen_txt_iba" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>CBU</th>
+                                        <td>
+                                            <span id="gen_txt_cbu" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>CAB</th>
+                                        <td>
+                                            <span id="gen_txt_cab" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Fecha Cierre</th>
+                                        <td>
+                                            <span id="gen_txt_fin" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>F. Documento</th>
+                                        <td>
+                                            <span id="gen_txt_fdo" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            @* Columna 3 *@
+                            <div class="col-md-4">
+                                <table class="table-form" width="100%">
+                                    <tr>
+                                        <th style="width: 100px;">Banco / Agencia</th>
+                                        <td>
+                                            <span id="gen_txt_age" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Código de Ruteo</th>
+                                        <td>
+                                            <span id="gen_txt_rut" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>ABA</th>
+                                        <td>
+                                            <span id="gen_txt_aba" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>BSB</th>
+                                        <td>
+                                            <span id="gen_txt_bsb" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table-form" width="100%">
+                                    <tr>
+                                        <th width="100px;">Observaciones</th>
+                                        <td>
+                                            <span class="text-gray">
+                                                <strong>
+                                                    Si tiene alguna observación acerca sobre los datos mostrados para esta cuenta bancaria, o tiene una cuenta que no figura en la lista,  puede indicarlo en el siguiente espacio
+                                                </strong>
+                                            </span>
+                                            <br />
+                                            @Html.TextAreaCustom("gen_txt_obs", 20, new { @onkeyup = "TextAreaObject.countChar(this, '#count_des_pm')" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><small id="count_des_pm" class="pull-right text-gray">max. 255 caracteres</small></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Datos de inscripcion de la cuenta *@
+                    <div class="tab-pane" id="tab_ben">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <table class="table-form" width="100%">
+                                    <tr>
+                                        <th style="width: 100px;">Nombre del Beneficiario</th>
+                                        <td>
+                                            <span id="ben_txt_nom" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Domicilio 1</th>
+                                        <td>
+                                            <span id="ben_txt_di1" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Domicilio 2</th>
+                                        <td>
+                                            <span id="ben_txt_di2" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Domicilio 3</th>
+                                        <td>
+                                            <span id="ben_txt_di3" class="span-control-page"></span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p>&nbsp;</p>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <span id="tab_msg_err" class="text-danger text-error"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <button id="tab_btn_sav" class="btn btn-info btn-sm">Confirmar los datos de esta cuenta bancaria</button>
+                        <a href="@Url.Action("Confirmar","CuentaCte")" class="btn btn-default btn-sm" style="margin-right:10px;">Regresar</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<input type="hidden" value="" id="hdn_sid" />
+
+@section layoutScripts{
+    <script type="text/javascript">
+        var ajax = {
+            scta: "@Url.Action("VUyNXUxV", "CuentaCte")"
+        }
+    </script>
+    <script type="text/javascript">
+        (function (a) {
+            var f = { getModelo: function () { return @Html.Raw(Json.Encode(Model)) } }, e = { elements: { data: { SID: "#hdn_sid" } }, initElements: function () { this.$sid = a(this.elements.data.SID); return this }, initPlugins: function () { return this }, bindEvents: function () { return !0 }, init: function () { this.initElements().initPlugins().bindEvents(); a(window).keydown(function (b) { if (13 == b.keyCode) return b.preventDefault(), !1 }) } }; e.init(); ({
+                elements: { buttons: { SAV: "#tab_btn_sav" }, labels: { ERR: "#tab_msg_err" } }, initElements: function () {
+                    this.$btn_sav =
+            a(this.elements.buttons.SAV); this.$msg_err = a(this.elements.labels.ERR); return this
+                }, handleSave: function () {
+                    var b = this; this.$msg_err.empty(); this.tabgen.$frm.prop("disabled", !0); this.tabben.$frm.prop("disabled", !0); a.confirm({
+                        title: "Confirmar Informaci\u00f3n", content: "Los datos confirmados servir\u00e1n como base para el nuevo proceso de <b>Rendici\u00f3n de Cuentas</b>", animationSpeed: 0, theme: "supervan", buttons: {
+                            ok: { text: "Aceptar", btnClass: "btn-warning", keys: ["enter"], action: function () { b.handleConfirm() } },
+                            cancel: function () { b.tabgen.$frm.prop("disabled", !1); b.tabben.$frm.prop("disabled", !1) }
+                        }
+                    })
+                }, handleConfirm: function () {
+                    var b = this, c = []; c.push(this.tabgen.$obs.val()); c.push(e.$sid.val()); c = { dat: c }; try {
+                        a.ajax({
+                            contentType: "application/json; charset=utf-8", data: JSON.stringify(c), dataType: "json", type: "POST", url: ajax.scta, success: function (a) {
+                                var d = a.ERR; null == d || "" == d || "null" == d ? (a = a.DATA, null != a && "" != a && "null" != a && (1 === a.Estado ? (toastr.success(a.Mensaje), b.tabgen.$frm.prop("disabled", !1), b.tabben.$frm.prop("disabled",
+                                !1)) : toastr.error(a.Mensaje))) : toastr.error(d)
+                            }
+                        }).fail(function (a, b, c) { toastr.error("Solicitud de servidor fallida. Error:" + b) })
+                    } catch (g) { toastr.error("Error en solicitud: " + g.message) }
+                }, bindEvents: function () { this.$btn_sav.on("click", this.handleSave.bind(this)) }, init: function () { this.initElements().bindEvents(); this.tabgen.init(); this.tabben.init() }, tabgen: {
+                    elements: {
+                        inputs: {
+                            FRM: "input[id^='gen_txt_'], select[id^='gen_sel_'], #gen_txt_obs", OSE: "#gen_txt_ose", MND: "#gen_txt_mnd", BIC: "#gen_txt_bic", RIB: "#gen_txt_rib",
+                            ABI: "#gen_txt_abi", INI: "#gen_txt_ini", DOC: "#gen_txt_doc", CTA: "#gen_txt_cta", DES: "#gen_txt_des", IBA: "#gen_txt_iba", CBU: "#gen_txt_cbu", CAB: "#gen_txt_cab", FIN: "#gen_txt_fin", FDO: "#gen_txt_fdo", AGE: "#gen_txt_age", RUT: "#gen_txt_rut", ABA: "#gen_txt_aba", BSB: "#gen_txt_bsb", OBS: "#gen_txt_obs"
+                        }
+                    }, initElements: function () {
+                        this.$frm = a(this.elements.inputs.FRM); this.$ose = a(this.elements.inputs.OSE); this.$mnd = a(this.elements.inputs.MND); this.$bic = a(this.elements.inputs.BIC); this.$rib = a(this.elements.inputs.RIB);
+                        this.$abi = a(this.elements.inputs.ABI); this.$ini = a(this.elements.inputs.INI); this.$doc = a(this.elements.inputs.DOC); this.$cta = a(this.elements.inputs.CTA); this.$des = a(this.elements.inputs.DES); this.$iba = a(this.elements.inputs.IBA); this.$cbu = a(this.elements.inputs.CBU); this.$cab = a(this.elements.inputs.CAB); this.$fin = a(this.elements.inputs.FIN); this.$fdo = a(this.elements.inputs.FDO); this.$age = a(this.elements.inputs.AGE); this.$rut = a(this.elements.inputs.RUT); this.$aba = a(this.elements.inputs.ABA); this.$bsb =
+                        a(this.elements.inputs.BSB); this.$obs = a(this.elements.inputs.OBS); return this
+                    }, initPlugins: function () { return this }, fillTab: function () {
+                        var a = f.getModelo(); e.$sid.val(a.CID); a = a.CuentaCorriente; this.$ose.text(a.OrganoServicio.Abreviatura); null !== a.Documento && (this.$doc.text(a.Documento.Numero), this.$fdo.text(a.Documento.Fecha)); this.$mnd.text(a.Moneda.Nombre); this.$bic.text(a.Swift); this.$rib.text(a.RIB); this.$abi.text(a.ABI); this.$ini.text(a.FechaApertura); this.$cta.text(a.NumeroCuenta); this.$des.text(a.Destino.Texto);
+                        this.$iba.text(a.Iban); this.$cbu.text(a.CBU); this.$cab.text(a.CAB); this.$fin.text(a.FechaCierre); this.$age.text(a.Agencia.Nombre); this.$rut.text(a.CodigoRuteo.Texto); this.$aba.text(a.ABA); this.$bsb.text(a.BSB); this.$obs.val(a.Observacion)
+                    }, handleChangeOse: function (a) { }, bindEvents: function () { }, init: function () { this.initElements().initPlugins().bindEvents(); this.fillTab() }
+                }, tabben: {
+                    elements: { inputs: { FRM: "input[id^='ben_txt_']", BEN: "#ben_txt_nom", DI1: "#ben_txt_di1", DI2: "#ben_txt_di2", DI3: "#ben_txt_di3" } },
+                    initElements: function () { this.$frm = a(this.elements.inputs.FRM); this.$ben = a(this.elements.inputs.BEN); this.$di1 = a(this.elements.inputs.DI1); this.$di2 = a(this.elements.inputs.DI2); this.$di3 = a(this.elements.inputs.DI3); return this }, fillTab: function () { var a = f.getModelo().CuentaCorriente; this.$ben.text(a.BeneficiarioNombre); this.$di1.text(a.BeneficiarioDir1); this.$di2.text(a.BeneficiarioDir2); this.$di3.text(a.BeneficiarioDir3) }, init: function () { this.initElements().fillTab() }
+                }
+            }).init()
+        })(jQuery);
+    </script>
+    @*
+    <script type="text/javascript">
+        'use strict';
+        (function ($) {
+            var modelo = {
+                getModelo: function () {
+                    return "@Html.Raw(Json.Encode(Model))"
+                }
+            };
+
+            var page = {
+                elements: {
+                    data: {
+                        SID: '#hdn_sid'
+                    },
+                },
+                initElements: function () {
+                    this.$sid = $(this.elements.data.SID);
+                    return this;
+                },
+                initPlugins: function () {
+                    return this;
+                },
+                bindEvents: function () {
+                    return true;
+                },
+                init: function () {
+                    this.initElements().initPlugins().bindEvents();
+
+                    $(window).keydown(function (event) {
+                        if (event.keyCode == 13) {
+                            event.preventDefault();
+                            return false;
+                        }
+                    });
+                }
+            };
+
+
+            var tabs = {
+                elements: {
+                    buttons: {
+                        SAV: "#tab_btn_sav"
+                    },
+                    labels: {
+                        ERR: "#tab_msg_err"
+                    }
+                },
+                initElements: function () {
+                    this.$btn_sav = $(this.elements.buttons.SAV);
+                    this.$msg_err = $(this.elements.labels.ERR);
+                    return this;
+                },
+
+                handleSave: function () {
+                    var that = this;
+
+                    this.$msg_err.empty();
+                    this.tabgen.$frm.prop("disabled", true);
+                    this.tabben.$frm.prop("disabled", true);
+
+                    $.confirm({
+                        title: 'Confirmar Información',
+                        content: 'Los datos confirmados servirán como base para el nuevo proceso de <b>Rendición de Cuentas</b>',
+                        animationSpeed: 0,
+                        theme: 'supervan',
+                        buttons: {
+                            ok: {
+                                text: "Aceptar",
+                                btnClass: 'btn-warning',
+                                keys: ['enter'],
+                                action: function () {
+                                    that.handleConfirm();
+                                }
+                            },
+                            cancel: function () {
+                                that.tabgen.$frm.prop("disabled", false);
+                                that.tabben.$frm.prop("disabled", false);
+                            }
+                        }
+                    });
+                },
+
+                handleConfirm: function () {
+                    var that = this;
+                    var data = [];
+                    
+                    data.push(this.tabgen.$obs.val());
+                    data.push(page.$sid.val());
+
+                    var params = {
+                        dat: data
+                    };
+
+                    try {
+                        var request = $.ajax({
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(params),
+                            dataType: "json",
+                            type: "POST",
+                            url: ajax.scta,
+                            success: function (d) {
+
+                                var err = d.ERR;
+                                if (err == null || err == '' || err == "null") {
+                                    var dat = d.DATA;
+                                    if (dat != null && dat != "" && dat != "null") {
+                                        if (dat.Estado === 1) {
+                                            toastr.success(dat.Mensaje);
+                                            that.tabgen.$frm.prop("disabled", false);
+                                            that.tabben.$frm.prop("disabled", false);
+                                        }
+                                        else {
+                                            toastr.error(dat.Mensaje);
+                                        }
+                                    }
+                                }
+                                else {
+                                    toastr.error(err);
+                                }
+                            }
+                        })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                toastr.error("Solicitud de servidor fallida. Error:" + textStatus);
+                            });
+                    }
+                    catch (e) {
+                        toastr.error("Error en solicitud: " + e.message);
+                    }
+                },
+
+                bindEvents: function () {
+                    this.$btn_sav.on('click', this.handleSave.bind(this));
+                },
+
+                init: function () {
+                    this.initElements().bindEvents();
+                    this.tabgen.init();
+                    this.tabben.init();
+                },
+
+                // Informacion General
+                tabgen: {
+                    elements: {
+                        inputs: {
+                            FRM: "input[id^='gen_txt_'], select[id^='gen_sel_'], #gen_txt_obs",
+
+                            OSE: '#gen_txt_ose',
+                            MND: '#gen_txt_mnd',
+                            BIC: '#gen_txt_bic',
+                            RIB: '#gen_txt_rib',
+                            ABI: '#gen_txt_abi',
+                            INI: '#gen_txt_ini',
+                            DOC: '#gen_txt_doc',
+
+                            CTA: '#gen_txt_cta',
+                            DES: '#gen_txt_des',
+                            IBA: '#gen_txt_iba',
+                            CBU: '#gen_txt_cbu',
+                            CAB: '#gen_txt_cab',
+                            FIN: '#gen_txt_fin',
+                            FDO: '#gen_txt_fdo',
+
+                            AGE: '#gen_txt_age',
+                            RUT: '#gen_txt_rut',
+                            ABA: '#gen_txt_aba',
+                            BSB: '#gen_txt_bsb',
+
+                            OBS: '#gen_txt_obs',
+                        }
+                    },
+
+                    initElements: function () {
+                        this.$frm = $(this.elements.inputs.FRM);
+
+                        this.$ose = $(this.elements.inputs.OSE);
+                        this.$mnd = $(this.elements.inputs.MND);
+                        this.$bic = $(this.elements.inputs.BIC);
+                        this.$rib = $(this.elements.inputs.RIB);
+                        this.$abi = $(this.elements.inputs.ABI);
+                        this.$ini = $(this.elements.inputs.INI);
+                        this.$doc = $(this.elements.inputs.DOC);
+
+                        this.$cta = $(this.elements.inputs.CTA);
+                        this.$des = $(this.elements.inputs.DES);
+                        this.$iba = $(this.elements.inputs.IBA);
+                        this.$cbu = $(this.elements.inputs.CBU);
+                        this.$cab = $(this.elements.inputs.CAB);
+                        this.$fin = $(this.elements.inputs.FIN);
+                        this.$fdo = $(this.elements.inputs.FDO);
+
+                        this.$age = $(this.elements.inputs.AGE);
+                        this.$rut = $(this.elements.inputs.RUT);
+                        this.$aba = $(this.elements.inputs.ABA);
+                        this.$bsb = $(this.elements.inputs.BSB);
+
+                        this.$obs = $(this.elements.inputs.OBS);
+
+                        return this;
+                    },
+
+                    initPlugins: function () {
+                        return this;
+                    },
+
+                    fillTab: function () {
+                        var m = modelo.getModelo();
+                        page.$sid.val(m.CID);
+
+                        var cta = m.CuentaCorriente;
+                        this.$ose.text(cta.OrganoServicio.Abreviatura);
+
+                        if (cta.Documento !== null) {
+                            this.$doc.text(cta.Documento.Numero);
+                            this.$fdo.text(cta.Documento.Fecha);
+                        }
+
+                        this.$mnd.text(cta.Moneda.Nombre);
+                        this.$bic.text(cta.Swift);
+                        this.$rib.text(cta.RIB);
+                        this.$abi.text(cta.ABI);
+                        this.$ini.text(cta.FechaApertura);
+
+                        this.$cta.text(cta.NumeroCuenta);
+                        this.$des.text(cta.Destino.Texto);
+                        this.$iba.text(cta.Iban);
+                        this.$cbu.text(cta.CBU);
+                        this.$cab.text(cta.CAB);
+                        this.$fin.text(cta.FechaCierre);
+
+                        this.$age.text(cta.Agencia.Nombre);
+                        this.$rut.text(cta.CodigoRuteo.Texto);
+                        this.$aba.text(cta.ABA);
+                        this.$bsb.text(cta.BSB);
+
+                        this.$obs.val(cta.Observacion);
+                    },
+
+                    handleChangeOse: function (e) {
+
+                    },
+
+                    bindEvents: function () {
+
+                    },
+
+                    init: function () {
+                        this.initElements().initPlugins().bindEvents();
+                        this.fillTab();
+                    }
+                },
+
+                // Beneficiarios de Cuenta
+                tabben: {
+                    elements: {
+                        inputs: {
+                            FRM: "input[id^='ben_txt_']",
+                            BEN: "#ben_txt_nom",
+                            DI1: "#ben_txt_di1",
+                            DI2: "#ben_txt_di2",
+                            DI3: "#ben_txt_di3"
+                        }
+                    },
+                    initElements: function () {
+                        this.$frm = $(this.elements.inputs.FRM);
+                        this.$ben = $(this.elements.inputs.BEN);
+                        this.$di1 = $(this.elements.inputs.DI1);
+                        this.$di2 = $(this.elements.inputs.DI2);
+                        this.$di3 = $(this.elements.inputs.DI3);
+                        return this;
+                    },
+                    fillTab: function () {
+                        var m = modelo.getModelo();
+                        var cta = m.CuentaCorriente;
+
+                        this.$ben.text(cta.BeneficiarioNombre);
+                        this.$di1.text(cta.BeneficiarioDir1);
+                        this.$di2.text(cta.BeneficiarioDir2);
+                        this.$di3.text(cta.BeneficiarioDir3);
+                    },
+                    init: function () {
+                        this.initElements().fillTab();
+                    }
+                },
+
+            };
+
+            page.init();
+            tabs.init();
+
+        })(jQuery);
+    </script>
+        *@
+}
+

@@ -1,0 +1,13 @@
+D:\Workspace\net\SGSE\app\SGSE.Business\bin\Release\SGSE.Business.dll
+D:\Workspace\net\SGSE\app\SGSE.Business\bin\Release\SGSE.Business.pdb
+D:\Workspace\net\SGSE\app\SGSE.Business\bin\Release\SGSE.Data.dll
+D:\Workspace\net\SGSE\app\SGSE.Business\bin\Release\SGSE.Entidad.dll
+D:\Workspace\net\SGSE\app\SGSE.Business\bin\Release\SGSE.Security.dll
+D:\Workspace\net\SGSE\app\SGSE.Business\bin\Release\SGSE.ConfigurationManager.dll
+D:\Workspace\net\SGSE\app\SGSE.Business\bin\Release\SGSE.Data.pdb
+D:\Workspace\net\SGSE\app\SGSE.Business\bin\Release\SGSE.Entidad.pdb
+D:\Workspace\net\SGSE\app\SGSE.Business\bin\Release\SGSE.Security.pdb
+D:\Workspace\net\SGSE\app\SGSE.Business\bin\Release\SGSE.ConfigurationManager.pdb
+D:\Workspace\net\SGSE\app\SGSE.Business\obj\Release\SGSE.Business.csprojResolveAssemblyReference.cache
+D:\Workspace\net\SGSE\app\SGSE.Business\obj\Release\SGSE.Business.dll
+D:\Workspace\net\SGSE\app\SGSE.Business\obj\Release\SGSE.Business.pdb
